@@ -8,6 +8,18 @@
 int main(int argc, char **argv) {
     int c;
     int digit_optind = 0;
+  typedef struct flags{
+    int b;
+    int e;
+    int n;
+    int s;
+    int t;
+
+  }flags;
+
+  flags Flags={0};
+
+  
 
     while (1) {
         int this_option_optind;
@@ -24,41 +36,31 @@ int main(int argc, char **argv) {
             {0, 0, 0, 0}
         };
 
-        c = getopt_long(argc, argv, "+abc:d:012", long_options, &option_index);
+        c = getopt_long(argc, argv, "+benst", long_options, &option_index);
         if (c == -1)
             break;
 
         switch (c) {
-        case 0:
-            printf("Parameter %s", long_options[option_index].name);
-           if (optarg)
-                printf(" with argument %s", optarg);
-           // printf("\n");
-           // break;
-
-        case '0':
-        case '1':
-        case '2':
-            if (digit_optind != 0 && digit_optind != this_option_optind)
-                printf("Digits used in different elements of argv.\n");
-            digit_optind = this_option_optind;
-            printf("Parameter %c\n", c);
-            break;
-
-        case 'a':
-            printf("Parameter a\n");
-            break;
-
         case 'b':
-            printf("Parameter b\n");
+        Flags.b=1;
+        printf("flags.b=%d\n", Flags.b);
+        printf("b");
             break;
-
-        case 'c':
-            printf("Parameter c with value `%s'\n", optarg);
+        case 'e':
+        printf("flag.e=%d\n", Flags.e);
+        printf("e");
             break;
-
-        case 'd':
-            printf("Parameter d with value `%s'\n", optarg);
+        case 'n':
+        printf("flag.n=%d\n", Flags.n);
+        printf("n");
+            break;
+        case 's':
+        printf("flag.s=%d\n", Flags.s);
+            printf("s");
+            break;
+        case 't':
+        printf("flag.t=%d\n", Flags.t);
+            printf("t");
             break;
 
         case '?':
