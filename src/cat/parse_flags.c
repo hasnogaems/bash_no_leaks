@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
   
 
     while (1) {
-        int this_option_optind;
+        int this_option_optind; //for debugging
         if (optind) {
             this_option_optind = optind;
         } else {
@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
             {0, 0, 0, 0}
         };
 
-        c = getopt_long(argc, argv, "+benst", long_options, &option_index);
+        c = getopt_long(argc, argv, "+benstET", long_options, &option_index);
         if (c == -1)
             break;
 
@@ -47,21 +47,34 @@ int main(int argc, char **argv) {
         printf("b");
             break;
         case 'e':
+        Flags.e=1;
         printf("flag.e=%d\n", Flags.e);
         printf("e");
             break;
         case 'n':
+        Flags.n=1;
         printf("flag.n=%d\n", Flags.n);
         printf("n");
             break;
         case 's':
+        Flags.s=1;
         printf("flag.s=%d\n", Flags.s);
             printf("s");
             break;
         case 't':
+        Flags.t=1;
         printf("flag.t=%d\n", Flags.t);
             printf("t");
             break;
+        case 'E':
+        Flags.e=1;
+        printf("flag.e=%d\n", Flags.e);
+            break;        
+        case 'T':
+        Flags.t=1;
+        printf("flag.t=%d\n", Flags.t);
+            break;
+
 
         case '?':
             break;
@@ -72,7 +85,7 @@ int main(int argc, char **argv) {
     }
 
     if (optind < argc) {
-        printf("Non-parameter elements in ARGV: ");
+        printf("Non-parameter elements in ARGV: "); // for debuggin
         while (optind < argc)
             printf("%s ", argv[optind++]);
         printf("\n");
