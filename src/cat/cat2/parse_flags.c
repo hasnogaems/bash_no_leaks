@@ -1,25 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
+#include "parse_flags.h"
 #define no_argument        0
 #define required_argument  1
 #define optional_argument  2
-typedef struct flags{
-    int b;
-    int e;
-    int n;
-    int s;
-    int t;
 
-  }flags;
-  static struct option long_options[] = {
-            {"number-nonblank", no_argument, 0, 'b'},
-            {"number", no_argument, 0, 'n'},
-            {"squeeze-blank", no_argument, 0, 's'},
-            {0, 0, 0, 0}
-        };
 
-int parse_flafs(int argc, char **argv) {
+flags parse_flags(int argc, char **argv) {
     int c;
     int digit_optind = 0;
   
@@ -87,12 +75,12 @@ int parse_flafs(int argc, char **argv) {
         }
     }
 
-    if (optind < argc) {
+    /*if (optind < argc) {
         printf("Non-parameter elements in ARGV: "); // for debuggin
         while (optind < argc)
             printf("%s ", argv[optind++]);
         printf("\n");
-    }
+    }*/
 
     
 
