@@ -40,11 +40,11 @@ int main(int argc, char *argv[]) {
         new_line=line_count+1;} //make it print line number only once for each new line
         if (Flag.n == 1&&current==10)
         line_count++;}
-        if(Flag.b==1 &&line_count==new_line&&!(previous == 10 && current == 10)){
-        printf("    %d ", line_count);
-        new_line=line_count+1;}
-        if (current==10)
-        line_count++;
+        //if(Flag.b==1 &&line_count==new_line&&!(previous == 10 && current == 10)){
+        //printf("    %d ", line_count);
+        //new_line=line_count+1;}
+        //if (current==10)
+        //line_count++;  //как комментить сразу несколько строк
 
 
         
