@@ -5,9 +5,9 @@
 int main(int argc, char *argv[]) {
     FILE *fp;
     int line_index = 0;
-    int previous = 0;
+    int previous = 10;
     int current = 0;
-    int extra_line = 0;
+    int count = 0;
 
     flags Flag = parse_flags(argc, argv);
     fp = fopen(argv[argc - 1], "r");
@@ -19,17 +19,17 @@ int main(int argc, char *argv[]) {
         if (feof(fp)) break;
 
         if (previous == 10 && current == 10) {
-            extra_line = 1;
+            count++;
         }
 
         
 
-        if (Flag.s == 1 && previous == 10 && current == 10 && extra_line == 1) {
+        if (Flag.s == 1 && previous == 10 && current == 10 && count > 1) {
             continue;
         }
         if (current != 10) {
             //if (extra_line == 1) {printf("\n");}
-            extra_line = 0;
+            count = 0;
         }
 
         printf("%c", c);
