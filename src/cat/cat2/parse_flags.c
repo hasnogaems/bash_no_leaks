@@ -34,32 +34,32 @@ flags parse_flags(int argc, char **argv) {
         switch (c) {
         case 'b':
         Flags.b=1;
-        printf("flags.b=%d\n", Flags.b);
+       // printf("flags.b=%d\n", Flags.b);
         printf("b");
             break;
         case 'e':
         Flags.e=1;
-        printf("flag.e=%d\n", Flags.e);
+        //printf("flag.e=%d\n", Flags.e);
         printf("e");
             break;
         case 'n':
         Flags.n=1;
-        printf("flag.n=%d\n", Flags.n);
-        printf("n");
+       // printf("flag.n=%d\n", Flags.n);
+        //printf("n");
             break;
         case 's':
         Flags.s=1;
-        printf("flag.s=%d\n", Flags.s);
-            printf("s");
+       // printf("flag.s=%d\n", Flags.s);
+        //    printf("s");
             break;
         case 't':
         Flags.t=1;
-        printf("flag.t=%d\n", Flags.t);
-            printf("t");
+       // printf("flag.t=%d\n", Flags.t);
+        //    printf("t");
             break;
         case 'E':
         Flags.e=1;
-        printf("flag.e=%d\n", Flags.e);
+        //printf("flag.e=%d\n", Flags.e);
             break;        
         case 'T':
         Flags.t=1;

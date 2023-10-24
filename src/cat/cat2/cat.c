@@ -8,6 +8,8 @@ int main(int argc, char *argv[]) {
     int previous = 10;
     int current = 0;
     int count = 0;
+    int line_count=1;
+    int new_line=1;
 
     flags Flag = parse_flags(argc, argv);
     fp = fopen(argv[argc - 1], "r");
@@ -24,7 +26,7 @@ int main(int argc, char *argv[]) {
 
         
 
-        if (Flag.s == 1 && previous == 10 && current == 10 && count > 1) {
+        if (Flag.s == 1 && previous == 10 && current == 10 && count > 1) { //flag s
             continue;
         }
         if (current != 10) {
@@ -32,6 +34,15 @@ int main(int argc, char *argv[]) {
             count = 0;
         }
 
+        if(!Flag.b){
+        if (Flag.n == 1&&line_count==new_line){
+        printf("    %d ", line_count);
+        new_line=line_count+1;}
+        if (Flag.n == 1&&current==10)
+        line_count++;}
+        //if(Flag.b &&line_count==new_line&&())
+
+        
         printf("%c", c);
         previous = c;
     }
