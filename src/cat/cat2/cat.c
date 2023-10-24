@@ -2,31 +2,41 @@
 #include <stdlib.h>
 #include "parse_flags.h"
 
-int main(int argc, char *argv[])
-{   FILE *fp;
-int line_index=0;
-//printf("argc=%d", argc);
-int previous=0;
-int current=0;
+int main(int argc, char *argv[]) {
+    FILE *fp;
+    int line_index = 0;
+    int previous = 0;
+    int current = 0;
+    int extra_line = 0;
 
-    flags Flag=parse_flags(argc, argv);
-    fp=fopen(argv[1], "r");
-    //int p=extralines(fp);
+    flags Flag = parse_flags(argc, argv);
+    fp = fopen(argv[argc - 1], "r");
 
+    int c;
+    while (1) {
+        c = fgetc(fp);
+        current = c;
+        if (feof(fp)) break;
 
-int c;
-while(1){
-c=fgetc(fp);
-current=c;
-if(feof(fp))break;
-if(Flag.s==1&&previous==10&&current==10)
-continue;
-printf("%c", c);  
-previous=c;
- 
- } 
- fclose(fp); 
- return 0;
+        if (previous == 10 && current == 10) {
+            extra_line = 1;
+        }
+
+        
+
+        if (Flag.s == 1 && previous == 10 && current == 10 && extra_line == 1) {
+            continue;
+        }
+        if (current != 10) {
+            //if (extra_line == 1) {printf("\n");}
+            extra_line = 0;
+        }
+
+        printf("%c", c);
+        previous = c;
+    }
+
+    fclose(fp);
+    return 0;
 }
-
 
