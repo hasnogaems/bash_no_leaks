@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
         line_count++;}
         if(Flag.b==1 &&line_count==new_line&&!(previous == 10 && current == 10)){
         printf("    %d ", line_count);
-        new_line=line_count+1;}
+        new_line=line_count+1;}//тут рассинхрон
         if (Flag.b==1&&current==10)
         line_count++;  //как комментить сразу несколько строк
 
