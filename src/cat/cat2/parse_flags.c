@@ -35,7 +35,7 @@ flags parse_flags(int argc, char **argv) {
         case 'b':
         Flags.b=1;
        // printf("flags.b=%d\n", Flags.b);
-        printf("b");
+        //printf("b");
             break;
         case 'e':
         Flags.e=1;
