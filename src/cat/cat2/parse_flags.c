@@ -40,7 +40,7 @@ flags parse_flags(int argc, char **argv) {
         case 'e':
         Flags.e=1;
         //printf("flag.e=%d\n", Flags.e);
-        printf("e");
+       // printf("e");
             break;
         case 'n':
         Flags.n=1;
@@ -63,7 +63,7 @@ flags parse_flags(int argc, char **argv) {
             break;        
         case 'T':
         Flags.t=1;
-        printf("flag.t=%d\n", Flags.t);
+       // printf("flag.t=%d\n", Flags.t);
             break;
 
 
