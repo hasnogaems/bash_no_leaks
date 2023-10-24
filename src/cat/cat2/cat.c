@@ -46,6 +46,15 @@ int main(int argc, char *argv[]) {
         new_line=line_count+1;}//тут рассинхрон
         if (Flag.b==1&&current==10&&!(previous == 10 && current == 10))
         line_count++;  //как комментить сразу несколько строк
+        if (Flag.e==1){
+            if(c<32&&c!=10){c=c+64;
+            printf("^%c", c);
+            continue;}
+
+            if(c==10)
+            printf("%%");
+        }
+        
 
 
         
