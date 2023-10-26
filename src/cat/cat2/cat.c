@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
     int current = 0;
     int count = 0;
     int line_count=1;
-    int new_line=1;
+    int mark_line=1;
     int s;
 
     flags Flag = parse_flags(argc, argv);
@@ -36,22 +36,23 @@ int main(int argc, char *argv[]) {
         }
 
         if(Flag.b==0){
-        if (Flag.n == 1&&line_count==new_line){ //flag n
+        if (Flag.n == 1&&mark_line==line_count){ //flag n
         printf("%6.d\t", line_count);
-        new_line=line_count+1;} //make it print line number only once for each new line
+        mark_line=line_count+1;} //make it print line number only once for each new line
         if (Flag.n == 1&&current==10)
         line_count++;}
-        if(Flag.b==1 &&line_count==new_line&&c!=10){
+        if(Flag.b==1 &&mark_line==line_count&&c!=10){
         printf("%6.d\t", line_count);
-        new_line=line_count+1;}//тут рассинхрон
-        if (Flag.b==1&&current==10&&!(previous == 10 && current == 10))
-        line_count++;  //как комментить сразу несколько строк
+        mark_line=line_count+1;}//
+        if (Flag.b==1&&current==10&&previous != 10)
+        line_count++;  
+        previous = c;
         if (Flag.e==1){
-            if(c<32&&c!=10&&c!=9){c=c+64;
-            printf("^%c", c);
+            if(c<32&&c!=10&&c!=9){
+            printf("^%c", c+64);
             continue;}
-            if(c==127){c=c-128;
-            printf("^%c", c);}
+            if(c==127){
+            printf("^%c", c-128);}
 
             if(c==10)
             printf("$");
@@ -61,7 +62,8 @@ int main(int argc, char *argv[]) {
 
         
         printf("%c", c);
-        previous = c;
+        //if(c=='t')printf("Previous=%d", previous);
+        
         
     }
 
