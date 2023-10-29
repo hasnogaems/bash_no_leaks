@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "parse_flags.h"
 
+
 int main(int argc, char *argv[]) {
     FILE *fp;
     int line_index = 0;
@@ -46,25 +47,37 @@ int main(int argc, char *argv[]) {
         new_line=line_count+1;}//тут рассинхрон
         if (Flag.b==1&&current==10&&!(previous == 10 && current == 10))
         line_count++;  //как комментить сразу несколько строк
-        if (Flag.e==1){
-            if(c<32&&c!=10&&c!=9){c=c+64;
-            printf("^%c", c);
+        previous = c;
+        if (Flag.e==1&&Flag.E!=1){
+            if(c<32&&c!=10&&c!=9){
+            printf("^%c", c+64);
+            
             continue;}
-            if(c==127){c=c-128;
-            printf("^%c", c);}
+            if(c==127){
+            printf("^%c", c-128);continue;
+            }
 
             if(c==10)
             printf("$");
         }
-        
+        if (Flag.t==1){
+            if(c<32&&c!=10&&c!=9){
+                printf("^%c", c+64);continue;
+            }
+            if(c==127){
+                printf("^%c", c-128);continue;
+            }
+        }
 
 
         
         printf("%c", c);
-        previous = c;
+        
         
     }
+if(argc==1){
 
+}
     fclose(fp);
     return 0;
 }

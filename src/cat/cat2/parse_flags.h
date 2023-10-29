@@ -9,6 +9,8 @@ typedef struct flags{
     int n;
     int s;
     int t;
+    int E;
+    int T;
 
     //if(b==e==n==s==t==0)
 

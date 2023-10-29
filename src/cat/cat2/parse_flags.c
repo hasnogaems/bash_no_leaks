@@ -15,8 +15,6 @@ flags parse_flags(int argc, char **argv) {
   flags Flags={0};
 
 
-  
-
     while (1) {
         int this_option_optind; //for debugging
         if (optind) {
@@ -26,7 +24,7 @@ flags parse_flags(int argc, char **argv) {
         }
         int option_index = 0;
         
-
+if(argc>1){
         c = getopt_long(argc, argv, "+benstET", long_options, &option_index);
         if (c == -1)
             break;
@@ -58,14 +56,13 @@ flags parse_flags(int argc, char **argv) {
         //    printf("t");
             break;
         case 'E':
-        Flags.e=1;
+        Flags.E=1;
         //printf("flag.e=%d\n", Flags.e);
             break;        
         case 'T':
-        Flags.t=1;
+        Flags.T=1;
        // printf("flag.t=%d\n", Flags.t);
             break;
-
 
         case '?':
             break;
@@ -80,7 +77,8 @@ flags parse_flags(int argc, char **argv) {
         while (optind < argc)
             printf("%s ", argv[optind++]);
         printf("\n");
-    }*/
+    }*/}
+    
 
     
 
