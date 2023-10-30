@@ -68,6 +68,14 @@
             if(c==127){
                 printf("^%c", c-128);continue;
             }
+            if(c==9){
+                printf("^|"); continue;
+            }
+        }
+        if (Flag.T==1){
+            if(c==9){
+                printf("^|"); continue;
+            }
         }
 
 
