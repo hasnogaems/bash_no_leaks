@@ -3,7 +3,7 @@
 #include "parse_flags.h"
 
 
-int main(int argc, char *argv[]) {
+ int main(int argc, char *argv[]) {
     FILE *fp;
     int line_index = 0;
     int previous = 10;
@@ -13,11 +13,12 @@ int main(int argc, char *argv[]) {
     int new_line=1;
     int s;
 
-    flags Flag = parse_flags(argc, argv);
+    flags Flag;
+    if(argc>1)Flag = parse_flags(argc, argv);
     fp = fopen(argv[argc - 1], "r");
 
     int c;
-    while (1) {
+    while (1&&argc>1) {
         c = fgetc(fp);
         current = c;
         if (feof(fp)) break;
@@ -75,9 +76,28 @@ int main(int argc, char *argv[]) {
         
         
     }
+    
 if(argc==1){
-
+    char *noargs;
+    int counter=1;
+    noargs=malloc(counter*sizeof(char));
+    
+    while(1){
+        if(counter>1)
+        noargs=realloc(noargs, counter*sizeof(char));
+        
+        c=getchar();
+        
+        if(c==EOF){/*printf("\n")*/break;}
+        if(c!=10)noargs[counter-1]=c;
+        if(c==10)while(counter>0){
+        printf("%c", noargs[counter-1]);counter--;}
+        if(counter==0)printf("\n");
+        counter++;
+    }
+free(noargs);
 }
+
     fclose(fp);
     return 0;
 }
