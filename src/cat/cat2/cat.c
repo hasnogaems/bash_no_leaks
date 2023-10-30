@@ -4,6 +4,7 @@
 
 
  int main(int argc, char *argv[]) {
+    //printf("ARGC=%d", argc);
     FILE *fp;
     int line_index = 0;
     int previous = 10;
