@@ -31,6 +31,11 @@
         if(Flag.b==1 &&previous==10&&c!=10){
         printf("%6.d\t", line_count);previous=c;}
         //new_line=line_count+1;}
+        if (Flag.n == 1&&previous==10){ //flag n
+        printf("%6.d\t", line_count);
+        new_line=line_count+1;} //make it print line number only once for each new line
+        if (Flag.n == 1&&current==10)
+        line_count++;
         if(Flag.v==1&&Flag.e!=1){
             if(c<32&&c!=10&&c!=9){
             printf("^%c", c+64);previous=c;
@@ -51,11 +56,7 @@
         }
 
         if(Flag.b==0){
-        if (Flag.n == 1&&previous==10){ //flag n
-        printf("%6.d\t", line_count);
-        new_line=line_count+1;} //make it print line number only once for each new line
-        if (Flag.n == 1&&current==10)
-        line_count++;}
+        }
         //тут рассинхрон
         if (Flag.b==1&&current==10&&!(previous == 10 && current == 10))
         line_count++;  //как комментить сразу несколько строк
@@ -104,7 +105,7 @@
         
         
     }
-    
+ 
 if(argc==1){
     char *noargs;
     int counter=1;
@@ -124,9 +125,10 @@ if(argc==1){
         counter++;
     }
 free(noargs);
-}
+
 
     fclose(fp);
     return 0;
 }
 
+ }
