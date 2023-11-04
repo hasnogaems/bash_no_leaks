@@ -45,15 +45,34 @@ int main(int argc, char *argv[]) {
         printf("%6.d\t", line_count);
         mark_line=line_count+1;}//
         if (Flag.b==1&&current==10&&previous != 10)
-        line_count++;  
+        line_count++;  //this was after line 64 and flag e did not let [previous] to change from 10 in some cases, so I have stuck variable with 10 which is crucial condition.
         previous = c;
-        if (Flag.e==1){
+        if(Flag.t!=1&&Flag.T==1){
+            if(c==9){printf("^|");continue;}
+        }
+        if(Flag.t==1){
+            if(c==9){
+                printf("^|");continue;
+            }
+            if(c<32&&c!=10&&c!=9){
+                printf("^%c", c+64);
+                continue;
+            if(c==127){
+                printf("^%c", c-128);
+                continue;        
+            }}}
+        if (Flag.e==1&&Flag.E!=1){
             if(c<32&&c!=10&&c!=9){
             printf("^%c", c+64);
             continue;}
             if(c==127){
-            printf("^%c", c-128);}
+            printf("^%c", c-128);
+            continue;}
 
+            if(c==10)
+            printf("$");
+        }
+        if (Flag.E==1&&Flag.e!=1){
             if(c==10)
             printf("$");
         }

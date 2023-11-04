@@ -58,11 +58,11 @@ flags parse_flags(int argc, char **argv) {
         //    printf("t");
             break;
         case 'E':
-        Flags.e=1;
+        Flags.E=1;
         //printf("flag.e=%d\n", Flags.e);
             break;        
         case 'T':
-        Flags.t=1;
+        Flags.T=1;
        // printf("flag.t=%d\n", Flags.t);
             break;
 
