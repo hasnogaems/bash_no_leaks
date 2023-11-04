@@ -13,7 +13,7 @@ flags parse_flags(int argc, char **argv) {
   
 
   flags Flags={0};
-  
+
 
     while (1) {
         int this_option_optind; //for debugging

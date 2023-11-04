@@ -1,3 +1,0 @@
-/Users/medusaga/C3_SimpleBashUtils-1/src/cat/cat2/CMakeFiles/my_program.dir
-/Users/medusaga/C3_SimpleBashUtils-1/src/cat/cat2/CMakeFiles/edit_cache.dir
-/Users/medusaga/C3_SimpleBashUtils-1/src/cat/cat2/CMakeFiles/rebuild_cache.dir

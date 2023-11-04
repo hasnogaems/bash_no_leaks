@@ -22,7 +22,6 @@ typedef struct flags{
             {"squeeze-blank", no_argument, 0, 's'},
             {0, 0, 0, 0}
         };
-        
 flags parse_flags(int argc, char **argv);
 int extralines(FILE *fp);
 #endif
