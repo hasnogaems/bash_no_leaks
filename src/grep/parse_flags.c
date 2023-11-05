@@ -1,11 +1,12 @@
-#include "headers.h"
+#include "h.h"
 Flags parse_flags(int argc, char **argv){
     int c;
     Flags flag={0};
+    int option_index=0;
     
     if(argc>1){
         while(1){
-        c = getopt(argc, argv, "+eivclnhsfo");
+        c = getopt_long(argc, argv, "+eivclnhsfo", long_options, &option_index);
         if (c == -1)
         break;
     
@@ -35,7 +36,7 @@ Flags parse_flags(int argc, char **argv){
         flag.s=1;
         break;
         case 'f':
-        flag.f=1;
+        flag.file=1;
         break;
         case 'o':
         flag.o=1;
