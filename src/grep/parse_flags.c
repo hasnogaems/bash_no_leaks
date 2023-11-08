@@ -56,3 +56,13 @@ int parse_pattern( int argc, char **argv){
     }
 return i;
 }
+
+int parse_file_name(int y, char **argv, int argc){
+    int i;
+    for(i=y+1;i<argc-1;i++){
+        if(argv[i][0]!='-')
+        break;
+    }
+    return i;
+
+}

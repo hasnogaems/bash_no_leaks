@@ -6,13 +6,18 @@
 #define required_argument 1
 #define optional_argument 2
 int main(int argc, char *argv[]){
+    if(argc==1)printf("Usage: grep [OPTION]... PATTERNS [FILE]...\nTry 'grep --help' for more information.\n");
+    else{
     FILE *fp;
     char *pattern=malloc(sizeof(char));
-    //fp=fopen(argv[argc-1],"r");
+   
     int c;
     int x;
     int y=parse_pattern(argc, argv);
+    int file_name=parse_file_name(y, argv, argc);
     printf("parse_pattern=%d\n", y);
+    printf("file name=%s\n", argv[file_name]);
+    fp=fopen(argv[file_name],"r");
     //
 //getopt(argc, argv);
     /* while(1){
@@ -24,6 +29,7 @@ int main(int argc, char *argv[]){
     char pattern2[]="ab ";
     char line[]="abcsfsfsfgsgab";
 
+   
    x=regex(argv[y], line);
     if(!x)
     for(int i=0;line[i]!='\0';i++)
@@ -40,8 +46,8 @@ Flags flag;
 
 
 
-
-free(pattern);
+//fclose(fp);
+free(pattern);}
 
 }
 
