@@ -18,22 +18,32 @@ int main(int argc, char *argv[]){
     printf("parse_pattern=%d\n", y);
     printf("file name=%s\n", argv[file_name]);
     fp=fopen(argv[file_name],"r");
+    char *line_=(char *)malloc(1024*sizeof(char));
     //
 //getopt(argc, argv);
-    /* while(1){
-        c=fgetc(fp);
-        if(feof(fp))break;
-        
+    //while(1){
+       /* for(int i=0;i<5;i++){ fgets(line_, 1024, fp);
+        printf("%s", line_);
+       } */
+       while( fgets(line_, 1024, fp)){
 
-    } */
+       x=regex(argv[y], line_);
+    if(!x)
+    
+    printf("%s", line_);
+        
+        //printf("%s", line_);
+       }
+
+    //} 
     char pattern2[]="ab ";
     char line[]="abcsfsfsfgsgab";
 
    
-   x=regex(argv[y], line);
+   /* x=regex(argv[y], line);
     if(!x)
     for(int i=0;line[i]!='\0';i++)
-    printf("%c", line[i]);
+    printf("%c", line[i]); */
     
     
 Flags flag;
@@ -47,7 +57,8 @@ Flags flag;
 
 
 //fclose(fp);
-free(pattern);}
+free(pattern);
+free(line_);}
 
 }
 
