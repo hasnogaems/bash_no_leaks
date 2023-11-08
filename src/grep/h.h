@@ -24,4 +24,5 @@ static struct option long_options[] = {
 int regex(char pattern[], char line[]);
 int parse_pattern(int argc, char **argv);
 int parse_file_name(int pattern_index, char **argv, int argc);
+Flags parse_flags(int argc, char **argv);
 #endif

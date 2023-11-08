@@ -13,7 +13,6 @@ int main(int argc, char *argv[]){
    
     int c;
     int x;
-    Flags flag=parse_flags(argc, argv);
     int y=parse_pattern(argc, argv);
     int file_name=parse_file_name(y, argv, argc);
     printf("parse_pattern=%d\n", y);
@@ -21,7 +20,7 @@ int main(int argc, char *argv[]){
     fp=fopen(argv[file_name],"r");
     char *line_=(char *)malloc(1024*sizeof(char));
     //
-
+//getopt(argc, argv);
     //while(1){
        /* for(int i=0;i<5;i++){ fgets(line_, 1024, fp);
         printf("%s", line_);
@@ -47,7 +46,7 @@ int main(int argc, char *argv[]){
     printf("%c", line[i]); */
     
     
-
+Flags flag;
 // if(argc>1)flag=parse_flags(argc, argv);
 // while(1&&argc>1){
 //     c=fgetc(fp);
@@ -59,10 +58,7 @@ int main(int argc, char *argv[]){
 
 //fclose(fp);
 free(pattern);
-free(line_);
-
-}
-printf("Flag.e=%d", flag.e);
+free(line_);}
 
 }
 
