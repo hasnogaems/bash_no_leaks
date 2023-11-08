@@ -47,3 +47,12 @@ Flags parse_flags(int argc, char **argv){
 }
     }
 }
+int parse_pattern( int argc, char **argv){
+    int i;
+    for(i=1;i<argc-1;i++){
+        if(argv[i][0]!='-')
+        break;
+
+    }
+return i;
+}

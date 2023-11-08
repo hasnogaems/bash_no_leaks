@@ -17,10 +17,11 @@ typedef struct Flags{
     
 }Flags;
 
-static struct options long_options[]={
+static struct option long_options[] = {
     {"number-nonblank", no_argument, 0, 'b'},
     {0, 0, 0, 0}
 };
-int regex(char x[], char y[]);
+int regex(char pattern[], char line[]);
+int parse_pattern(int argc, char **argv);
 
 #endif
