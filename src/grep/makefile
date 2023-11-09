@@ -6,3 +6,6 @@
 
 flags:
 	gcc -Wall -Werror -Wextra -std=c11 grep.c parse_flags.c regex.c
+
+debug:
+	gcc -fsanitize=address grep.c parse_flags.c regex.c	

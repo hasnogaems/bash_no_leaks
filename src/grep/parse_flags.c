@@ -48,24 +48,31 @@ Flags parse_flags(int argc, char **argv){
 }
     }
 }
-int parse_pattern( int argc, char **argv){
+int parse_pattern( int argc, char **argv, char **e_ptrns, int *count){
     
 
     int i;
-    char **e_ptrns=(char **)malloc(1025*sizeof(char));
-    int count=1;
+    char **x;
+    int pattern;
+    int pattern_found=0;
+    
+    
     for(i=1;i<argc-1;i++){
         if(strcmp(argv[i], "-e")==0){
         printf("-e detected!");
-        e_ptrns[count-1]=argv[i+1];
-        count++;realloc(e_ptrns, count*(1025*sizeof(char)));}
+        e_ptrns[*count-1]=argv[i+1];
+        //*count++;
+        x=realloc(e_ptrns, *count*(1025*sizeof(char)));
+        if(x==NULL)printf("Realloc failed");else e_ptrns=x;}
 
-        if(argv[i][0]!='-'&&strcmp(argv[i-1], "-e")!=0)
-        break;
+        if(argv[i][0]!='-'&&pattern_found==0/*&&strcmp(argv[i-1], "-e")!=0*/){
+        pattern=i;pattern_found=1;}
+        //else if(argv[i][0]=='-')
 
     }
-    printf("e_ptrn=%s", e_ptrns[0]);
-return i;
+    printf("COUNT POINTER=%d COUNT VALUE=%d\n", count, *count);
+    printf("ptrn=%s argv index of pattern is %d\n", argv[i], i);
+return pattern;
 }
 
 int parse_file_name(int y, char **argv, int argc){
@@ -74,6 +81,7 @@ int parse_file_name(int y, char **argv, int argc){
         if(argv[i][0]!='-')
         break;
     }
+    printf("File_name=%s argv index of File_name is %d\n", argv[i], i);
     return i;
 
 }

@@ -6,11 +6,8 @@
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}",
             "args": [
-                "-b",
-                "-a",
                 "-e",
-                "-t",
-                "fdfdfdf",
+                "111",
                 "test.txt"
             ],
             "stopAtEntry": false,
