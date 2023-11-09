@@ -1,4 +1,5 @@
 #include "h.h"
+#include <string.h>
 Flags parse_flags(int argc, char **argv){
     int c;
     Flags flag={0};
@@ -48,12 +49,22 @@ Flags parse_flags(int argc, char **argv){
     }
 }
 int parse_pattern( int argc, char **argv){
+    
+
     int i;
+    char **e_ptrns=(char **)malloc(1025*sizeof(char));
+    int count=1;
     for(i=1;i<argc-1;i++){
-        if(argv[i][0]!='-')
+        if(strcmp(argv[i], "-e")==0){
+        printf("-e detected!");
+        e_ptrns[count-1]=argv[i+1];
+        count++;realloc(e_ptrns, count*(1025*sizeof(char)));}
+
+        if(argv[i][0]!='-'&&strcmp(argv[i-1], "-e")!=0)
         break;
 
     }
+    printf("e_ptrn=%s", e_ptrns[0]);
 return i;
 }
 

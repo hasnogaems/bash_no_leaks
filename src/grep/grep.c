@@ -27,6 +27,7 @@ int main(int argc, char *argv[]){
         printf("%s", line_);
        } */
        while( fgets(line_, 1024, fp)){
+        
 
        x=regex(argv[y], line_);
     if(!x)
@@ -60,9 +61,11 @@ int main(int argc, char *argv[]){
 //fclose(fp);
 free(pattern);
 free(line_);
+//free(e_ptrns);
+printf("Flag.e=%d", flag.e);
 
 }
-printf("Flag.e=%d", flag.e);
+
 
 }
 
