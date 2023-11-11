@@ -11,9 +11,9 @@ int regex(char pattern[], char line[]){
 
     return_value = regexec(&regex, line, 0, NULL, 0);
     if(!return_value){
-        printf("%dMatch.\n", return_value);
+        
     }else{
-        printf("%dNo match.\n",return_value);
+       // printf("%dNo match.\n",return_value);
 
     }
     regfree(&regex);

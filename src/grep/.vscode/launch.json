@@ -8,7 +8,11 @@
             "args": [
                 "-e",
                 "111",
-                "test.txt"
+                "test.txt",
+                "-e",
+                "22",
+                "-e",
+                "33"
             ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

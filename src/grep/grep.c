@@ -8,7 +8,7 @@
 int main(int argc, char *argv[]){
     if(argc==1)printf("Usage: grep [OPTION]... PATTERNS [FILE]...\nTry 'grep --help' for more information.\n");
     else{
-        int count=100;
+        int count=0;
         int* pcount=&count;
         FILE *fp;
         char *pattern=malloc(100*sizeof(char));
@@ -16,64 +16,47 @@ int main(int argc, char *argv[]){
         int c;
         int x;
         Flags flag=parse_flags(argc, argv); //parse flags
-        int y=parse_pattern(argc, argv, e_ptrns, &count);
-        printf("COUNT IN MAIN=%d", count); //parse pattern
+        int y=parse_pattern(argc, argv, e_ptrns, &count);  //parse pattern
         int file_name=parse_file_name(y, argv, argc);//parse file name
-        printf("parse_pattern=%d\n", y);//debug
-        printf("file name=%s\n", argv[file_name]);
+        
         fp=fopen(argv[file_name],"r");//opening file
         if (fp == NULL) {
             printf("Error opening file.\n");
             return -1;//debug
         }
         char *line_=(char *)malloc(1024*sizeof(char)); //here we store line from our file we grabbed with fgets
-        //
-
-        //while(1){
-        /* for(int i=0;i<5;i++){ fgets(line_, 1024, fp);
-            printf("%s", line_);
-        } */
-        while( fgets(line_, 1024, fp)){
+                
+        if(flag.e!=1)
+        while( fgets(line_, 1024, fp)){ 
             
 
         x=regex(argv[y], line_);
         if(!x)
-        
-        printf("%s", line_);
-            
-            //printf("%s", line_);
+              
+            printf("%s\n", line_);
         }
-        //if(e_counter>1){
-            //need counter of amounts of flag e, and then we read from array of e patterns
-        // }
-
-        //} 
-        /* char pattern2[]="ab ";
-        char line[]="abcsfsfsfgsgab"; */
-
-    
-    /* x=regex(argv[y], line);
-        if(!x)
-        for(int i=0;line[i]!='\0';i++)
-        printf("%c", line[i]); */
         
         
-
-    // if(argc>1)flag=parse_flags(argc, argv);
-    // while(1&&argc>1){
-    //     c=fgetc(fp);
-    //     if(feof(fp)) break;
+        fseek(fp, 0, SEEK_SET);// Move the cursor to the beginning of the file
+        fgets(line_, 1024, fp);
         
-    // }
-
-
-
-    //fclose(fp);
+        fseek(fp, 0, SEEK_SET);
+        
+        while(count!=0){// exec e patterns
+            while(fgets(line_, 1024, fp)){
+                x=regex(e_ptrns[count-1], line_);
+                //printf("X in E loop=%d\n", x);
+                if(!x)
+                printf("%s\n", line_);
+        
+            }
+            fseek(fp, 0, SEEK_SET);
+            count--;}
+            
     free(pattern);
     free(line_);
     free(e_ptrns);
-    //free(e_ptrns);
-    printf("Flag.e=%d", flag.e);
+    
 
 }
 
