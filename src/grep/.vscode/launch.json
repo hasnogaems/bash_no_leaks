@@ -7,8 +7,8 @@
             "program": "${fileDirname}/${fileBasenameNoExtension}",
             "args": [
                 "-e",
-                "111",
-                "test.txt",
+                "11",
+                "test_e.txt",
                 "-e",
                 "22",
                 "-e",

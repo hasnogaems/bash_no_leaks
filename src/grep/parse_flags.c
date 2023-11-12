@@ -58,11 +58,17 @@ int parse_pattern( int argc, char **argv, char **e_ptrns, int *count){
     int pattern;
     int pattern_found=0;
     
-    
+    for(int i =0; i < argc; i++)
+    {
+        printf("%s\n",argv[i]);
+    }
     for(i=1;i<argc-1;i++){
+        printf("argc = %d\n", argc);
+        printf("1=[%s]\n2=[%s]\n", argv[i], argv[i+1]);
             if(strcmp(argv[i], "-e")==0){
                 
-                e_ptrns[*count]=argv[i+1];//argv не важно какой индекс если мы читаем оттуда, не должно быть segfault?
+                e_ptrns[*count]=argv[i+1];//argv не важно какой 
+                // индекс если мы читаем оттуда, не должно быть segfault?
                // printf("argv[%d]=%s\n", i+1, argv[i+1]);
                 (*count)++;
                 x=realloc(e_ptrns, *count*(1025*sizeof(char)));

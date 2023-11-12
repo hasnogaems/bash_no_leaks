@@ -6,6 +6,10 @@
 #define required_argument 1
 #define optional_argument 2
 int main(int argc, char *argv[]){
+    for(int i =0; i < argc; i++)
+    {
+        printf("%s\n",argv[i]);
+    }
     if(argc==1)printf("Usage: grep [OPTION]... PATTERNS [FILE]...\nTry 'grep --help' for more information.\n");
     else{
         int count=0;
