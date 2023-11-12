@@ -12,7 +12,9 @@
                 "-e",
                 "22",
                 "-e",
-                "33"
+                "33",
+                "-o",
+                "-s"
             ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

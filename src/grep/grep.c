@@ -42,16 +42,17 @@ int main(int argc, char *argv[]){
         
         fseek(fp, 0, SEEK_SET);
         
-        while(count!=0){// exec e patterns
-            while(fgets(line_, 1024, fp)){
-                x=regex(e_ptrns[count-1], line_);
+        // exec e patterns
+        int e_count=count;
+            while(fgets(line_, 1024, fp)&&count!=0){
+                x=regex(e_ptrns[e_count-1], line_);
                 //printf("X in E loop=%d\n", x);
                 if(!x)
-                printf("%s\n", line_);
+                printf("%s", line_);
+                
         
             }
-            fseek(fp, 0, SEEK_SET);
-            count--;}
+            
             
     free(pattern);
     free(line_);

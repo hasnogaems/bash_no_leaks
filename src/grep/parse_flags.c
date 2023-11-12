@@ -7,7 +7,8 @@ Flags parse_flags(int argc, char **argv){
     
     if(argc>1){
         while(1){
-        c = getopt_long(argc, argv, "+eivclnhsfo", long_options, &option_index);
+        c = getopt_long(argc, argv, "eivclnhsfo", long_options, &option_index);
+        printf("optind=%d on argv[%s]\n", optind, argv[optind]);
         if (c == -1)
         break;
     
@@ -44,9 +45,10 @@ Flags parse_flags(int argc, char **argv){
         break;
         
     }
-    return flag;
+    
 }
     }
+    return flag;
 }
 int parse_pattern( int argc, char **argv, char **e_ptrns, int *count){
     
@@ -73,7 +75,6 @@ int parse_pattern( int argc, char **argv, char **e_ptrns, int *count){
 
     }
     
-    
 return pattern;
 }
 
@@ -83,7 +84,7 @@ int parse_file_name(int y, char **argv, int argc){
         if(argv[i][0]!='-')
         break;
     }
-    printf("File_name=%s argv index of File_name is %d\n", argv[i], i);
+    //printf("File_name=%s argv index of File_name is %d\n", argv[i], i);
     return i;
 
 }
