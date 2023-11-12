@@ -44,11 +44,20 @@ int main(int argc, char *argv[]){
         
         // exec e patterns
         int e_count=count;
-            while(fgets(line_, 1024, fp)&&count!=0){
+        printf("e_count=%d\n", e_count);
+        printf("e_ptrns[e_count-1]=%s\n", e_ptrns[e_count-1]);
+        printf("e_ptrns[e_count-2]=%s\n", e_ptrns[e_count-2]);
+            while(fgets(line_, 1024, fp)){
+                int e_count=count;
+                while(e_count!=1){
                 x=regex(e_ptrns[e_count-1], line_);
+                e_count--;
                 //printf("X in E loop=%d\n", x);
-                if(!x)
-                printf("%s", line_);
+                if(!x){
+                
+                printf("%s", line_);}
+                }
+
                 
         
             }
