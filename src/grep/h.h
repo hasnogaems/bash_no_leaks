@@ -14,7 +14,7 @@ typedef struct Flags{
     int s;
     int file;
     int o;
-    
+    int count;
 }Flags;
 
 static struct option long_options[] = {
@@ -24,5 +24,5 @@ static struct option long_options[] = {
 int regex(char pattern[], char line[]);
 int parse_pattern(int argc, char **argv, char **e_ptrns, int*);
 int parse_file_name(int pattern_index, char **argv, int argc);
-Flags parse_flags(int argc, char **argv);
+Flags parse_flags(int argc, char **argv, char **e_ptrns);
 #endif

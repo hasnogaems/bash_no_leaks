@@ -19,10 +19,11 @@ int main(int argc, char *argv[]){
         char **e_ptrns=(char **)malloc(1025*sizeof(char*));
         int c;
         int x;
-        Flags flag=parse_flags(argc, argv); //parse flags
+        Flags flag=parse_flags(argc, argv, e_ptrns); //parse flags
         int y=parse_pattern(argc, argv, e_ptrns, &count);  //parse pattern
-        int file_name=parse_file_name(y, argv, argc);//parse file name
-        
+        //int file_name=parse_file_name(y, argv, argc);//parse file name
+        int file_name=optind;
+        printf("file name is %s its index is%d\n", argv[file_name], optind);
         fp=fopen(argv[file_name],"r");//opening file
         if (fp == NULL) {
             printf("Error opening file.\n");
@@ -47,15 +48,13 @@ int main(int argc, char *argv[]){
         fseek(fp, 0, SEEK_SET);
         
         // exec e patterns
-        int e_count=count;
-        printf("e_count=%d\n", e_count);
-        printf("e_ptrns[e_count-1]=%s\n", e_ptrns[e_count-1]);
-        printf("e_ptrns[e_count-2]=%s\n", e_ptrns[e_count-2]);
+        
+       
             while(fgets(line_, 1024, fp)){
-                int e_count=count;
-                while(e_count!=1){
-                x=regex(e_ptrns[e_count-1], line_);
-                e_count--;
+                
+                while(flag.count!=0){
+                x=regex(e_ptrns[flag.count], line_);
+                flag.count--;
                 //printf("X in E loop=%d\n", x);
                 if(!x){
                 
