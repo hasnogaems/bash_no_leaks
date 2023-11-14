@@ -1,6 +1,6 @@
 #include "h.h"
 #include <string.h>
-Flags parse_flags(int argc, char **argv, char **e_ptrns){
+Flags parse_flags(int argc, char **argv, char **e_ptrns, int *e_count){
     int c;
     Flags flag={0};
     int option_index=0;
@@ -16,8 +16,8 @@ Flags parse_flags(int argc, char **argv, char **e_ptrns){
     switch(c){
         case 'e':
         flag.e=1;
-        e_ptrns[count]=optarg;
-        count++;
+        e_ptrns[*e_count]=optarg;
+        (*e_count)++;
         break;
         case 'i':
         flag.i=1; 
@@ -63,7 +63,7 @@ int parse_pattern( int argc, char **argv, char **e_ptrns, int *count){
     
     for(int i =0; i < argc; i++)
     {
-        printf("%s\n",argv[i]);
+        printf("%s\n",argv[i]); //print found patterns
     }
     // for(i=1;i<argc-1;i++){
     //     printf("argc = %d\n", argc);
