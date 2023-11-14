@@ -55,10 +55,26 @@ int main(int argc, char *argv[]){
         
         // exec e patterns
         
-            
+            if(flag.v==1){
             while(fgets(line_, 1024, fp)){ //print e patterns
                 int loop_count=count;
-                while(loop_count>0){
+                while(loop_count>0){ // что значат фиолетовые синие и желтые скобки
+                x=regex(e_ptrns[loop_count-1], line_, eflags);
+                loop_count--;
+                //printf("X in E loop=%d\n", x);
+                if(x){
+                
+                printf("MATCHED: %s", line_);}
+                }
+
+                
+        
+            }
+            }
+            if(flag.v!=1&&flag.c!=1){
+            while(fgets(line_, 1024, fp)){ //print e patterns
+                int loop_count=count;
+                while(loop_count>0){ // что значат фиолетовые синие и желтые скобки
                 x=regex(e_ptrns[loop_count-1], line_, eflags);
                 loop_count--;
                 //printf("X in E loop=%d\n", x);
@@ -66,9 +82,22 @@ int main(int argc, char *argv[]){
                 
                 printf("MATCHED: %s", line_);}
                 }
-
+            }
+            }
+            if(flag.c==1){
+                int c_count=0;
+            while(fgets(line_, 1024, fp)){ //print e patterns
+                int loop_count=count;
+                while(loop_count>0){ // что значат фиолетовые синие и желтые скобки
+                x=regex(e_ptrns[loop_count-1], line_, eflags);
+                loop_count--;
+                //printf("X in E loop=%d\n", x);
+                if(!x){
                 
-        
+                c_count++;}
+                }
+            }
+            printf("C count%d", c_count);
             }
     //         printf("INSIDE THE e_ptrns:\n");     
     // for(int n=0;n<2;n++){        
