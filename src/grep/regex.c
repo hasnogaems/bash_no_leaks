@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <regex.h>
-int regex(char pattern[], char line[]){
-    
+int regex(char pattern[], char line[], int eflags){
+    printf("%d", eflags);
     regex_t regex;
-    int return_value = regcomp(&regex, pattern, 0);
+    int return_value = regcomp(&regex, pattern, eflags);
     if(return_value) {
         printf("Could not compile regular expression.\n");
         return 1;

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
+#include <regex.h>
 #include "h.h"
 #define no_argument       0
 #define required_argument 1
@@ -15,6 +16,7 @@ int main(int argc, char *argv[]){
         int count=0;
         int* e_count=&count;
         FILE *fp;
+        int eflags=0;
         char *pattern=malloc(100*sizeof(char));
         char **e_ptrns=(char **)malloc(1025*sizeof(char*));
         int c;
@@ -23,6 +25,7 @@ int main(int argc, char *argv[]){
         int y=parse_pattern(argc, argv, e_ptrns, &count);  //parse pattern
         //int file_name=parse_file_name(y, argv, argc);//parse file name
         int file_name=optind;
+        printf("OPTIND=%d", optind);
         printf("file name is %s its index is%d\n", argv[file_name], optind);
         fp=fopen(argv[file_name],"r");//opening file
         if (fp == NULL) {
@@ -30,12 +33,15 @@ int main(int argc, char *argv[]){
             return -1;//debug
         }
         char *line_=(char *)malloc(1024*sizeof(char)); //here we store line from our file we grabbed with fgets
-                
+        if(flag.i==1){ //no distinction between upper and lowercase characters
+        eflags=REG_ICASE;
+        printf("EFLAGS IN MAIN=%d\n", eflags);
+        }        
         if(flag.e!=1)
         while( fgets(line_, 1024, fp)){ 
             
 
-        x=regex(argv[y], line_);
+        x=regex(argv[y], line_, eflags);
         if(!x)
               
             printf("%s\n", line_);
@@ -53,7 +59,7 @@ int main(int argc, char *argv[]){
             while(fgets(line_, 1024, fp)){ //print e patterns
                 int loop_count=count;
                 while(loop_count>0){
-                x=regex(e_ptrns[loop_count-1], line_);
+                x=regex(e_ptrns[loop_count-1], line_, eflags);
                 loop_count--;
                 //printf("X in E loop=%d\n", x);
                 if(!x){

@@ -21,7 +21,7 @@ static struct option long_options[] = {
     {"number-nonblank", no_argument, 0, 'b'},
     {0, 0, 0, 0}
 };
-int regex(char pattern[], char line[]);
+int regex(char pattern[], char line[], int);
 int parse_pattern(int argc, char **argv, char **e_ptrns, int*);
 int parse_file_name(int pattern_index, char **argv, int argc);
 Flags parse_flags(int argc, char **argv, char **e_ptrns, int*);
