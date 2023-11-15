@@ -1,5 +1,5 @@
-1:grep.c parse_flags.c
-	gcc grep.c parse_flags.c regex.c
+1:grep.c parse_flags.c regex.c
+	gcc grep.c parse_flags.c regex.c -o s21_grep
 
 2:prog4.c
 	gcc prog4.c

@@ -7,6 +7,10 @@
 #define required_argument 1
 #define optional_argument 2
 int main(int argc, char *argv[]){
+    for(int i =0; i < argc; i++)
+    {
+        printf("%s\n",argv[i]);
+    }
     if(argc==1)printf("Usage: grep [OPTION]... PATTERNS [FILE]...\nTry 'grep --help' for more information.\n");
     else{
         int count=0;
@@ -21,8 +25,8 @@ int main(int argc, char *argv[]){
         int y=parse_pattern(argc, argv, e_ptrns, &count);  //parse pattern
         //int file_name=parse_file_name(y, argv, argc);//parse file name
         int file_name=optind;
-        //printf("OPTIND=%d", optind);
-        //printf("file name is %s its index is%d\n", argv[file_name], optind);
+        printf("OPTIND=%d", optind);
+        printf("file name is %s its index is%d\n", argv[file_name], optind);
         fp=fopen(argv[file_name],"r");//opening file
         if (fp == NULL) {
             printf("Error opening file.\n");
@@ -31,7 +35,7 @@ int main(int argc, char *argv[]){
         char *line_=(char *)malloc(1024*sizeof(char)); //here we store line from our file we grabbed with fgets
         if(flag.i==1){ //no distinction between upper and lowercase characters
         eflags=REG_ICASE;
-       // printf("EFLAGS IN MAIN=%d\n", eflags);
+        printf("EFLAGS IN MAIN=%d\n", eflags);
         }        
         if(flag.e!=1)
         while( fgets(line_, 1024, fp)){ 
@@ -60,12 +64,11 @@ int main(int argc, char *argv[]){
                 //printf("X in E loop=%d\n", x);
                 if(x){
                 
-                printf("%s", line_);}
+                printf("MATCHED: %s", line_);}
                 }
 
                 
         
-
             }
             }
             if(flag.v!=1&&flag.c!=1){
@@ -77,7 +80,7 @@ int main(int argc, char *argv[]){
                 //printf("X in E loop=%d\n", x);
                 if(!x){
                 
-                printf("%s", line_);}
+                printf("MATCHED: %s", line_);}
                 }
             }
             }
@@ -94,7 +97,7 @@ int main(int argc, char *argv[]){
                 c_count++;}
                 }
             }
-            printf("%d", c_count);
+            printf("C count%d", c_count);
             }
     //         printf("INSIDE THE e_ptrns:\n");     
     // for(int n=0;n<2;n++){        

@@ -61,10 +61,7 @@ int parse_pattern( int argc, char **argv, char **e_ptrns, int *count){
     int pattern;
     int pattern_found=0;
     
-    for(int i =0; i < argc; i++)
-    {
-        printf("%s\n",argv[i]); //print found patterns
-    }
+    
     // for(i=1;i<argc-1;i++){
     //     printf("argc = %d\n", argc);
     //     printf("1=[%s]\n2=[%s]\n", argv[i], argv[i+1]);
