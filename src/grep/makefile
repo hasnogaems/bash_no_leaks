@@ -9,3 +9,6 @@ flags:
 
 debug:
 	gcc -fsanitize=address grep.c parse_flags.c regex.c	
+
+test:
+	./greybaca_grep_test_1.sh

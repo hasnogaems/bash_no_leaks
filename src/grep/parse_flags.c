@@ -62,10 +62,12 @@ int parse_pattern( int argc, char **argv, char **e_ptrns, int *count){
     int pattern_found=0;
     
     
-    // for(i=1;i<argc-1;i++){
-    //     printf("argc = %d\n", argc);
-    //     printf("1=[%s]\n2=[%s]\n", argv[i], argv[i+1]);
-    //         if(strcmp(argv[i], "-e")==0){
+    for(i=1;i<argc;i++){
+
+ 
+    if(argv[i][0]!='-'){
+    pattern=i;
+    break;}
                 
     //             e_ptrns[*count]=argv[i+1];//argv не важно какой 
     //             // индекс если мы читаем оттуда, не должно быть segfault?
@@ -80,16 +82,21 @@ int parse_pattern( int argc, char **argv, char **e_ptrns, int *count){
     //     //else if(argv[i][0]=='-')
 
     // }
+    return pattern;
     
-return pattern;
-}
 
+}
+}
 int parse_file_name(int y, char **argv, int argc){
     int i;
-    for(i=y+1;i<argc-1;i++){
-        if(argv[i][0]!='-')
+    FILE *fptemp;
+    for(i=1;i<argc;i++){
+        fptemp=fopen(argv[i],"r");
+        if(fptemp==NULL)
+        continue;
         break;
     }
+    fclose(fptemp);
     //printf("File_name=%s argv index of File_name is %d\n", argv[i], i);
     return i;
 

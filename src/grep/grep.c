@@ -19,12 +19,14 @@ int main(int argc, char *argv[]){
         int x;
         Flags flag=parse_flags(argc, argv, e_ptrns, e_count); //parse flags
         int y=parse_pattern(argc, argv, e_ptrns, &count);  //parse pattern
-        //int file_name=parse_file_name(y, argv, argc);//parse file name
-        int file_name=optind;
+        int file_name=parse_file_name(y, argv, argc);//parse file name
+        
         //printf("OPTIND=%d", optind);
-        //printf("file name is %s its index is%d\n", argv[file_name], optind);
+        //printf("file name is %s its index is%d\n", argv[file_name], file_name);
+        
         fp=fopen(argv[file_name],"r");//opening file
-        if (fp == NULL) {
+        if (fp == NULL) 
+        {
             printf("Error opening file.\n");
             return -1;//debug
         }
@@ -40,7 +42,7 @@ int main(int argc, char *argv[]){
         x=regex(argv[y], line_, eflags);
         if(!x)
               
-            printf("%s\n", line_);
+            printf("%s", line_);
         }
         
         
@@ -67,6 +69,7 @@ int main(int argc, char *argv[]){
         
 
             }
+            printf("\n");
             }
             if(flag.v!=1&&flag.c!=1){
             while(fgets(line_, 1024, fp)){ //print e patterns
