@@ -1,76 +1,148 @@
-FUNC_SUCCESS=0
-FUNC_FAIL=0
+#!/bin/bash
+
+SUCCESS=0
+FAIL=0
 COUNTER=0
-DIFF=""
+DIFF_RES=""
 
-declare -a flags=(
-"-i"
-"-v"
-"-c"
-"-l"
-"-n"
-"-h"
-"-s"
-"-f"
-"-o"
+declare -a tests=(
+"s tests/test_0_grep.txt VAR"
+
+
+
+
 )
 
-declare -a files=(
-#"s21_greptest1.txt"
-"s21_greptest1.txt s21_greptest2.txt"
+declare -a extra=(
+"-n for tests/test_1_grep.txt tests/test_2_grep.txt"
+"-n for tests/test_1_grep.txt"
+"-n -e ^\} tests/test_1_grep.txt"
+"-c -e /\ tests/test_1_grep.txt"
+"-ce ^int tests/test_1_grep.txt tests/test_2_grep.txt"
+"-e ^int tests/test_1_grep.txt"
+"-nivh = tests/test_1_grep.txt tests/test_2_grep.txt"
+"-e"
+"-ie INT tests/test_5_grep.txt"
+"-echar tests/test_1_grep.txt tests/test_2_grep.txt"
+"-ne = -e out tests/test_5_grep.txt"
+"-iv int tests/test_5_grep.txt"
+"-in int tests/test_5_grep.txt"
+"-c -l aboba tests/test_1_grep.txt tests/test_5_grep.txt"
+"-v tests/test_1_grep.txt -e ank"
+"-ne ) tests/test_5_grep.txt"
+"-l for tests/test_1_grep.txt tests/test_2_grep.txt"
+"-e = -e out tests/test_5_grep.txt"
+"-ne ing -e as -e the -e not -e is tests/test_6_grep.txt"
+"-e ing -e as -e the -e not -e is tests/test_6_grep.txt"
+"-c -e . tests/test_1_grep.txt -e '.'"
+"-l for no_file.txt tests/test_2_grep.txt"
 )
 
-declare -a commline=(
-"OPT FILE"
-)
-
-
-
-function testing()
+testing()
 {
-    str=$(echo $@ | sed "s/OPT/$options/")
-    str=$(echo $str | sed -e "s/FILE/$file/g")
-    ./s21_grep $str > s21_grep_testing.log
-    grep $str > system_grep_testing.log
-    DIFF="$(diff -s s21_grep_testing.log system_grep_testing.log)"
+    t=$(echo $@ | sed "s/VAR/$var/")
+    ./s21_grep $t > test_s21_grep.log
+    grep $t > test_sys_grep.log
+    DIFF_RES="$(diff -s test_s21_grep.log test_sys_grep.log)"
     (( COUNTER++ ))
-    if [ "$DIFF" == "Files s21_grep_testing.log and system_grep_testing.log are identical" ]
+    if [ "$DIFF_RES" == "Files test_s21_grep.log and test_sys_grep.log are identical" ]
     then
-        (( FUNC_SUCCESS++ ))
-        echo "grep $str FUNCTIONALITY SUCCESS $COUNTER"
+      (( SUCCESS++ ))
+      echo "\033[31m$FAIL\033[0m/\033[32m$SUCCESS\033[0m/$COUNTER \033[32msuccess\033[0m grep $t"
     else
-        (( FUNC_FAIL++ ))
-        echo "grep $str FUNCTIONALITY FAIL $COUNTER"
+      (( FAIL++ ))
+      echo "\033[31m$FAIL\033[0m/\033[32m$SUCCESS\033[0m/$COUNTER \033[31mfail\033[0m grep $t"
     fi
-    rm s21_grep_testing.log system_grep_testing.log
+    rm test_s21_grep.log test_sys_grep.log
 }
 
-
-
-
-for opt1 in "${flags[@]}"
+# специфические тесты
+for i in "${extra[@]}"
 do
-    for opt2 in "${flags[@]}"
+    var="-"
+    testing $i
+done
+
+# 1 параметр
+for var1 in v c l n h
+do
+    for i in "${tests[@]}"
     do
-        for opt3 in "${flags[@]}"
-        do
-            for opt4 in "${flags[@]}"
+        var="-$var1"
+        testing $i
+    done
+done
+
+# 2 параметра
+for var1 in v c l n h
+do
+    for var2 in v c l n h
+    do
+        if [ $var1 != $var2 ]
+        then
+            for i in "${tests[@]}"
             do
-                if [ $opt1 != $opt2 ] && [ $opt1 != $opt3 ] \
-                && [ $opt1 != $opt4 ] && [ $opt2 != $opt3 ] \
-                && [ $opt2 != $opt4 ] && [ $opt3 != $opt4 ]
-                then
-                    for file in "${files[@]}"
-                    do
-                        options="-e lorem -e ut $opt1 $opt2 $opt3 $opt4"
-                        testing $commline
-                    done
-                fi
+                var="-$var1 -$var2"
+                testing $i
             done
+        fi
+    done
+done
+
+# 3 параметра
+for var1 in v c l n h
+do
+    for var2 in v c l n h
+    do
+        for var3 in v c l n h
+        do
+            if [ $var1 != $var2 ] && [ $var2 != $var3 ] && [ $var1 != $var3 ]
+            then
+                for i in "${tests[@]}"
+                do
+                    var="-$var1 -$var2 -$var3"
+                    testing $i
+                done
+            fi
         done
     done
 done
 
-echo "FAIL: $FUNC_FAIL"
-echo "SUCCESS: $FUNC_SUCCESS"
+# 2 сдвоенных параметра
+for var1 in v c l n h
+do
+    for var2 in v c l n h
+    do
+        if [ $var1 != $var2 ]
+        then
+            for i in "${tests[@]}"
+            do
+                var="-$var1$var2"
+                testing $i
+            done
+        fi
+    done
+done
+
+# 3 строенных параметра
+for var1 in v c l n h
+do
+    for var2 in v c l n h
+    do
+        for var3 in v c l n h
+        do
+            if [ $var1 != $var2 ] && [ $var2 != $var3 ] && [ $var1 != $var3 ]
+            then
+                for i in "${tests[@]}"
+                do
+                    var="-$var1$var2$var3"
+                    testing $i
+                done
+            fi
+        done
+    done
+done
+
+echo "\033[31mFAIL: $FAIL\033[0m"
+echo "\033[32mSUCCESS: $SUCCESS\033[0m"
 echo "ALL: $COUNTER"
