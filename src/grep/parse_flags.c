@@ -82,17 +82,20 @@ int parse_pattern( int argc, char **argv, char **e_ptrns, int *count){
     //     //else if(argv[i][0]=='-')
 
     // }
+    }
     return pattern;
     
 
-}
+
 }
 int parse_file_name(int y, char **argv, int argc){
     int i;
     FILE *fptemp;
     for(i=1;i<argc;i++){
+        
         fptemp=fopen(argv[i],"r");
         if(fptemp==NULL)
+        //if(i==argc-1)
         continue;
         break;
     }

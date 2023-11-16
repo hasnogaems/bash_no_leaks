@@ -22,7 +22,7 @@ int main(int argc, char *argv[]){
         int file_name=parse_file_name(y, argv, argc);//parse file name
         
         //printf("OPTIND=%d", optind);
-        //printf("file name is %s its index is%d\n", argv[file_name], file_name);
+       // printf("file name is %s its index is%d\n", argv[file_name], file_name);
         
         fp=fopen(argv[file_name],"r");//opening file
         if (fp == NULL) 
@@ -35,7 +35,8 @@ int main(int argc, char *argv[]){
         eflags=REG_ICASE;
        // printf("EFLAGS IN MAIN=%d\n", eflags);
         }        
-        if(flag.e!=1)
+        if(flag.e!=1&&flag.v!=1)
+        
         while( fgets(line_, 1024, fp)){ 
             
 
@@ -53,7 +54,8 @@ int main(int argc, char *argv[]){
         
         // exec e patterns
         
-            if(flag.v==1){
+
+            if(flag.v==1&&flag.e==1){
             while(fgets(line_, 1024, fp)){ //print e patterns
                 int loop_count=count;
                 while(loop_count>0){ // что значат фиолетовые синие и желтые скобки
@@ -64,6 +66,25 @@ int main(int argc, char *argv[]){
                 
                 printf("%s", line_);}
                 }
+
+                
+        
+
+            }
+            printf("\n");}
+            
+            if(flag.v==1){
+                //printf("V==1 and argv[y]=%s", argv[y]);
+                while(fgets(line_, 1024, fp)){ //print e patterns
+                
+                // что значат фиолетовые синие и желтые скобки
+                x=regex(argv[y], line_, eflags);
+                
+                //printf("X in E loop=%d\n", x);
+                if(x){
+                
+                printf("%s", line_);}
+                
 
                 
         
@@ -97,7 +118,7 @@ int main(int argc, char *argv[]){
                 c_count++;}
                 }
             }
-            printf("%d", c_count);
+            printf("%d\n", c_count);
             }
     //         printf("INSIDE THE e_ptrns:\n");     
     // for(int n=0;n<2;n++){        
