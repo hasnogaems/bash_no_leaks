@@ -90,7 +90,7 @@ int main(int argc, char *argv[]){
         
 
             }
-            printf("\n");
+            //printf("\n");
             }
             if(flag.v!=1&&flag.c!=1){
             while(fgets(line_, 1024, fp)){ //print e patterns

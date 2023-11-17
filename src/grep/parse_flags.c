@@ -16,6 +16,7 @@ Flags parse_flags(int argc, char **argv, char **e_ptrns, int *e_count){
     switch(c){
         case 'e':
         flag.e=1;
+        
         e_ptrns[*e_count]=optarg;
         (*e_count)++;
         break;

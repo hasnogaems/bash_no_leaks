@@ -7,10 +7,6 @@ DIFF_RES=""
 
 declare -a tests=(
 "s tests/test_0_grep.txt VAR"
-
-
-
-
 )
 
 declare -a extra=(
