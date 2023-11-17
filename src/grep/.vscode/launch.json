@@ -6,15 +6,9 @@
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}",
             "args": [
-                "-e",
+                "-v",
                 "11",
-                "test_e.txt",
-                "-e",
-                "22",
-                "-e",
-                "33",
-                "-o",
-                "-s"
+                "test_e.txt"
             ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
