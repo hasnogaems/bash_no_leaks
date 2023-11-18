@@ -1,0 +1,209 @@
+
+Content from file: grep.c
+#include <stdio.h>
+#include <stdlib.h>
+#include <getopt.h>
+#include "h.h"
+#define no_argument       0
+#define required_argument 1
+#define optional_argument 2
+int main(int argc, char *argv[]){
+    if(argc==1)printf("Usage: grep [OPTION]... PATTERNS [FILE]...\nTry 'grep --help' for more information.\n");
+    else{
+    FILE *fp;
+    char *pattern=malloc(sizeof(char));
+    char **e_ptrns=(char **)malloc(1025*sizeof(char));
+    int c;
+    int x;
+    Flags flag=parse_flags(argc, argv);
+    int y=parse_pattern(argc, argv, e_ptrns);
+    int file_name=parse_file_name(y, argv, argc);
+    printf("parse_pattern=%d\n", y);
+    printf("file name=%s\n", argv[file_name]);
+    fp=fopen(argv[file_name],"r");
+    char *line_=(char *)malloc(1024*sizeof(char));
+    //
+
+    //while(1){
+       /* for(int i=0;i<5;i++){ fgets(line_, 1024, fp);
+        printf("%s", line_);
+       } */
+       while( fgets(line_, 1024, fp)){
+        
+
+       x=regex(argv[y], line_);
+    if(!x)
+    
+    printf("%s", line_);
+        
+        //printf("%s", line_);
+       }
+
+    //} 
+    /* char pattern2[]="ab ";
+    char line[]="abcsfsfsfgsgab"; */
+
+   
+   /* x=regex(argv[y], line);
+    if(!x)
+    for(int i=0;line[i]!='\0';i++)
+    printf("%c", line[i]); */
+    
+    
+
+// if(argc>1)flag=parse_flags(argc, argv);
+// while(1&&argc>1){
+//     c=fgetc(fp);
+//     if(feof(fp)) break;
+    
+// }
+
+
+
+//fclose(fp);
+free(pattern);
+free(line_);
+free(e_ptrns);
+//free(e_ptrns);
+printf("Flag.e=%d", flag.e);
+
+}
+
+
+}
+
+
+Content from file: h.h
+#ifndef HEADERS_H
+#define HEADERS_H
+#include <stdio.h>
+#include <stdlib.h>
+#include <getopt.h>
+typedef struct Flags{
+    int e;
+    int i;
+    int v;
+    int c;
+    int l;
+    int n;
+    int h;
+    int s;
+    int file;
+    int o;
+    
+}Flags;
+
+static struct option long_options[] = {
+    {"number-nonblank", no_argument, 0, 'b'},
+    {0, 0, 0, 0}
+};
+int regex(char pattern[], char line[]);
+int parse_pattern(int argc, char **argv, char **e_ptrns);
+int parse_file_name(int pattern_index, char **argv, int argc);
+Flags parse_flags(int argc, char **argv);
+#endif
+Content from file: parse_flags.c
+#include "h.h"
+#include <string.h>
+Flags parse_flags(int argc, char **argv){
+    int c;
+    Flags flag={0};
+    int option_index=0;
+    
+    if(argc>1){
+        while(1){
+        c = getopt_long(argc, argv, "+eivclnhsfo", long_options, &option_index);
+        if (c == -1)
+        break;
+    
+    switch(c){
+        case 'e':
+        flag.e=1;
+        break;
+        case 'i':
+        flag.i=1; 
+        break;   
+        case 'v':
+        flag.v=1;
+        break;
+        case 'c':
+        flag.c=1;
+        break;
+        case 'l':
+        flag.l=1;
+        break;
+        case 'n':
+        flag.n=1;
+        break;
+        case 'h':
+        flag.h=1;
+        break;
+        case 's':
+        flag.s=1;
+        break;
+        case 'f':
+        flag.file=1;
+        break;
+        case 'o':
+        flag.o=1;
+        break;
+        
+    }
+    return flag;
+}
+    }
+}
+int parse_pattern( int argc, char **argv, char **e_ptrns){
+    
+
+    int i;
+    char **x;
+    
+    int count=1;
+    for(i=1;i<argc-1;i++){
+        if(strcmp(argv[i], "-e")==0){
+        printf("-e detected!");
+        e_ptrns[count-1]=argv[i+1];
+        count++;x=realloc(e_ptrns, count*(1025*sizeof(char)));
+        if(x==NULL)printf("Realloc failed");else e_ptrns=x;}
+
+        if(argv[i][0]!='-'&&strcmp(argv[i-1], "-e")!=0)
+        break;
+
+    }
+    printf("e_ptrn=%s", e_ptrns[0]);
+return i;
+}
+
+int parse_file_name(int y, char **argv, int argc){
+    int i;
+    for(i=y+1;i<argc-1;i++){
+        if(argv[i][0]!='-')
+        break;
+    }
+    return i;
+
+}
+Content from file: regex.c
+#include <stdio.h>
+#include <regex.h>
+int regex(char pattern[], char line[]){
+    
+    regex_t regex;
+    int return_value = regcomp(&regex, pattern, 0);
+    if(return_value) {
+        printf("Could not compile regular expression.\n");
+        return 1;
+    }
+
+    return_value = regexec(&regex, line, 0, NULL, 0);
+    if(!return_value){
+        printf("%dMatch.\n", return_value);
+    }else{
+        printf("%dNo match.\n",return_value);
+
+    }
+    regfree(&regex);
+    return return_value;
+    }
+
