@@ -24,4 +24,5 @@ typedef struct flags{
         };
 flags parse_flags(int argc, char **argv);
 int extralines(FILE *fp);
+int big_while(int argc, char **argv);
 #endif
