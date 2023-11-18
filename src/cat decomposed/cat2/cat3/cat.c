@@ -7,19 +7,18 @@ int main(int argc, char *argv[]) {
   // printf("ARGC=%d", argc);
   FILE *fp;
   int line_index = 0;
-  int previous = 10;
-  int current = 0;
-  int count = 0;
-  int line_count = 1;
-  int new_line = 1;
+  
+  
+  
   int s;
 
   flags Flag;
+
   if (argc > 1) Flag = parse_flags(argc, argv);
   fp = fopen(argv[argc - 1], "r");
 
   int c;
-  big_while(argc, argv);
+  big_while(argc, argv, fp, &Flag);
 
   if (argc == 1) {
     char *noargs;
