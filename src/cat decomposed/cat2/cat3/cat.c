@@ -13,8 +13,8 @@ int main(int argc, char *argv[]) {
   fp = fopen(argv[argc - 1], "r");
   int c;
   big_while(argc, argv, fp, &Flag);
-  if (argc == 1)argc1(&c);
-  
+  if (argc == 1) argc1(&c);
+
   fclose(fp);
   return 0;
 }

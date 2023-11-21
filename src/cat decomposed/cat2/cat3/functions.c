@@ -14,7 +14,6 @@ void big_while(int argc, char** argv, FILE* fp, flags* Flag) {
     c = fgetc(fp);
     current = c;
     if (feof(fp)) break;
-
     if (v_and_s(&previous, &current, Flag, &c, &count)) {
     } else {
       if (Flag->b == 0) {
@@ -32,29 +31,7 @@ void big_while(int argc, char** argv, FILE* fp, flags* Flag) {
         line_count++;  //как комментить сразу несколько строк
       previous = c;
       if (flag_e(Flag, &c)) continue;
-
-      if (Flag->t == 1) {
-        if (c < 32 && c != 10 && c != 9) {
-          printf("^%c", c + 64);
-          continue;
-        }
-        if (c == 127) {
-          printf("^%c", c - 128);
-          continue;
-        }
-        if (c == 9) {
-          printf("^I");
-          continue;
-        }
-      }
-      if (Flag->T == 1) {
-        if (c == 9) {
-          printf("^I");
-          continue;
-        }
-        if (c == 27) continue;
-      }
-
+      if(tT(Flag, &c))continue;
       printf("%c", c);
     }
   }
@@ -106,26 +83,52 @@ int flag_e(flags* Flag, int* c) {
   return cont;
 }
 
-void argc1(int* c){
-  char *noargs;
+void argc1(int* c) {
+  char* noargs;
   int counter = 1;
   noargs = malloc(counter * sizeof(char));
-  while(1){
-  if (counter > 1) noargs = realloc(noargs, counter * sizeof(char));
+  while (1) {
+    if (counter > 1) noargs = realloc(noargs, counter * sizeof(char));
 
-      (*c) = getchar();
+    (*c) = getchar();
 
-      if ((*c) == EOF) { /*printf("\n")*/
-        break;
-      }
-      if ((*c) != 10) noargs[counter - 1] = (*c);
-      if ((*c) == 10)
-        while (counter > 0) {
-          printf("%c", noargs[counter - 1]);
-          counter--;
-        }
-      if (counter == 0) printf("\n");
-      counter++;
+    if ((*c) == EOF) { /*printf("\n")*/
+      break;
     }
-    free(noargs);
+    if ((*c) != 10) noargs[counter - 1] = (*c);
+    if ((*c) == 10)
+      while (counter > 0) {
+        printf("%c", noargs[counter - 1]);
+        counter--;
+      }
+    if (counter == 0) printf("\n");
+    counter++;
   }
+  free(noargs);
+}
+
+int tT(flags* Flag, int* c) {
+  int cont=0;
+  if (Flag->t == 1) {
+    if ((*c) < 32 && (*c) != 10 && (*c) != 9) {
+      printf("^%c", (*c) + 64);
+      cont=1;
+    }
+    if ((*c) == 127) {
+      printf("^%c", (*c) - 128);
+      cont=1;
+    }
+    if ((*c) == 9) {
+      printf("^I");
+      cont=1;
+    }
+  }
+  if (Flag->T == 1) {
+    if ((*c) == 9) {
+      printf("^I");
+      cont=1;
+    }
+    if ((*c) == 27) cont=1;
+  }
+  return cont;
+}
