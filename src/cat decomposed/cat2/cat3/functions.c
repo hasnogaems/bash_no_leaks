@@ -19,6 +19,7 @@ if(v_and_s(&previous, &current, Flag, &c,  &count)){}
 else{
 
     if (Flag->b == 0) {
+      
       if (Flag->n == 1 && line_count == new_line) {  // flag n
         printf("%6.d\t", line_count);
         new_line = line_count + 1;
@@ -32,19 +33,7 @@ else{
     if (Flag->b == 1 && current == 10 && !(previous == 10 && current == 10))
       line_count++;  //как комментить сразу несколько строк
     previous = c;
-    if (Flag->e == 1 && Flag->E != 1) {
-      if (c < 32 && c != 10 && c != 9) {
-        printf("^%c", c + 64);
-
-        continue;
-      }
-      if (c == 127) {
-        printf("^%c", c - 128);
-        continue;
-      }
-
-      if (c == 10) printf("$");
-    }
+    
     if (Flag->t == 1) {
       if (c < 32 && c != 10 && c != 9) {
         printf("^%c", c + 64);
@@ -101,4 +90,19 @@ int v_and_s(int* previous, int* current, flags* Flag,int* c, int* count){
       (*count) = 0;
     }
   return skip;  
+}
+int flag_e(flags* Flag, int* c){
+  if (Flag->e == 1 && Flag->E != 1) {
+      if ((*c) < 32 && (*c) != 10 && (*c) != 9) {
+        printf("^%c", (*c) + 64);
+
+        continue;
+      }
+      else if ((*c) == 127) {
+        printf("^%c", (*c) - 128);
+        continue;
+      }
+
+      if ((*c) == 10) printf("$");
+    }
 }
