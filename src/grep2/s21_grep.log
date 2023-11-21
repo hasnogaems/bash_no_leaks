@@ -13,8 +13,6 @@ TEST_GREP_FLAGS = -e -i -v -c -l -n -h -s -o
 	gcc grep_debug.c parse_flags.c regex.c -o s21_grep	
 
 test_grep:
-	@for file in $(TEST_GREP_FILES); do \
-		for flag in $(TEST_GREP_FLAGS); do \
 			echo "Running test: grep $$flag pattern $$file"; \
 			./s21_grep $$flag hh $$file > s21_grep_output.txt; \
 			grep $$flag hh $$file > grep_output.txt; \
