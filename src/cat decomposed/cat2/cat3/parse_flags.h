@@ -26,4 +26,6 @@ flags parse_flags(int argc, char **argv);
 int extralines(FILE *fp);
 void big_while(int argc, char **argv, FILE *fp, flags* Flag);
 int v_and_s(int* previous, int* current, flags* Flag,int* c, int* count);
+int flag_e(flags* Flag, int* c);
+void argc1(int* c);
 #endif
