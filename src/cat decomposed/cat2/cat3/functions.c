@@ -15,29 +15,8 @@ void big_while(int argc, char **argv, FILE *fp, flags* Flag){
     current = c;
     if (feof(fp)) break;
 
-    if (previous == 10 && current == 10) {
-      count++;
-    }
-
-    if (Flag->v == 1 && Flag->e != 1) {
-      if (c < 32 && c != 10 && c != 9) {
-        printf("^%c", c + 64);
-
-        continue;
-      }
-      if (c == 127) {
-        printf("^%c", c - 128);
-        continue;
-      }
-    }
-    if (Flag->s == 1 && previous == 10 && current == 10 && count > 1) {  // flag
-                                                                        // s
-      continue;
-    }
-    if (current != 10) {
-      // if (extra_line == 1) {printf("\n");}
-      count = 0;
-    }
+if(v_and_s(&previous, &current, Flag, &c,  &count)){}
+else{
 
     if (Flag->b == 0) {
       if (Flag->n == 1 && line_count == new_line) {  // flag n
@@ -90,4 +69,36 @@ void big_while(int argc, char **argv, FILE *fp, flags* Flag){
 
     printf("%c", c);
   }
+    }
+}
+
+int v_and_s(int* previous, int* current, flags* Flag,int* c, int* count){
+  int skip=0;
+      if ((*previous) == 10 && (*current) == 10) {
+      (*count)++;
+    }
+
+    if (Flag->v == 1 && Flag->e != 1) {
+      if ((*c) < 32 && (*c) != 10 && (*c) != 9) {
+        printf("^%c", (*c) + 64);
+        skip=1;        
+      }
+      if ((*c) == 127) {
+        skip=1;
+        printf("^%c", (*c) - 128);
+        
+      }
+    }
+
+    if (Flag->s == 1 && (*previous) == 10 && (*current) == 10 && (*count) > 1) {  // flag
+    
+    skip=1;
+                                                                        // s
+    
+    }
+    if ((*current) != 10) {
+      // if (extra_line == 1) {printf("\n");}
+      (*count) = 0;
+    }
+  return skip;  
 }
