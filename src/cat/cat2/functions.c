@@ -10,14 +10,14 @@ int previous;
 int number_of_enters = 0 ;
 
 while(1){
-c=fgetc(fp);
-if(feof(fp))break;
-printf("%c", c);
+    c=fgetc(fp);
+    if(feof(fp))break;
+    printf("%c", c);
 
-if(previous==10&&c==10)
-empty++;
+    if(previous==10&&c == 10)
+        empty++;
 
-previous=c;
+    previous=c;
 
 
 

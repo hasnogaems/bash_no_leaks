@@ -120,10 +120,15 @@ if(argc==1){
         
         c=getchar();
         
-        if(c==EOF){/*printf("\n")*/break;}
-        if(c!=10)noargs[counter-1]=c;
-        if(c==10)while(counter>0){
-        printf("%c", noargs[counter-1]);counter--;}
+        if(c == EOF){/*printf("\n")*/break;}
+        if(c != 10)
+        noargs[counter-1]=c;
+        if(c==10){
+            while(counter>0){
+                printf("%c", noargs[counter-1]);
+                counter--;
+            }
+        }
         if(counter==0)printf("\n");
         counter++;
     }
