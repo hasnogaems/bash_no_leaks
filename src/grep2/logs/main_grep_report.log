@@ -3,17 +3,20 @@
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:GE1S:	✅  Passed
+│ Test:GE1S:	❌  Failed
 └──────────────────────────────────────────────────────────────────
 orig: grep -e rock lyrics.txt
 Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
 s21_: ./s21_grep -e rock lyrics.txt
-Hey now, you're a rock star, get the show on, get paid
+-------------------------------------------------------------------
+diff -s orig_GE1S.log s21_GE1S.log
+1d0
+< Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:GE2S:	✅  Passed
+│ Test:GE2S:	❌  Failed
 └──────────────────────────────────────────────────────────────────
 orig: grep -e me lyrics.txt
 Somebody once told me the world is gonna roll me
@@ -21,43 +24,44 @@ Hey now, you're an all-star, get your game on, go play
 But the meteor men beg to differ
 -------------------------------------------------------------------
 s21_: ./s21_grep -e me lyrics.txt
-Somebody once told me the world is gonna roll me
-Hey now, you're an all-star, get your game on, go play
-But the meteor men beg to differ
+-------------------------------------------------------------------
+diff -s orig_GE2S.log s21_GE2S.log
+1,3d0
+< Somebody once told me the world is gonna roll me
+< Hey now, you're an all-star, get your game on, go play
+< But the meteor men beg to differ
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:GE3S:	✅  Passed
+│ Test:GE3S:	❌  Failed
 └──────────────────────────────────────────────────────────────────
 orig: grep -e rock -e back lyrics.txt
 So what's wrong with taking the back streets?
 Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
 s21_: ./s21_grep -e rock -e back lyrics.txt
-So what's wrong with taking the back streets?
-Hey now, you're a rock star, get the show on, get paid
+-------------------------------------------------------------------
+diff -s orig_GE3S.log s21_GE3S.log
+1,2d0
+< So what's wrong with taking the back streets?
+< Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:-e:	❌  Failed
+│ Test:-e 2 files:	❌  Failed
 └──────────────────────────────────────────────────────────────────
 orig: grep -e rock lyrics.txt  lyrics.txt 
 lyrics.txt:Hey now, you're a rock star, get the show on, get paid
 lyrics.txt:Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
 s21_: ./s21_grep -e rock lyrics.txt  lyrics.txt 
-Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
-diff -s orig_-e.log s21_-e.log
-1,2c1
-< lyrics.txt:Hey now, you're a rock star, get the show on, get paid
-< lyrics.txt:Hey now, you're a rock star, get the show on, get paid
----
-> Hey now, you're a rock star, get the show on, get paid
+diff -s orig_-e 2 files.log s21_-e 2 files.log
+
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:GI1S:	✅  Passed
+│ Test:GI1S:	❌  Failed
 └──────────────────────────────────────────────────────────────────
 orig: grep -i Your lyrics.txt
 Your brain gets smart but your head gets dumb
@@ -65,13 +69,16 @@ Hey now, you're an all-star, get your game on, go play
 My world's on fire, how about yours?
 -------------------------------------------------------------------
 s21_: ./s21_grep -i Your lyrics.txt
-Your brain gets smart but your head gets dumb
-Hey now, you're an all-star, get your game on, go play
-My world's on fire, how about yours?
+-------------------------------------------------------------------
+diff -s orig_GI1S.log s21_GI1S.log
+1,3d0
+< Your brain gets smart but your head gets dumb
+< Hey now, you're an all-star, get your game on, go play
+< My world's on fire, how about yours?
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:GV1S:	✅  Passed
+│ Test:GV1S:	❌  Failed
 └──────────────────────────────────────────────────────────────────
 orig: grep -v me lyrics.txt
 I ain't the sharpest tool in the shed
@@ -98,38 +105,44 @@ That's the way I like it and I'll never get bored
 
 -------------------------------------------------------------------
 s21_: ./s21_grep -v me lyrics.txt
-I ain't the sharpest tool in the shed
-She was looking kind of dumb with her finger and her thumb
-In the shape of an "L" on her forehead
-Well the years start coming and they don't stop coming
-Fed to the rules and I hit the ground running
-Didn't make sense not to live for fun
-Your brain gets smart but your head gets dumb
-So much to do, so much to see
-So what's wrong with taking the back streets?
-You'll never know if you don't go
-You'll never shine if you don't glow
-Hey now, you're a rock star, get the show on, get paid
-And all that glitters is gold
-Only shooting stars break the mold
-It's a cool place and they say it gets colder
-You're bundled up now, wait 'til you get older
-Judging by the hole in the satellite picture
-The ice we skate is getting pretty thin
-The water's getting warm so you might as well swim
-My world's on fire, how about yours?
-That's the way I like it and I'll never get bored
-
+-------------------------------------------------------------------
+diff -s orig_GV1S.log s21_GV1S.log
+1,22d0
+< I ain't the sharpest tool in the shed
+< She was looking kind of dumb with her finger and her thumb
+< In the shape of an "L" on her forehead
+< Well the years start coming and they don't stop coming
+< Fed to the rules and I hit the ground running
+< Didn't make sense not to live for fun
+< Your brain gets smart but your head gets dumb
+< So much to do, so much to see
+< So what's wrong with taking the back streets?
+< You'll never know if you don't go
+< You'll never shine if you don't glow
+< Hey now, you're a rock star, get the show on, get paid
+< And all that glitters is gold
+< Only shooting stars break the mold
+< It's a cool place and they say it gets colder
+< You're bundled up now, wait 'til you get older
+< Judging by the hole in the satellite picture
+< The ice we skate is getting pretty thin
+< The water's getting warm so you might as well swim
+< My world's on fire, how about yours?
+< That's the way I like it and I'll never get bored
+< 
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:GC1S:	✅  Passed
+│ Test:GC1S:	❌  Failed
 └──────────────────────────────────────────────────────────────────
 orig: grep -c me lyrics.txt
 3
 -------------------------------------------------------------------
 s21_: ./s21_grep -c me lyrics.txt
-3
+-------------------------------------------------------------------
+diff -s orig_GC1S.log s21_GC1S.log
+1d0
+< 3
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -139,13 +152,10 @@ orig: grep -l back lyrics.txt
 lyrics.txt
 -------------------------------------------------------------------
 s21_: ./s21_grep -l back lyrics.txt
-So what's wrong with taking the back streets?
 -------------------------------------------------------------------
 diff -s orig_GL1S.log s21_GL1S.log
-1c1
+1d0
 < lyrics.txt
----
-> So what's wrong with taking the back streets?
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -156,14 +166,11 @@ lyrics.txt
 lyrics2.txt
 -------------------------------------------------------------------
 s21_: ./s21_grep -l rock lyrics.txt lyrics2.txt
-Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
 diff -s orig_GL2M.log s21_GL2M.log
-1,2c1
+1,2d0
 < lyrics.txt
 < lyrics2.txt
----
-> Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -174,14 +181,11 @@ lyrics.txt
 lyrics2.txt
 -------------------------------------------------------------------
 s21_: ./s21_grep -l back lyrics.txt lyrics2.txt empty.file
-So what's wrong with taking the back streets?
 -------------------------------------------------------------------
 diff -s orig_GL3M.log s21_GL3M.log
-1,2c1
+1,2d0
 < lyrics.txt
 < lyrics2.txt
----
-> So what's wrong with taking the back streets?
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -191,13 +195,10 @@ orig: grep -n rock lyrics.txt
 14:Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
 s21_: ./s21_grep -n rock lyrics.txt
-Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
 diff -s orig_GN1S.log s21_GN1S.log
-1c1
+1d0
 < 14:Hey now, you're a rock star, get the show on, get paid
----
-> Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -209,19 +210,12 @@ orig: grep -n me lyrics.txt
 19:But the meteor men beg to differ
 -------------------------------------------------------------------
 s21_: ./s21_grep -n me lyrics.txt
-Somebody once told me the world is gonna roll me
-Hey now, you're an all-star, get your game on, go play
-But the meteor men beg to differ
 -------------------------------------------------------------------
 diff -s orig_GN2S.log s21_GN2S.log
-1,3c1,3
+1,3d0
 < 1:Somebody once told me the world is gonna roll me
 < 13:Hey now, you're an all-star, get your game on, go play
 < 19:But the meteor men beg to differ
----
-> Somebody once told me the world is gonna roll me
-> Hey now, you're an all-star, get your game on, go play
-> But the meteor men beg to differ
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -237,12 +231,9 @@ lyrics2.txt:14:Pleading with your eyes, gonna make you some peace someday
 lyrics2.txt:16:Somebody better put you back into your place
 -------------------------------------------------------------------
 s21_: ./s21_grep -n me lyrics.txt lyrics2.txt
-Somebody once told me the world is gonna roll me
-Hey now, you're an all-star, get your game on, go play
-But the meteor men beg to differ
 -------------------------------------------------------------------
 diff -s orig_GN3M.log s21_GN3M.log
-1,7c1,3
+1,7d0
 < lyrics.txt:1:Somebody once told me the world is gonna roll me
 < lyrics.txt:13:Hey now, you're an all-star, get your game on, go play
 < lyrics.txt:19:But the meteor men beg to differ
@@ -250,10 +241,6 @@ diff -s orig_GN3M.log s21_GN3M.log
 < lyrics2.txt:8:Shouting in the street, gonna take on the world someday
 < lyrics2.txt:14:Pleading with your eyes, gonna make you some peace someday
 < lyrics2.txt:16:Somebody better put you back into your place
----
-> Somebody once told me the world is gonna roll me
-> Hey now, you're an all-star, get your game on, go play
-> But the meteor men beg to differ
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -269,12 +256,9 @@ lyrics2.txt:14:Pleading with your eyes, gonna make you some peace someday
 lyrics2.txt:16:Somebody better put you back into your place
 -------------------------------------------------------------------
 s21_: ./s21_grep -n me lyrics.txt lyrics2.txt empty.file
-Somebody once told me the world is gonna roll me
-Hey now, you're an all-star, get your game on, go play
-But the meteor men beg to differ
 -------------------------------------------------------------------
 diff -s orig_GN4M.log s21_GN4M.log
-1,7c1,3
+1,7d0
 < lyrics.txt:1:Somebody once told me the world is gonna roll me
 < lyrics.txt:13:Hey now, you're an all-star, get your game on, go play
 < lyrics.txt:19:But the meteor men beg to differ
@@ -282,24 +266,23 @@ diff -s orig_GN4M.log s21_GN4M.log
 < lyrics2.txt:8:Shouting in the street, gonna take on the world someday
 < lyrics2.txt:14:Pleading with your eyes, gonna make you some peace someday
 < lyrics2.txt:16:Somebody better put you back into your place
----
-> Somebody once told me the world is gonna roll me
-> Hey now, you're an all-star, get your game on, go play
-> But the meteor men beg to differ
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:GH1S:	✅  Passed
+│ Test:GH1S:	❌  Failed
 └──────────────────────────────────────────────────────────────────
 orig: grep -h rock lyrics.txt
 Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
 s21_: ./s21_grep -h rock lyrics.txt
-Hey now, you're a rock star, get the show on, get paid
+-------------------------------------------------------------------
+diff -s orig_GH1S.log s21_GH1S.log
+1d0
+< Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:GH2S:	✅  Passed
+│ Test:GH2S:	❌  Failed
 └──────────────────────────────────────────────────────────────────
 orig: grep -h me lyrics.txt
 Somebody once told me the world is gonna roll me
@@ -307,9 +290,12 @@ Hey now, you're an all-star, get your game on, go play
 But the meteor men beg to differ
 -------------------------------------------------------------------
 s21_: ./s21_grep -h me lyrics.txt
-Somebody once told me the world is gonna roll me
-Hey now, you're an all-star, get your game on, go play
-But the meteor men beg to differ
+-------------------------------------------------------------------
+diff -s orig_GH2S.log s21_GH2S.log
+1,3d0
+< Somebody once told me the world is gonna roll me
+< Hey now, you're an all-star, get your game on, go play
+< But the meteor men beg to differ
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -325,12 +311,12 @@ Pleading with your eyes, gonna make you some peace someday
 Somebody better put you back into your place
 -------------------------------------------------------------------
 s21_: ./s21_grep -h me lyrics.txt lyrics2.txt
-Somebody once told me the world is gonna roll me
-Hey now, you're an all-star, get your game on, go play
-But the meteor men beg to differ
 -------------------------------------------------------------------
 diff -s orig_GH3M.log s21_GH3M.log
-4,7d3
+1,7d0
+< Somebody once told me the world is gonna roll me
+< Hey now, you're an all-star, get your game on, go play
+< But the meteor men beg to differ
 < Playing in the street, gonna be a big man someday
 < Shouting in the street, gonna take on the world someday
 < Pleading with your eyes, gonna make you some peace someday
@@ -350,12 +336,12 @@ Pleading with your eyes, gonna make you some peace someday
 Somebody better put you back into your place
 -------------------------------------------------------------------
 s21_: ./s21_grep -h me lyrics.txt lyrics2.txt empty.file
-Somebody once told me the world is gonna roll me
-Hey now, you're an all-star, get your game on, go play
-But the meteor men beg to differ
 -------------------------------------------------------------------
 diff -s orig_GH4M.log s21_GH4M.log
-4,7d3
+1,7d0
+< Somebody once told me the world is gonna roll me
+< Hey now, you're an all-star, get your game on, go play
+< But the meteor men beg to differ
 < Playing in the street, gonna be a big man someday
 < Shouting in the street, gonna take on the world someday
 < Pleading with your eyes, gonna make you some peace someday
@@ -363,16 +349,11 @@ diff -s orig_GH4M.log s21_GH4M.log
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:GS1S:	❌  Failed
+│ Test:GS1S:	✅  Passed
 └──────────────────────────────────────────────────────────────────
 orig: grep -s rock nonexistent.file
 -------------------------------------------------------------------
 s21_: ./s21_grep -s rock nonexistent.file
-Error opening file.
--------------------------------------------------------------------
-diff -s orig_GS1S.log s21_GS1S.log
-0a1
-> Error opening file.
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -636,17 +617,14 @@ orig: grep -o rock lyrics.txt
 rock
 -------------------------------------------------------------------
 s21_: ./s21_grep -o rock lyrics.txt
-Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
 diff -s orig_GO1S.log s21_GO1S.log
-1c1
+1d0
 < rock
----
-> Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:GIV1S:	✅  Passed
+│ Test:GIV1S:	❌  Failed
 └──────────────────────────────────────────────────────────────────
 orig: grep -iv Your lyrics.txt
 Somebody once told me the world is gonna roll me
@@ -673,38 +651,44 @@ That's the way I like it and I'll never get bored
 
 -------------------------------------------------------------------
 s21_: ./s21_grep -iv Your lyrics.txt
-Somebody once told me the world is gonna roll me
-I ain't the sharpest tool in the shed
-She was looking kind of dumb with her finger and her thumb
-In the shape of an "L" on her forehead
-Well the years start coming and they don't stop coming
-Fed to the rules and I hit the ground running
-Didn't make sense not to live for fun
-So much to do, so much to see
-So what's wrong with taking the back streets?
-You'll never know if you don't go
-You'll never shine if you don't glow
-Hey now, you're a rock star, get the show on, get paid
-And all that glitters is gold
-Only shooting stars break the mold
-It's a cool place and they say it gets colder
-You're bundled up now, wait 'til you get older
-But the meteor men beg to differ
-Judging by the hole in the satellite picture
-The ice we skate is getting pretty thin
-The water's getting warm so you might as well swim
-That's the way I like it and I'll never get bored
-
+-------------------------------------------------------------------
+diff -s orig_GIV1S.log s21_GIV1S.log
+1,22d0
+< Somebody once told me the world is gonna roll me
+< I ain't the sharpest tool in the shed
+< She was looking kind of dumb with her finger and her thumb
+< In the shape of an "L" on her forehead
+< Well the years start coming and they don't stop coming
+< Fed to the rules and I hit the ground running
+< Didn't make sense not to live for fun
+< So much to do, so much to see
+< So what's wrong with taking the back streets?
+< You'll never know if you don't go
+< You'll never shine if you don't glow
+< Hey now, you're a rock star, get the show on, get paid
+< And all that glitters is gold
+< Only shooting stars break the mold
+< It's a cool place and they say it gets colder
+< You're bundled up now, wait 'til you get older
+< But the meteor men beg to differ
+< Judging by the hole in the satellite picture
+< The ice we skate is getting pretty thin
+< The water's getting warm so you might as well swim
+< That's the way I like it and I'll never get bored
+< 
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:GIC1S:	✅  Passed
+│ Test:GIC1S:	❌  Failed
 └──────────────────────────────────────────────────────────────────
 orig: grep -ic Your lyrics.txt
 3
 -------------------------------------------------------------------
 s21_: ./s21_grep -ic Your lyrics.txt
-3
+-------------------------------------------------------------------
+diff -s orig_GIC1S.log s21_GIC1S.log
+1d0
+< 3
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -715,18 +699,11 @@ lyrics.txt
 lyrics2.txt
 -------------------------------------------------------------------
 s21_: ./s21_grep -il Your lyrics.txt lyrics2.txt
-Your brain gets smart but your head gets dumb
-Hey now, you're an all-star, get your game on, go play
-My world's on fire, how about yours?
 -------------------------------------------------------------------
 diff -s orig_GIL1M.log s21_GIL1M.log
-1,2c1,3
+1,2d0
 < lyrics.txt
 < lyrics2.txt
----
-> Your brain gets smart but your head gets dumb
-> Hey now, you're an all-star, get your game on, go play
-> My world's on fire, how about yours?
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -738,23 +715,16 @@ orig: grep -in Your lyrics.txt
 23:My world's on fire, how about yours?
 -------------------------------------------------------------------
 s21_: ./s21_grep -in Your lyrics.txt
-Your brain gets smart but your head gets dumb
-Hey now, you're an all-star, get your game on, go play
-My world's on fire, how about yours?
 -------------------------------------------------------------------
 diff -s orig_GIN1S.log s21_GIN1S.log
-1,3c1,3
+1,3d0
 < 8:Your brain gets smart but your head gets dumb
 < 13:Hey now, you're an all-star, get your game on, go play
 < 23:My world's on fire, how about yours?
----
-> Your brain gets smart but your head gets dumb
-> Hey now, you're an all-star, get your game on, go play
-> My world's on fire, how about yours?
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:GIH1S:	✅  Passed
+│ Test:GIH1S:	❌  Failed
 └──────────────────────────────────────────────────────────────────
 orig: grep -ih Your lyrics.txt
 Your brain gets smart but your head gets dumb
@@ -762,9 +732,12 @@ Hey now, you're an all-star, get your game on, go play
 My world's on fire, how about yours?
 -------------------------------------------------------------------
 s21_: ./s21_grep -ih Your lyrics.txt
-Your brain gets smart but your head gets dumb
-Hey now, you're an all-star, get your game on, go play
-My world's on fire, how about yours?
+-------------------------------------------------------------------
+diff -s orig_GIH1S.log s21_GIH1S.log
+1,3d0
+< Your brain gets smart but your head gets dumb
+< Hey now, you're an all-star, get your game on, go play
+< My world's on fire, how about yours?
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -794,20 +767,13 @@ your
 your
 -------------------------------------------------------------------
 s21_: ./s21_grep -io Your lyrics.txt
-Your brain gets smart but your head gets dumb
-Hey now, you're an all-star, get your game on, go play
-My world's on fire, how about yours?
 -------------------------------------------------------------------
 diff -s orig_GIO1S.log s21_GIO1S.log
-1,4c1,3
+1,4d0
 < Your
 < your
 < your
 < your
----
-> Your brain gets smart but your head gets dumb
-> Hey now, you're an all-star, get your game on, go play
-> My world's on fire, how about yours?
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -817,57 +783,10 @@ orig: grep -vc me lyrics.txt
 22
 -------------------------------------------------------------------
 s21_: ./s21_grep -vc me lyrics.txt
-I ain't the sharpest tool in the shed
-She was looking kind of dumb with her finger and her thumb
-In the shape of an "L" on her forehead
-Well the years start coming and they don't stop coming
-Fed to the rules and I hit the ground running
-Didn't make sense not to live for fun
-Your brain gets smart but your head gets dumb
-So much to do, so much to see
-So what's wrong with taking the back streets?
-You'll never know if you don't go
-You'll never shine if you don't glow
-Hey now, you're a rock star, get the show on, get paid
-And all that glitters is gold
-Only shooting stars break the mold
-It's a cool place and they say it gets colder
-You're bundled up now, wait 'til you get older
-Judging by the hole in the satellite picture
-The ice we skate is getting pretty thin
-The water's getting warm so you might as well swim
-My world's on fire, how about yours?
-That's the way I like it and I'll never get bored
-
-0
 -------------------------------------------------------------------
 diff -s orig_GVC1S.log s21_GVC1S.log
-1c1,23
+1d0
 < 22
----
-> I ain't the sharpest tool in the shed
-> She was looking kind of dumb with her finger and her thumb
-> In the shape of an "L" on her forehead
-> Well the years start coming and they don't stop coming
-> Fed to the rules and I hit the ground running
-> Didn't make sense not to live for fun
-> Your brain gets smart but your head gets dumb
-> So much to do, so much to see
-> So what's wrong with taking the back streets?
-> You'll never know if you don't go
-> You'll never shine if you don't glow
-> Hey now, you're a rock star, get the show on, get paid
-> And all that glitters is gold
-> Only shooting stars break the mold
-> It's a cool place and they say it gets colder
-> You're bundled up now, wait 'til you get older
-> Judging by the hole in the satellite picture
-> The ice we skate is getting pretty thin
-> The water's getting warm so you might as well swim
-> My world's on fire, how about yours?
-> That's the way I like it and I'll never get bored
-> 
-> 0
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -878,60 +797,11 @@ lyrics.txt
 lyrics2.txt
 -------------------------------------------------------------------
 s21_: ./s21_grep -vl rock lyrics.txt lyrics2.txt
-Somebody once told me the world is gonna roll me
-I ain't the sharpest tool in the shed
-She was looking kind of dumb with her finger and her thumb
-In the shape of an "L" on her forehead
-Well the years start coming and they don't stop coming
-Fed to the rules and I hit the ground running
-Didn't make sense not to live for fun
-Your brain gets smart but your head gets dumb
-So much to do, so much to see
-So what's wrong with taking the back streets?
-You'll never know if you don't go
-You'll never shine if you don't glow
-Hey now, you're an all-star, get your game on, go play
-And all that glitters is gold
-Only shooting stars break the mold
-It's a cool place and they say it gets colder
-You're bundled up now, wait 'til you get older
-But the meteor men beg to differ
-Judging by the hole in the satellite picture
-The ice we skate is getting pretty thin
-The water's getting warm so you might as well swim
-My world's on fire, how about yours?
-That's the way I like it and I'll never get bored
-
 -------------------------------------------------------------------
 diff -s orig_GVL1M.log s21_GVL1M.log
-1,2c1,24
+1,2d0
 < lyrics.txt
 < lyrics2.txt
----
-> Somebody once told me the world is gonna roll me
-> I ain't the sharpest tool in the shed
-> She was looking kind of dumb with her finger and her thumb
-> In the shape of an "L" on her forehead
-> Well the years start coming and they don't stop coming
-> Fed to the rules and I hit the ground running
-> Didn't make sense not to live for fun
-> Your brain gets smart but your head gets dumb
-> So much to do, so much to see
-> So what's wrong with taking the back streets?
-> You'll never know if you don't go
-> You'll never shine if you don't glow
-> Hey now, you're an all-star, get your game on, go play
-> And all that glitters is gold
-> Only shooting stars break the mold
-> It's a cool place and they say it gets colder
-> You're bundled up now, wait 'til you get older
-> But the meteor men beg to differ
-> Judging by the hole in the satellite picture
-> The ice we skate is getting pretty thin
-> The water's getting warm so you might as well swim
-> My world's on fire, how about yours?
-> That's the way I like it and I'll never get bored
-> 
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -964,33 +834,9 @@ orig: grep -vn rock lyrics.txt
 25:
 -------------------------------------------------------------------
 s21_: ./s21_grep -vn rock lyrics.txt
-Somebody once told me the world is gonna roll me
-I ain't the sharpest tool in the shed
-She was looking kind of dumb with her finger and her thumb
-In the shape of an "L" on her forehead
-Well the years start coming and they don't stop coming
-Fed to the rules and I hit the ground running
-Didn't make sense not to live for fun
-Your brain gets smart but your head gets dumb
-So much to do, so much to see
-So what's wrong with taking the back streets?
-You'll never know if you don't go
-You'll never shine if you don't glow
-Hey now, you're an all-star, get your game on, go play
-And all that glitters is gold
-Only shooting stars break the mold
-It's a cool place and they say it gets colder
-You're bundled up now, wait 'til you get older
-But the meteor men beg to differ
-Judging by the hole in the satellite picture
-The ice we skate is getting pretty thin
-The water's getting warm so you might as well swim
-My world's on fire, how about yours?
-That's the way I like it and I'll never get bored
-
 -------------------------------------------------------------------
 diff -s orig_GVN1S.log s21_GVN1S.log
-1,24c1,24
+1,24d0
 < 1:Somebody once told me the world is gonna roll me
 < 2:I ain't the sharpest tool in the shed
 < 3:She was looking kind of dumb with her finger and her thumb
@@ -1015,31 +861,6 @@ diff -s orig_GVN1S.log s21_GVN1S.log
 < 23:My world's on fire, how about yours?
 < 24:That's the way I like it and I'll never get bored
 < 25:
----
-> Somebody once told me the world is gonna roll me
-> I ain't the sharpest tool in the shed
-> She was looking kind of dumb with her finger and her thumb
-> In the shape of an "L" on her forehead
-> Well the years start coming and they don't stop coming
-> Fed to the rules and I hit the ground running
-> Didn't make sense not to live for fun
-> Your brain gets smart but your head gets dumb
-> So much to do, so much to see
-> So what's wrong with taking the back streets?
-> You'll never know if you don't go
-> You'll never shine if you don't glow
-> Hey now, you're an all-star, get your game on, go play
-> And all that glitters is gold
-> Only shooting stars break the mold
-> It's a cool place and they say it gets colder
-> You're bundled up now, wait 'til you get older
-> But the meteor men beg to differ
-> Judging by the hole in the satellite picture
-> The ice we skate is getting pretty thin
-> The water's getting warm so you might as well swim
-> My world's on fire, how about yours?
-> That's the way I like it and I'll never get bored
-> 
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -1085,33 +906,33 @@ Somebody better put you back into your place
 Alright
 -------------------------------------------------------------------
 s21_: ./s21_grep -vh rock lyrics.txt lyrics2.txt
-Somebody once told me the world is gonna roll me
-I ain't the sharpest tool in the shed
-She was looking kind of dumb with her finger and her thumb
-In the shape of an "L" on her forehead
-Well the years start coming and they don't stop coming
-Fed to the rules and I hit the ground running
-Didn't make sense not to live for fun
-Your brain gets smart but your head gets dumb
-So much to do, so much to see
-So what's wrong with taking the back streets?
-You'll never know if you don't go
-You'll never shine if you don't glow
-Hey now, you're an all-star, get your game on, go play
-And all that glitters is gold
-Only shooting stars break the mold
-It's a cool place and they say it gets colder
-You're bundled up now, wait 'til you get older
-But the meteor men beg to differ
-Judging by the hole in the satellite picture
-The ice we skate is getting pretty thin
-The water's getting warm so you might as well swim
-My world's on fire, how about yours?
-That's the way I like it and I'll never get bored
-
 -------------------------------------------------------------------
 diff -s orig_GVH1M.log s21_GVH1M.log
-25,37d24
+1,37d0
+< Somebody once told me the world is gonna roll me
+< I ain't the sharpest tool in the shed
+< She was looking kind of dumb with her finger and her thumb
+< In the shape of an "L" on her forehead
+< Well the years start coming and they don't stop coming
+< Fed to the rules and I hit the ground running
+< Didn't make sense not to live for fun
+< Your brain gets smart but your head gets dumb
+< So much to do, so much to see
+< So what's wrong with taking the back streets?
+< You'll never know if you don't go
+< You'll never shine if you don't glow
+< Hey now, you're an all-star, get your game on, go play
+< And all that glitters is gold
+< Only shooting stars break the mold
+< It's a cool place and they say it gets colder
+< You're bundled up now, wait 'til you get older
+< But the meteor men beg to differ
+< Judging by the hole in the satellite picture
+< The ice we skate is getting pretty thin
+< The water's getting warm so you might as well swim
+< My world's on fire, how about yours?
+< That's the way I like it and I'll never get bored
+< 
 < Buddy, you're a boy, make a big noise
 < Playing in the street, gonna be a big man someday
 < You got mud on your face, you big disgrace
@@ -1168,11 +989,9 @@ lyrics2.txt:You got mud on your face, big disgrace
 lyrics2.txt:Alright
 -------------------------------------------------------------------
 s21_: ./s21_grep -vf pattern.file lyrics.txt lyrics2.txt
-rock
-back
 -------------------------------------------------------------------
 diff -s orig_GVF1M.log s21_GVF1M.log
-1,35c1,2
+1,35d0
 < lyrics.txt:Somebody once told me the world is gonna roll me
 < lyrics.txt:I ain't the sharpest tool in the shed
 < lyrics.txt:She was looking kind of dumb with her finger and her thumb
@@ -1208,83 +1027,29 @@ diff -s orig_GVF1M.log s21_GVF1M.log
 < lyrics2.txt:Pleading with your eyes, gonna make you some peace someday
 < lyrics2.txt:You got mud on your face, big disgrace
 < lyrics2.txt:Alright
----
-> rock
-> back
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
 │ Test:GVO1S:	✅  Passed
 └──────────────────────────────────────────────────────────────────
 orig: grep -vo me lyrics.txt
-I ain't the sharpest tool in the shed
-She was looking kind of dumb with her finger and her thumb
-In the shape of an "L" on her forehead
-Well the years start coming and they don't stop coming
-Fed to the rules and I hit the ground running
-Didn't make sense not to live for fun
-Your brain gets smart but your head gets dumb
-So much to do, so much to see
-So what's wrong with taking the back streets?
-You'll never know if you don't go
-You'll never shine if you don't glow
-Hey now, you're a rock star, get the show on, get paid
-And all that glitters is gold
-Only shooting stars break the mold
-It's a cool place and they say it gets colder
-You're bundled up now, wait 'til you get older
-Judging by the hole in the satellite picture
-The ice we skate is getting pretty thin
-The water's getting warm so you might as well swim
-My world's on fire, how about yours?
-That's the way I like it and I'll never get bored
-
 -------------------------------------------------------------------
 s21_: ./s21_grep -vo me lyrics.txt
-I ain't the sharpest tool in the shed
-She was looking kind of dumb with her finger and her thumb
-In the shape of an "L" on her forehead
-Well the years start coming and they don't stop coming
-Fed to the rules and I hit the ground running
-Didn't make sense not to live for fun
-Your brain gets smart but your head gets dumb
-So much to do, so much to see
-So what's wrong with taking the back streets?
-You'll never know if you don't go
-You'll never shine if you don't glow
-Hey now, you're a rock star, get the show on, get paid
-And all that glitters is gold
-Only shooting stars break the mold
-It's a cool place and they say it gets colder
-You're bundled up now, wait 'til you get older
-Judging by the hole in the satellite picture
-The ice we skate is getting pretty thin
-The water's getting warm so you might as well swim
-My world's on fire, how about yours?
-That's the way I like it and I'll never get bored
-
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
 │ Test:GCL1M:	❌  Failed
 └──────────────────────────────────────────────────────────────────
 orig: grep -cl rock lyrics.txt lyrics2.txt
-lyrics.txt:1
 lyrics.txt
-lyrics2.txt:1
 lyrics2.txt
 -------------------------------------------------------------------
 s21_: ./s21_grep -cl rock lyrics.txt lyrics2.txt
-1
 -------------------------------------------------------------------
 diff -s orig_GCL1M.log s21_GCL1M.log
-1,4c1
-< lyrics.txt:1
+1,2d0
 < lyrics.txt
-< lyrics2.txt:1
 < lyrics2.txt
----
-> 1
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -1295,14 +1060,11 @@ lyrics.txt:1
 lyrics2.txt:8
 -------------------------------------------------------------------
 s21_: ./s21_grep -cn rock lyrics.txt lyrics2.txt
-1
 -------------------------------------------------------------------
 diff -s orig_GCN1M.log s21_GCN1M.log
-1,2c1
+1,2d0
 < lyrics.txt:1
 < lyrics2.txt:8
----
-> 1
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -1313,10 +1075,10 @@ orig: grep -ch rock lyrics.txt lyrics2.txt
 8
 -------------------------------------------------------------------
 s21_: ./s21_grep -ch rock lyrics.txt lyrics2.txt
-1
 -------------------------------------------------------------------
 diff -s orig_GCH1M.log s21_GCH1M.log
-2d1
+1,2d0
+< 1
 < 8
 -------------------------------------------------------------------
 
@@ -1363,10 +1125,9 @@ lyrics2.txt:Somebody better put you back into your place
 lyrics2.txt:Alright
 -------------------------------------------------------------------
 s21_: ./s21_grep -vf pattern.file lyrics.txt lyrics2.txt empty.file
-rock
 -------------------------------------------------------------------
 diff -s orig_GCF1M.log s21_GCF1M.log
-1,37c1
+1,37d0
 < lyrics.txt:Somebody once told me the world is gonna roll me
 < lyrics.txt:I ain't the sharpest tool in the shed
 < lyrics.txt:She was looking kind of dumb with her finger and her thumb
@@ -1404,8 +1165,6 @@ diff -s orig_GCF1M.log s21_GCF1M.log
 < lyrics2.txt:You got mud on your face, big disgrace
 < lyrics2.txt:Somebody better put you back into your place
 < lyrics2.txt:Alright
----
-> rock
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -1417,15 +1176,12 @@ lyrics2.txt:4
 empty.file:0
 -------------------------------------------------------------------
 s21_: ./s21_grep -co me lyrics.txt lyrics2.txt empty.file
-3
 -------------------------------------------------------------------
 diff -s orig_GCO1M.log s21_GCO1M.log
-1,3c1
+1,3d0
 < lyrics.txt:3
 < lyrics2.txt:4
 < empty.file:0
----
-> 3
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -1436,18 +1192,11 @@ lyrics.txt
 lyrics2.txt
 -------------------------------------------------------------------
 s21_: ./s21_grep -ln me lyrics.txt lyrics2.txt empty.file
-Somebody once told me the world is gonna roll me
-Hey now, you're an all-star, get your game on, go play
-But the meteor men beg to differ
 -------------------------------------------------------------------
 diff -s orig_GLN1M.log s21_GLN1M.log
-1,2c1,3
+1,2d0
 < lyrics.txt
 < lyrics2.txt
----
-> Somebody once told me the world is gonna roll me
-> Hey now, you're an all-star, get your game on, go play
-> But the meteor men beg to differ
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -1458,18 +1207,11 @@ lyrics.txt
 lyrics2.txt
 -------------------------------------------------------------------
 s21_: ./s21_grep -lh me lyrics.txt lyrics2.txt empty.file
-Somebody once told me the world is gonna roll me
-Hey now, you're an all-star, get your game on, go play
-But the meteor men beg to differ
 -------------------------------------------------------------------
 diff -s orig_GLH1M.log s21_GLH1M.log
-1,2c1,3
+1,2d0
 < lyrics.txt
 < lyrics2.txt
----
-> Somebody once told me the world is gonna roll me
-> Hey now, you're an all-star, get your game on, go play
-> But the meteor men beg to differ
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -1495,18 +1237,11 @@ lyrics.txt
 lyrics2.txt
 -------------------------------------------------------------------
 s21_: ./s21_grep -lo me lyrics.txt lyrics2.txt empty.file
-Somebody once told me the world is gonna roll me
-Hey now, you're an all-star, get your game on, go play
-But the meteor men beg to differ
 -------------------------------------------------------------------
 diff -s orig_GLO1M.log s21_GLO1M.log
-1,2c1,3
+1,2d0
 < lyrics.txt
 < lyrics2.txt
----
-> Somebody once told me the world is gonna roll me
-> Hey now, you're an all-star, get your game on, go play
-> But the meteor men beg to differ
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -1524,10 +1259,9 @@ orig: grep -nh rock lyrics.txt lyrics2.txt
 20:We will, we will rock you
 -------------------------------------------------------------------
 s21_: ./s21_grep -nh rock lyrics.txt lyrics2.txt
-Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
 diff -s orig_GNH1M.log s21_GNH1M.log
-1,9c1
+1,9d0
 < 14:Hey now, you're a rock star, get the show on, get paid
 < 5:We will, we will rock you
 < 6:We will, we will rock you
@@ -1537,8 +1271,6 @@ diff -s orig_GNH1M.log s21_GNH1M.log
 < 18:We will, we will rock you, everybody
 < 19:We will, we will rock you, hmm
 < 20:We will, we will rock you
----
-> Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -1624,12 +1356,9 @@ me
 me
 -------------------------------------------------------------------
 s21_: ./s21_grep -ho me lyrics.txt lyrics2.txt empty.file
-Somebody once told me the world is gonna roll me
-Hey now, you're an all-star, get your game on, go play
-But the meteor men beg to differ
 -------------------------------------------------------------------
 diff -s orig_GHO1M.log s21_GHO1M.log
-1,11c1,3
+1,11d0
 < me
 < me
 < me
@@ -1641,13 +1370,9 @@ diff -s orig_GHO1M.log s21_GHO1M.log
 < me
 < me
 < me
----
-> Somebody once told me the world is gonna roll me
-> Hey now, you're an all-star, get your game on, go play
-> But the meteor men beg to differ
 -------------------------------------------------------------------
 
 ---------------------------SUMMARY---------------------------------
-SUCCESS: 13
-FAIL: 40
+SUCCESS: 3
+FAIL: 50
 -------------------------------------------------------------------

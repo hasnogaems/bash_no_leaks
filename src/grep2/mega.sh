@@ -165,7 +165,7 @@ TEST_CASE="grep $FLAGS $PATTERN $FILE"
 run_test_case
 #-------------------------------------------------------------------
 clear_vars
-TC_NAME="-e"
+TC_NAME="-e 2 files"
 FLAGS="-e"
 PATTERN="rock"
 FILE="lyrics.txt "

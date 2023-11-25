@@ -1,7 +1,8 @@
 #include "h.h"
 
-void open_file_and_i_flag(FILE* fp,Flags* flag, int file_name, char** argv, int* eflags){
-    fp=fopen(argv[file_name],"r");//opening file
+int open_file_and_i_flag(FILE** fp,Flags* flag, int file_name, char** argv, int* eflags){
+    //printf("argv[optind+1]=%s\n", argv[optind+1]);
+    (*fp)=fopen(argv[optind+1],"r");//opening file
         if (fp == NULL) 
         {
             printf("Error opening file.\n");
@@ -16,3 +17,14 @@ void open_file_and_i_flag(FILE* fp,Flags* flag, int file_name, char** argv, int*
 /* grep_file(){
 
 } */
+
+int raw_pattern(Flags flag,FILE* fp, int eflags, char* line_, char** argv, int y){
+    int x=0;
+    if (flag.e != 1 && flag.v != 1 && flag.c !=1)
+//printf("here?\n");
+      while (fgets(line_, 1024, fp)) {
+        
+        x = regex(argv[y], line_, eflags);
+        if (!x) printf("%s", line_);
+      }
+}

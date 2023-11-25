@@ -24,4 +24,6 @@ int regex(char pattern[], char line[], int);
 int parse_pattern(int argc, char **argv, char **e_ptrns, int *);
 int parse_file_name(int pattern_index, char **argv, int argc);
 Flags parse_flags(int argc, char **argv, char **e_ptrns, int *);
+int open_file_and_i_flag(FILE** fp,Flags* flag, int file_name, char** argv, int* eflags);
+int raw_pattern(Flags flag, FILE* fp, int eflags, char* line_, char** argv, int y);
 #endif

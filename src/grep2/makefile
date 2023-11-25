@@ -7,7 +7,7 @@ TEST_GREP_FILES = $(FOLDER)test_1_grep.txt $(FOLDER)test_2_grep.txt
 TEST_GREP_FLAGS = -e -i -v -c -l -n -h -s -o
 FILE = test.txt
 1:grep.c parse_flags.c regex.c test
-	gcc -g grep.c parse_flags.c regex.c -o s21_grep
+	gcc -g grep.c parse_flags.c regex.c function.c -o s21_grep
 
 2:prog4.c
 	gcc prog4.c

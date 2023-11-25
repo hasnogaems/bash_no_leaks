@@ -21,33 +21,30 @@ int main(int argc, char *argv[]) {
     char **e_ptrns = (char **)malloc(1025 * sizeof(char *));
     int c=0;
     int x;
+    //printf("Where?\n");
     Flags flag = parse_flags(argc, argv, e_ptrns, e_count);  // parse flags
     int y = parse_pattern(argc, argv, e_ptrns, &count);      // parse pattern
     int file_name = parse_file_name(y, argv, argc);          // parse file name
 
-    // printf("OPTIND=%d", optind);
+    printf("OPTIND=%d\n", optind);
     // printf("file name is %s its index is%d\n", argv[file_name], file_name);
-
-    fp = fopen(argv[file_name], "r");  // opening file
-    if (fp == NULL) {
-      printf("Error opening file.\n");
-      return -1;  // debug
-    }
-    char *line_ = (char *)malloc(
-        1024 *
-        sizeof(
-            char));  // here we store line from our file we grabbed with fgets
-    if (flag.i == 1) {  // no distinction between upper and lowercase characters
-      eflags = REG_ICASE;
-      // printf("EFLAGS IN MAIN=%d\n", eflags);
-    }
+//printf("line31\n");
+    open_file_and_i_flag(&fp, &flag, optind, argv, &eflags);
+    //printf("line33\n");
+    char *line_ = (char *)malloc(1025 * sizeof(char));  // here we store line from our file we grabbed with fgets
+    if(fp==NULL)printf("NULL fp\n");
+    
+  //printf("line34\n");
+    //raw_pattern(flag, *line, *fp);
     if (flag.e != 1 && flag.v != 1 && flag.c !=1)
-
+//printf("here?\n");
       while (fgets(line_, 1024, fp)) {
+        
         x = regex(argv[y], line_, eflags);
         if (!x) printf("%s", line_);
       }
-
+      
+//printf("line 42\n");
     fseek(fp, 0, SEEK_SET);  // Move the cursor to the beginning of the file
     fgets(line_, 1024, fp);
 
