@@ -79,17 +79,18 @@ int parse_pattern(int argc, char **argv, char **e_ptrns, int *count) {
   }
   return pattern;
 }
-int parse_file_name(int y, char **argv, int argc) {
+int parse_file_amount(char **argv, int argc) {
   int i;
+  int y=0;
   FILE *fptemp;
   for (i = 1; i < argc; i++) {
     fptemp = fopen(argv[i], "r");
-    if (fptemp == NULL)
+    if (fptemp != NULL)
       // if(i==argc-1)
-      continue;
-    break;
+      y++;
+    
   }
   fclose(fptemp);
   // printf("File_name=%s argv index of File_name is %d\n", argv[i], i);
-  return i;
+  return y;
 }
