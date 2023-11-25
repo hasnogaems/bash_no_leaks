@@ -22,19 +22,17 @@ int open_file_and_i_flag(FILE** fp,Flags* flag, int file_name, char** argv, int*
 
 
 int grep(Flags flag,FILE* fp, int eflags, char* line_, char** argv, int y, int count, char** e_ptrns, int file_amount){
-  regmatch_t matches[1];
  //printf("hello?\n");
     int x=0; 
        
     if (flag.e != 1 && flag.v != 1 && flag.c !=1)
       while (fgets(line_, 1024, fp)) {
         
-        x = regex(argv[y], line_, eflags, flag, );
+        x = regex(argv[y], line_, eflags);
         if (!x){
         if(flag.l==1){
         printf("%s\n", argv[optind]);
         break;}
-        if(flag.o==1)flag_e(); 
         
           multifileprint(file_amount, argv);
         printf("%s", line_);
@@ -50,7 +48,7 @@ int grep(Flags flag,FILE* fp, int eflags, char* line_, char** argv, int y, int c
     fseek(fp, 0, SEEK_SET);
     //printf("line 37 grep\n");
     //printf("e_ptrns[0]=%s", e_ptrns[0]);
-noflags_ve_v_e(flag, fp, &count, e_ptrns, eflags, x, line_, argv, y, file_amount);
+noflags_ve_v(flag, fp, &count, e_ptrns, eflags, x, line_, argv, y, file_amount);
     // exec e patterns
     if (flag.c == 1&&flag.e==1) {
       int c_count = 0;
@@ -81,7 +79,7 @@ noflags_ve_v_e(flag, fp, &count, e_ptrns, eflags, x, line_, argv, y, file_amount
     //     printf("%s\n", e_ptrns[n]);}
 }
 
-void noflags_ve_v_e(Flags flag, FILE* fp, int* count, char** e_ptrns, int eflags, int x, char* line_, char** argv, int y, int file_amount){
+void noflags_ve_v(Flags flag, FILE* fp, int* count, char** e_ptrns, int eflags, int x, char* line_, char** argv, int y, int file_amount){
     if (flag.v == 1 && flag.e == 1) {
       while (fgets(line_, 1024, fp)) {  // print e patterns
         int loop_count = (*count);
@@ -131,13 +129,3 @@ void multifileprint(int x, char** argv){
     printf("%s:", argv[optind]);
   }
 }
-/* int flag_o(Flags flag, char line_, char** e_ptrns, char* line, int y){
-  regmatch_t matches[1];
-                if(flag.e==1){
-                while ((regex(e_ptrns[loop], line_, &matches) == 0)){
-                    printf("%.*s\n", (int) (matches[0].rm_eo - matches[0].rm_so), string_o + matches[0].rm_so);
-                    string_o += matches[0].rm_eo;
-                }
-}} */
-
-
