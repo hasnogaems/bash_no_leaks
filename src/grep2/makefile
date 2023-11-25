@@ -1,9 +1,12 @@
+SHELL := /bin/bash
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -std=c11 -g
+FLAG = -Wall -Wextra -Werror
 FOLDER=tests_grep/
 TEST_GREP_FILES = $(FOLDER)test_1_grep.txt $(FOLDER)test_2_grep.txt
 TEST_GREP_FLAGS = -e -i -v -c -l -n -h -s -o
-1:grep.c parse_flags.c regex.c
+FILE = test.txt
+1:grep.c parse_flags.c regex.c test
 	gcc -g grep.c parse_flags.c regex.c -o s21_grep
 
 2:prog4.c
@@ -12,16 +15,18 @@ TEST_GREP_FLAGS = -e -i -v -c -l -n -h -s -o
 3:grep.c parse_flags.c regex.c
 	gcc grep_debug.c parse_flags.c regex.c -o s21_grep	
 
-test_grep:
-	@for file in $(TEST_GREP_FILES); do \
-		for flag in $(TEST_GREP_FLAGS); do \
-			echo "Running test: grep $$flag pattern $$file"; \
-			./s21_grep $$flag hh $$file > s21_grep_output.txt; \
-			grep $$flag hh $$file > grep_output.txt; \
-			diff s21_grep_output.txt grep_output.txt; \
-			rm -rf s21_grep_output.txt grep_output.txt; \
-		done; \
-	done
+test:
+	 -diff <(./s21_grep He $(FILE)) <(grep He $(FILE))
+	 -diff <(./s21_grep -v He $(FILE)) <(grep -v He $(FILE))
+	 -diff <(./s21_grep -i He $(FILE)) <(grep -i He $(FILE))
+	 -diff <(./s21_grep -iv He $(FILE)) <(grep -iv He $(FILE))
+	 -diff <(./s21_grep -in He $(FILE)) <(grep -in He $(FILE))
+	 -diff <(./s21_grep -ie He $(FILE)) <(grep -ie He $(FILE))
+	 -diff <(./s21_grep -ince "^he" $(FILE)) <(grep -ince "^he" $(FILE))
+	 -diff <(./s21_grep -lh se $(FILE)) <(grep -lh se $(FILE))
+
+	-diff <(./s21_grep $(FILE)) <(grep $(FILE))
+	-diff <(./s21_grep $(FILE)) <(grep $(FILE))
 
 extended_test_grep1:
 	@echo "Running test: grep -f filepattern $(FOLDER)test_1_grep.txt"
@@ -53,5 +58,3 @@ flags:
 debug:
 	gcc -fsanitize=address grep.c parse_flags.c regex.c	
 
-test:
-	./greybaca_grep_test_1.sh

@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
     if (flag.v == 1 && flag.e == 1) {
       while (fgets(line_, 1024, fp)) {  // print e patterns
         int loop_count = count;
-        while (loop_count > 0) {  // что значат фиолетовые синие и желтые скобки
+        while (loop_count > 0) {  
           x = regex(e_ptrns[loop_count - 1], line_, eflags);
           loop_count--;
           // printf("X in E loop=%d\n", x);
@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
       // printf("V==1 and argv[y]=%s", argv[y]);
       while (fgets(line_, 1024, fp)) {  // print e patterns
 
-        // что значат фиолетовые синие и желтые скобки
+        
         x = regex(argv[y], line_, eflags);
 
         // printf("X in E loop=%d\n", x);
@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
     if (flag.v != 1 && flag.c != 1) {
       while (fgets(line_, 1024, fp)) {  // print e patterns
          int loop_count = count;
-        while (loop_count > 0) {  // что значат фиолетовые синие и желтые скобки
+        while (loop_count > 0) { 
           x = regex(e_ptrns[loop_count - 1], line_, eflags);
           loop_count--;
           // printf("X in E loop=%d\n", x);
