@@ -1,8 +1,9 @@
 #include "h.h"
 
 int open_file_and_i_flag(FILE** fp,Flags* flag, int file_name, char** argv, int* eflags){
-    //printf("argv[optind+1]=%s\n", argv[optind+1]);
-    (*fp)=fopen(argv[optind+1],"r");//opening file
+  
+    printf("in open_file argv[optind]=%s\n", argv[optind]);
+    (*fp)=fopen(argv[optind],"r");//opening file
         if (fp == NULL) 
         {
             printf("Error opening file.\n");
@@ -19,19 +20,25 @@ int open_file_and_i_flag(FILE** fp,Flags* flag, int file_name, char** argv, int*
 } */
 
 int grep(Flags flag,FILE* fp, int eflags, char* line_, char** argv, int y, int count, char** e_ptrns){
-    int x=0; if (flag.e != 1 && flag.v != 1 && flag.c !=1)
-//printf("here?\n");
+  printf("hello?\n");
+    int x=0; 
+    
+    if (flag.e != 1 && flag.v != 1 && flag.c !=1)
       while (fgets(line_, 1024, fp)) {
         
         x = regex(argv[y], line_, eflags);
         if (!x) printf("%s", line_);
       }
-      
+      printf("here?\n");
+      if(fp==NULL)printf("NULL fp in grep func\n");
 //printf("line 42\n");
     fseek(fp, 0, SEEK_SET);  // Move the cursor to the beginning of the file
+    
     fgets(line_, 1024, fp);
 
     fseek(fp, 0, SEEK_SET);
+    printf("line 37 grep\n");
+    printf("e_ptrns[0]=%s", e_ptrns[0]);
 noflags_ve_v(flag, fp, &count, e_ptrns, eflags, x, line_, argv, y);
     // exec e patterns
 
