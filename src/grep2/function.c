@@ -24,7 +24,7 @@ int open_file_and_i_flag(FILE** fp,Flags* flag, int file_name, char** argv, int*
 int grep(Flags flag,FILE* fp, int eflags, char* line_, char** argv, int y, int count, char** e_ptrns, int file_amount){
  //printf("hello?\n");
     int x=0; 
-       
+    
     if (flag.e != 1 && flag.v != 1 && flag.c !=1)
       while (fgets(line_, 1024, fp)) {
         
@@ -44,17 +44,20 @@ int grep(Flags flag,FILE* fp, int eflags, char* line_, char** argv, int y, int c
      // if(fp==NULL)printf("NULL fp in grep func\n");
 //printf("line 42\n");
     fseek(fp, 0, SEEK_SET);  // Move the cursor to the beginning of the file
+    
     fgets(line_, 1024, fp);
+
     fseek(fp, 0, SEEK_SET);
     //printf("line 37 grep\n");
     //printf("e_ptrns[0]=%s", e_ptrns[0]);
 noflags_ve_v(flag, fp, &count, e_ptrns, eflags, x, line_, argv, y, file_amount);
     // exec e patterns
+
     if (flag.c == 1&&flag.e==1) {
       int c_count = 0;
       while (fgets(line_, 1024, fp)) {  // print e patterns
         int loop_count = count;
-        while (loop_count > 0) { 
+        while (loop_count > 0) {  // что значат фиолетовые синие и желтые скобки
           x = regex(e_ptrns[loop_count - 1], line_, eflags);
           loop_count--;
           // printf("X in E loop=%d\n", x);
@@ -84,7 +87,7 @@ void noflags_ve_v(Flags flag, FILE* fp, int* count, char** e_ptrns, int eflags, 
       while (fgets(line_, 1024, fp)) {  // print e patterns
         int loop_count = (*count);
         while (loop_count > 0) {  
-          x = regex(e_ptrns[loop_count - 1], line_, eflags, flag, &matches[]);
+          x = regex(e_ptrns[loop_count - 1], line_, eflags);
           loop_count--;
           // printf("X in E loop=%d\n", x);
           if (x) {
@@ -110,7 +113,18 @@ void noflags_ve_v(Flags flag, FILE* fp, int* count, char** e_ptrns, int eflags, 
       //printf("\n");
     }
     if (flag.v != 1 && flag.c != 1) {
-      while (fgets(line_, 1024, fp)) {  // print e patterns
+      flag_e(flag, fp, count, e_ptrns, eflags, line_, argv, file_amount);
+    }
+}
+void multifileprint(int x, char** argv){
+  if (x>1) {
+    printf("%s:", argv[optind]);
+  }
+}
+
+void flag_e(Flags flag, FILE* fp, int* count, char** e_ptrns, int eflags, char* line_, char** argv, int file_amount){
+  int x;
+  while (fgets(line_, 1024, fp)) {  // print e patterns
          int loop_count = (*count);
         while (loop_count > 0) { 
           x = regex(e_ptrns[loop_count - 1], line_, eflags);
@@ -122,10 +136,5 @@ void noflags_ve_v(Flags flag, FILE* fp, int* count, char** e_ptrns, int eflags, 
           }
         }
       }
-    }
-}
-void multifileprint(int x, char** argv){
-  if (x>1) {
-    printf("%s:", argv[optind]);
-  }
+
 }
