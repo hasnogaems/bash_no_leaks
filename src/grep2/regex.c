@@ -6,7 +6,7 @@ int regex(char pattern[], char line[], int eflags) {
   int return_value = regcomp(&regex, pattern, eflags);
   if (return_value) {
     printf("Could not compile regular expression.\n");
-    return 1;
+    
   }
 
   return_value = regexec(&regex, line, 0, NULL, 0);

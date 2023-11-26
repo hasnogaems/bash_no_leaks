@@ -33,6 +33,10 @@ int grep(Flags flag,FILE* fp, int eflags, char* line_, char** argv, int y, int c
         if(flag.l==1){
         printf("%s\n", argv[optind]);
         break;}
+        if(flag.o==1){
+          flag_o(line_, argv[y], eflags);
+          continue;
+        }
         
           multifileprint(file_amount, argv);
         printf("%s", line_);
@@ -137,4 +141,19 @@ void flag_e(Flags flag, FILE* fp, int* count, char** e_ptrns, int eflags, char* 
         }
       }
 
+}
+
+void flag_o(char* line_, char pattern[], int eflags){
+  regex_t regex;
+  regmatch_t matches[1];
+
+  int return_value = regcomp(&regex, pattern, eflags);
+  if (return_value) {
+    printf("Could not compile regular expression.\n");
+    
+  }
+  while ((regexec(&regex, line_, 1, matches, 0) == 0)){
+                    printf("%.*s\n", (int) (matches[0].rm_eo - matches[0].rm_so), line_ + matches[0].rm_so);
+                    line_ += matches[0].rm_eo;
+                }
 }

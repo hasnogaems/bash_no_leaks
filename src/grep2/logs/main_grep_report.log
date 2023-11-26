@@ -647,19 +647,13 @@ diff -s orig_GF6M.log s21_GF6M.log
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:GO1S:	❌  Failed
+│ Test:GO1S:	✅  Passed
 └──────────────────────────────────────────────────────────────────
 orig: grep -o rock lyrics.txt
 rock
 -------------------------------------------------------------------
 s21_: ./s21_grep -o rock lyrics.txt
-Hey now, you're a rock star, get the show on, get paid
--------------------------------------------------------------------
-diff -s orig_GO1S.log s21_GO1S.log
-1c1
-< rock
----
-> Hey now, you're a rock star, get the show on, get paid
+rock
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -792,7 +786,7 @@ diff -s orig_GIF1S.log s21_GIF1S.log
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:GIO1S:	❌  Failed
+│ Test:GIO1S:	✅  Passed
 └──────────────────────────────────────────────────────────────────
 orig: grep -io Your lyrics.txt
 Your
@@ -801,20 +795,10 @@ your
 your
 -------------------------------------------------------------------
 s21_: ./s21_grep -io Your lyrics.txt
-Your brain gets smart but your head gets dumb
-Hey now, you're an all-star, get your game on, go play
-My world's on fire, how about yours?
--------------------------------------------------------------------
-diff -s orig_GIO1S.log s21_GIO1S.log
-1,4c1,3
-< Your
-< your
-< your
-< your
----
-> Your brain gets smart but your head gets dumb
-> Hey now, you're an all-star, get your game on, go play
-> My world's on fire, how about yours?
+Your
+your
+your
+your
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -1812,7 +1796,7 @@ diff -s orig_GHF1M.log s21_GHF1M.log
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:GHO1M:	❌  Failed
+│ Test:GHO1M:	✅  Passed
 └──────────────────────────────────────────────────────────────────
 orig: grep -ho me lyrics.txt lyrics2.txt empty.file
 me
@@ -1828,38 +1812,20 @@ me
 me
 -------------------------------------------------------------------
 s21_: ./s21_grep -ho me lyrics.txt lyrics2.txt empty.file
-lyrics.txt:Somebody once told me the world is gonna roll me
-lyrics.txt:Hey now, you're an all-star, get your game on, go play
-lyrics.txt:But the meteor men beg to differ
-lyrics2.txt:Playing in the street, gonna be a big man someday
-lyrics2.txt:Shouting in the street, gonna take on the world someday
-lyrics2.txt:Pleading with your eyes, gonna make you some peace someday
-lyrics2.txt:Somebody better put you back into your place
--------------------------------------------------------------------
-diff -s orig_GHO1M.log s21_GHO1M.log
-1,11c1,7
-< me
-< me
-< me
-< me
-< me
-< me
-< me
-< me
-< me
-< me
-< me
----
-> lyrics.txt:Somebody once told me the world is gonna roll me
-> lyrics.txt:Hey now, you're an all-star, get your game on, go play
-> lyrics.txt:But the meteor men beg to differ
-> lyrics2.txt:Playing in the street, gonna be a big man someday
-> lyrics2.txt:Shouting in the street, gonna take on the world someday
-> lyrics2.txt:Pleading with your eyes, gonna make you some peace someday
-> lyrics2.txt:Somebody better put you back into your place
+me
+me
+me
+me
+me
+me
+me
+me
+me
+me
+me
 -------------------------------------------------------------------
 
 ---------------------------SUMMARY---------------------------------
-SUCCESS: 23
-FAIL: 30
+SUCCESS: 26
+FAIL: 27
 -------------------------------------------------------------------
