@@ -15,15 +15,17 @@ int main(int argc, char *argv[]) {
     regex_t regex;
     
     int count = 0;
-    int *e_count = &count;
-    FILE *fp;
+    int* e_count = &count;
+    int f_count=0;
+    FILE* fp;
     int eflags = 0;
-    char *pattern = malloc(100 * sizeof(char));
-    char **e_ptrns = (char **)malloc(1025 * sizeof(char *));
+    char* pattern = malloc(100 * sizeof(char));
+    char** e_ptrns = (char **)malloc(1025 * sizeof(char *));
+    char** f_ptrns = (char **)malloc(1025 * sizeof(char *));
     int c=0;
     int x;
     //printf("Where?\n");
-    Flags flag = parse_flags(argc, argv, e_ptrns, e_count);  // parse flags
+    Flags flag = parse_flags(argc, argv, e_ptrns, e_count, &f_ptrns, &f_count);  // parse flags
     int y = parse_pattern(argc, argv, e_ptrns, &count);      // parse pattern
     int file_amount = parse_file_amount(argv, argc);          // parse file name
 
@@ -43,7 +45,7 @@ int main(int argc, char *argv[]) {
 //if(fp==NULL)printf("NULL fp in MAIN func\n");
     char *line_ = (char *)malloc(1025 * sizeof(char));  // here we store line from our file we grabbed with fgets
     //printf("line 36\n");
-    grep(flag, fp, eflags, line_, argv, y, count, e_ptrns, file_amount);
+    grep(flag, fp, eflags, line_, argv, y, count, e_ptrns, file_amount, f_ptrns, &f_count, argc);
     //if(fp==NULL)printf("NULL fp\n");
     
   //printf("line34\n");

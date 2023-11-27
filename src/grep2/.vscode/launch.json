@@ -6,11 +6,9 @@
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}",
             "args": [
-                "-l",
-                "11",
-                "test.txt",
-                "test1.txt",
-                "test2.txt"
+                "-f",
+                "ptrn.txt",
+                "test.txt"
             ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

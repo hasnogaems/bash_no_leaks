@@ -20,12 +20,33 @@ int open_file_and_i_flag(FILE** fp,Flags* flag, int file_name, char** argv, int*
 
 } */
 
+void pattern_from_file(char** e_ptrns, char* optarg, int* e_count){
+  FILE* pt = NULL;
+  pt=fopen(optarg, "r");
+  if(pt== NULL)printf("in function pattern_file file is not read! optarg=%s", optarg);
+if(pt != NULL){
+  char string[1000];
+         while (fgets(string, 1000, pt) != NULL){
+            if (string[strlen(string) - 1] == '\n') string[strlen(string) - 1] = '\0';
+            
+  e_ptrns[*e_count]=string;
+   printf("recorded in e_ptrns[%d]=%s\n", *e_count, e_ptrns[*e_count]);
+  (*e_count)++;
+ 
 
-int grep(Flags flag,FILE* fp, int eflags, char* line_, char** argv, int y, int count, char** e_ptrns, int file_amount){
+}
+}
+ else {
+        printf("s21_grep: %s: No such file or directory\n", optarg);
+    }
+    fclose(pt);
+}
+
+int grep(Flags flag,FILE* fp, int eflags, char* line_, char** argv, int y, int count, char** e_ptrns, int file_amount, char** f_ptrns, int* f_count, int argc){
  //printf("hello?\n");
     int x=0; 
     
-    if (flag.e != 1 && flag.v != 1 && flag.c !=1)
+    if (flag.e != 1 && flag.v != 1 && flag.c !=1 && flag.f !=1)
       while (fgets(line_, 1024, fp)) {
         
         x = regex(argv[y], line_, eflags);
@@ -38,7 +59,7 @@ int grep(Flags flag,FILE* fp, int eflags, char* line_, char** argv, int y, int c
           continue;
         }
         
-          multifileprint(file_amount, argv);
+          multifileprint(file_amount, argv, argc);
         printf("%s", line_);
         if (line_[strlen(line_) - 1] != '\n') printf("\n");
         }
@@ -54,7 +75,7 @@ int grep(Flags flag,FILE* fp, int eflags, char* line_, char** argv, int y, int c
     fseek(fp, 0, SEEK_SET);
     //printf("line 37 grep\n");
     //printf("e_ptrns[0]=%s", e_ptrns[0]);
-noflags_ve_v(flag, fp, &count, e_ptrns, eflags, x, line_, argv, y, file_amount);
+noflags_ve_v(flag, fp, &count, e_ptrns, eflags, x, line_, argv, y, file_amount, f_ptrns, f_count, argc);
     // exec e patterns
 
     if (flag.c == 1&&flag.e==1) {
@@ -86,8 +107,8 @@ noflags_ve_v(flag, fp, &count, e_ptrns, eflags, x, line_, argv, y, file_amount);
     //     printf("%s\n", e_ptrns[n]);}
 }
 
-void noflags_ve_v(Flags flag, FILE* fp, int* count, char** e_ptrns, int eflags, int x, char* line_, char** argv, int y, int file_amount){
-    if (flag.v == 1 && flag.e == 1) {
+void noflags_ve_v(Flags flag, FILE* fp, int* count, char** e_ptrns, int eflags, int x, char* line_, char** argv, int y, int file_amount, char** f_ptrns, int* f_count, int argc){
+    if (flag.v == 1 && (flag.e == 1|| flag.f ==1)) {
       while (fgets(line_, 1024, fp)) {  // print e patterns
         int loop_count = (*count);
         while (loop_count > 0) {  
@@ -116,32 +137,57 @@ void noflags_ve_v(Flags flag, FILE* fp, int* count, char** e_ptrns, int eflags, 
       }
       //printf("\n");
     }
+/*     if(flag.f==1){
+      flag_f(flag, fp, f_count, &f_ptrns, eflags, line_, argv, file_amount);
+    } */
     if (flag.v != 1 && flag.c != 1) {
-      flag_e(flag, fp, count, e_ptrns, eflags, line_, argv, file_amount);
+      flag_e(flag, fp, count, e_ptrns, eflags, line_, argv, file_amount, argc);
     }
 }
-void multifileprint(int x, char** argv){
-  if (x>1) {
+void multifileprint(int x, char** argv, int argc){
+  while (argc>optind) {
     printf("%s:", argv[optind]);
+    optind++;
   }
 }
 
-void flag_e(Flags flag, FILE* fp, int* count, char** e_ptrns, int eflags, char* line_, char** argv, int file_amount){
+void flag_e(Flags flag, FILE* fp, int* count, char** e_ptrns, int eflags, char* line_, char** argv, int file_amount, int argc){
+  //fseek(fp, 0, SEEK_SET);   
   int x;
   while (fgets(line_, 1024, fp)) {  // print e patterns
          int loop_count = (*count);
         while (loop_count > 0) { 
+          //printf("e_ptrns[loop_count-1]=%s\n", e_ptrns[loop_count-1]);
           x = regex(e_ptrns[loop_count - 1], line_, eflags);
           loop_count--;
           // printf("X in E loop=%d\n", x);
           if (!x) {
-            multifileprint(file_amount, argv);
+            multifileprint(file_amount, argv, argc);
             printf("%s", line_);
           }
         }
       }
 
 }
+
+/* void flag_f(Flags flag, FILE* fp, int* f_count, char*** f_ptrns, int eflags, char* line_,char**  argv, int file_amount, int argc){
+  printf("f_ptrns[0]=%s", *f_ptrns[0]);//я могу все писсать просто в паттерн для е флага, и потом при любом из них on я вывожу
+
+  int x;
+  while (fgets(line_, 1024, fp)) {  // print e patterns
+         int loop_count = *f_count;
+        while (loop_count > 0) { 
+          //printf("f_ptrns[0]=%s", *f_ptrns[loop_count-1]);
+          x = regex(*f_ptrns[loop_count - 1], line_, eflags);
+          loop_count--;
+          // printf("X in E loop=%d\n", x);
+          if (!x) {
+            multifileprint(file_amount, argv, argc);
+            printf("%s", line_);
+          }
+        }
+      }
+} */
 
 void flag_o(char* line_, char pattern[], int eflags){
   regex_t regex;
@@ -155,5 +201,7 @@ void flag_o(char* line_, char pattern[], int eflags){
   while ((regexec(&regex, line_, 1, matches, 0) == 0)){
                     printf("%.*s\n", (int) (matches[0].rm_eo - matches[0].rm_so), line_ + matches[0].rm_so);
                     line_ += matches[0].rm_eo;
-                }
+                } //первый аргумент это длина паттерна, а второй сдвигает указатель в строке чтобы от стоял на первом чаре, и потом печатает как раз длину паттерна. 
 }
+
+

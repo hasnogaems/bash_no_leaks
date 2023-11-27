@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <regex.h>
 #include <string.h>
+
 typedef struct Flags {
   int e;
   int i;
@@ -17,6 +18,8 @@ typedef struct Flags {
   int file;
   int o;
   int count;
+  int f;
+  
 } Flags;
 
 static struct option long_options[] = {{"number-nonblank", no_argument, 0, 'b'},
@@ -24,11 +27,13 @@ static struct option long_options[] = {{"number-nonblank", no_argument, 0, 'b'},
 int regex(char pattern[], char line[], int);
 int parse_pattern(int argc, char **argv, char **e_ptrns, int *);
 int parse_file_amount(char **argv, int argc);
-Flags parse_flags(int argc, char **argv, char **e_ptrns, int *);
+Flags parse_flags(int argc, char **argv, char **e_ptrns, int *e_count, char*** f_ptrns, int* f_count);
 int open_file_and_i_flag(FILE** fp,Flags* flag, int file_name, char** argv, int* eflags);
-int grep(Flags flag,FILE* fp, int eflags, char* line_, char** argv, int y, int count, char** e_ptrns, int file_amount);
-void noflags_ve_v(Flags flag, FILE* fp, int* count, char** e_ptrns, int eflags, int x, char* line_, char** argv, int y, int file_amount);
-void multifileprint(int, char**);
-void flag_e(Flags flag, FILE* fp, int* count, char** e_ptrns, int eflags, char* line_, char** argv, int file_amount);
+int grep(Flags flag,FILE* fp, int eflags, char* line_, char** argv, int y, int count, char** e_ptrns, int file_amount, char** f_ptrns, int* fcount, int argc);
+void noflags_ve_v(Flags flag, FILE* fp, int* count, char** e_ptrns, int eflags, int x, char* line_, char** argv, int y, int file_amount, char** f_ptrns, int* f_count, int argc);
+void multifileprint(int, char**, int);
+void flag_e(Flags flag, FILE* fp, int* count, char** e_ptrns, int eflags, char* line_, char** argv, int file_amount, int argc);
 void flag_o(char* line_, char pattern[], int eflags);
+void pattern_from_file(char** e_ptrns, char* optarg, int* e_count);
+void flag_f(Flags flag, FILE* fp, int* f_count, char*** f_ptrns, int eflags, char* line_,char**  argv, int file_amount);
 #endif

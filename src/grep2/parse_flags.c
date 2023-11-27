@@ -1,7 +1,7 @@
 #include <string.h>
 
 #include "h.h"
-Flags parse_flags(int argc, char **argv, char **e_ptrns, int *e_count) {
+Flags parse_flags(int argc, char **argv, char **e_ptrns, int *e_count, char*** f_ptrns, int* f_count) {
   int c;
   Flags flag = {0};
   int option_index = 0;
@@ -9,14 +9,14 @@ Flags parse_flags(int argc, char **argv, char **e_ptrns, int *e_count) {
 
   if (argc > 1) {
     while (1) {
-      c = getopt_long(argc, argv, "e:ivclnhsfo", long_options, &option_index);
+      c = getopt_long(argc, argv, "e:ivclnhsf:o", long_options, &option_index);
       // printf("optind=%d on argv[%s]\n", optind, argv[optind]);
       if (c == -1) break;
 
       switch (c) {
         case 'e':
           flag.e = 1;
-          e_ptrns[*e_count] = optarg;
+          e_ptrns[*e_count] = (*optarg);
           (*e_count)++;
           break;
         case 'i':
@@ -41,7 +41,9 @@ Flags parse_flags(int argc, char **argv, char **e_ptrns, int *e_count) {
           flag.s = 1;
           break;
         case 'f':
-          flag.file = 1;
+          flag.f = 1;
+          pattern_from_file(e_ptrns, optarg, e_count);
+         // (*e_count)++;
           break;
         case 'o':
           flag.o = 1;
@@ -49,6 +51,7 @@ Flags parse_flags(int argc, char **argv, char **e_ptrns, int *e_count) {
       }
     }
   }
+  if (flag.v && flag.o) flag.o = 0;
   return flag;
 }
 int parse_pattern(int argc, char **argv, char **e_ptrns, int *count) {
