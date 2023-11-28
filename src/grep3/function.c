@@ -52,12 +52,14 @@ int grep(Flags flag,FILE* fp, int eflags, char* line_, char** argv, int y, int c
       while (fgets(line_, 1024, fp)) {
         
         x = regex(argv[y], line_, flag);
+        
+        flag.file_counter --;
         if (!x){
         if(flag.l==1){
         printf("%s\n", argv[optind]);
         break;}
         if(flag.o==1){
-          flag_o(line_, argv[y], eflags);
+          flag_o(line_, argv[y], flag);
           continue;
         }
         
@@ -189,11 +191,11 @@ fclose(fp);
       }
 } */
 
-void flag_o(char* line_, char pattern[], int eflags){
+void flag_o(char* line_, char pattern[], Flags flag){
   regex_t regex;
   regmatch_t matches[1];
 
-  int return_value = regcomp(&regex, pattern, eflags);
+  int return_value = regcomp(&regex, pattern, REG_EXTENDED | (flag.i ? REG_ICASE : 0));
   if (return_value) {
     printf("Could not compile regular expression.\n");
     

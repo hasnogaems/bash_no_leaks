@@ -51,7 +51,7 @@ lyrics.txt:Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:GI1S:	❌  Failed
+│ Test:GI1S:	✅  Passed
 └──────────────────────────────────────────────────────────────────
 orig: grep -i Your lyrics.txt
 Your brain gets smart but your head gets dumb
@@ -59,19 +59,9 @@ Hey now, you're an all-star, get your game on, go play
 My world's on fire, how about yours?
 -------------------------------------------------------------------
 s21_: ./s21_grep -i Your lyrics.txt
-lyrics.txt:Your brain gets smart but your head gets dumb
-lyrics.txt:Hey now, you're an all-star, get your game on, go play
-lyrics.txt:My world's on fire, how about yours?
--------------------------------------------------------------------
-diff -s orig_GI1S.log s21_GI1S.log
-1,3c1,3
-< Your brain gets smart but your head gets dumb
-< Hey now, you're an all-star, get your game on, go play
-< My world's on fire, how about yours?
----
-> lyrics.txt:Your brain gets smart but your head gets dumb
-> lyrics.txt:Hey now, you're an all-star, get your game on, go play
-> lyrics.txt:My world's on fire, how about yours?
+Your brain gets smart but your head gets dumb
+Hey now, you're an all-star, get your game on, go play
+My world's on fire, how about yours?
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -177,13 +167,13 @@ orig: grep -n rock lyrics.txt
 14:Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
 s21_: ./s21_grep -n rock lyrics.txt
-lyrics.txt:Hey now, you're a rock star, get the show on, get paid
+Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
 diff -s orig_GN1S.log s21_GN1S.log
 1c1
 < 14:Hey now, you're a rock star, get the show on, get paid
 ---
-> lyrics.txt:Hey now, you're a rock star, get the show on, get paid
+> Hey now, you're a rock star, get the show on, get paid
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -195,9 +185,9 @@ orig: grep -n me lyrics.txt
 19:But the meteor men beg to differ
 -------------------------------------------------------------------
 s21_: ./s21_grep -n me lyrics.txt
-lyrics.txt:Somebody once told me the world is gonna roll me
-lyrics.txt:Hey now, you're an all-star, get your game on, go play
-lyrics.txt:But the meteor men beg to differ
+Somebody once told me the world is gonna roll me
+Hey now, you're an all-star, get your game on, go play
+But the meteor men beg to differ
 -------------------------------------------------------------------
 diff -s orig_GN2S.log s21_GN2S.log
 1,3c1,3
@@ -205,9 +195,9 @@ diff -s orig_GN2S.log s21_GN2S.log
 < 13:Hey now, you're an all-star, get your game on, go play
 < 19:But the meteor men beg to differ
 ---
-> lyrics.txt:Somebody once told me the world is gonna roll me
-> lyrics.txt:Hey now, you're an all-star, get your game on, go play
-> lyrics.txt:But the meteor men beg to differ
+> Somebody once told me the world is gonna roll me
+> Hey now, you're an all-star, get your game on, go play
+> But the meteor men beg to differ
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -224,12 +214,12 @@ lyrics2.txt:16:Somebody better put you back into your place
 -------------------------------------------------------------------
 s21_: ./s21_grep -n me lyrics.txt lyrics2.txt
 lyrics.txt:Somebody once told me the world is gonna roll me
-lyrics.txt:Hey now, you're an all-star, get your game on, go play
-lyrics.txt:But the meteor men beg to differ
-lyrics2.txt:Playing in the street, gonna be a big man someday
-lyrics2.txt:Shouting in the street, gonna take on the world someday
-lyrics2.txt:Pleading with your eyes, gonna make you some peace someday
-lyrics2.txt:Somebody better put you back into your place
+Hey now, you're an all-star, get your game on, go play
+But the meteor men beg to differ
+Playing in the street, gonna be a big man someday
+Shouting in the street, gonna take on the world someday
+Pleading with your eyes, gonna make you some peace someday
+Somebody better put you back into your place
 -------------------------------------------------------------------
 diff -s orig_GN3M.log s21_GN3M.log
 1,7c1,7
@@ -242,12 +232,12 @@ diff -s orig_GN3M.log s21_GN3M.log
 < lyrics2.txt:16:Somebody better put you back into your place
 ---
 > lyrics.txt:Somebody once told me the world is gonna roll me
-> lyrics.txt:Hey now, you're an all-star, get your game on, go play
-> lyrics.txt:But the meteor men beg to differ
-> lyrics2.txt:Playing in the street, gonna be a big man someday
-> lyrics2.txt:Shouting in the street, gonna take on the world someday
-> lyrics2.txt:Pleading with your eyes, gonna make you some peace someday
-> lyrics2.txt:Somebody better put you back into your place
+> Hey now, you're an all-star, get your game on, go play
+> But the meteor men beg to differ
+> Playing in the street, gonna be a big man someday
+> Shouting in the street, gonna take on the world someday
+> Pleading with your eyes, gonna make you some peace someday
+> Somebody better put you back into your place
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -264,12 +254,12 @@ lyrics2.txt:16:Somebody better put you back into your place
 -------------------------------------------------------------------
 s21_: ./s21_grep -n me lyrics.txt lyrics2.txt empty.file
 lyrics.txt:Somebody once told me the world is gonna roll me
-lyrics.txt:Hey now, you're an all-star, get your game on, go play
-lyrics.txt:But the meteor men beg to differ
+Hey now, you're an all-star, get your game on, go play
+But the meteor men beg to differ
 lyrics2.txt:Playing in the street, gonna be a big man someday
-lyrics2.txt:Shouting in the street, gonna take on the world someday
-lyrics2.txt:Pleading with your eyes, gonna make you some peace someday
-lyrics2.txt:Somebody better put you back into your place
+Shouting in the street, gonna take on the world someday
+Pleading with your eyes, gonna make you some peace someday
+Somebody better put you back into your place
 -------------------------------------------------------------------
 diff -s orig_GN4M.log s21_GN4M.log
 1,7c1,7
@@ -282,12 +272,12 @@ diff -s orig_GN4M.log s21_GN4M.log
 < lyrics2.txt:16:Somebody better put you back into your place
 ---
 > lyrics.txt:Somebody once told me the world is gonna roll me
-> lyrics.txt:Hey now, you're an all-star, get your game on, go play
-> lyrics.txt:But the meteor men beg to differ
+> Hey now, you're an all-star, get your game on, go play
+> But the meteor men beg to differ
 > lyrics2.txt:Playing in the street, gonna be a big man someday
-> lyrics2.txt:Shouting in the street, gonna take on the world someday
-> lyrics2.txt:Pleading with your eyes, gonna make you some peace someday
-> lyrics2.txt:Somebody better put you back into your place
+> Shouting in the street, gonna take on the world someday
+> Pleading with your eyes, gonna make you some peace someday
+> Somebody better put you back into your place
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -695,9 +685,9 @@ orig: grep -in Your lyrics.txt
 23:My world's on fire, how about yours?
 -------------------------------------------------------------------
 s21_: ./s21_grep -in Your lyrics.txt
-lyrics.txt:Your brain gets smart but your head gets dumb
-lyrics.txt:Hey now, you're an all-star, get your game on, go play
-lyrics.txt:My world's on fire, how about yours?
+Your brain gets smart but your head gets dumb
+Hey now, you're an all-star, get your game on, go play
+My world's on fire, how about yours?
 -------------------------------------------------------------------
 diff -s orig_GIN1S.log s21_GIN1S.log
 1,3c1,3
@@ -705,9 +695,9 @@ diff -s orig_GIN1S.log s21_GIN1S.log
 < 13:Hey now, you're an all-star, get your game on, go play
 < 23:My world's on fire, how about yours?
 ---
-> lyrics.txt:Your brain gets smart but your head gets dumb
-> lyrics.txt:Hey now, you're an all-star, get your game on, go play
-> lyrics.txt:My world's on fire, how about yours?
+> Your brain gets smart but your head gets dumb
+> Hey now, you're an all-star, get your game on, go play
+> My world's on fire, how about yours?
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -1634,6 +1624,6 @@ me
 -------------------------------------------------------------------
 
 ---------------------------SUMMARY---------------------------------
-SUCCESS: 35
-FAIL: 18
+SUCCESS: 36
+FAIL: 17
 -------------------------------------------------------------------

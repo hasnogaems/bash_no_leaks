@@ -34,7 +34,7 @@ int grep(Flags flag,FILE* fp, int eflags, char* line_, char** argv, int y, int c
 void noflags_ve_v(Flags flag, FILE* fp, int* count, int eflags, int x, char* line_, char** argv, int y, int file_amount, char** f_ptrns, int* f_count, int argc);
 void multifileprint(Flags* flag, char* filename);
 void flag_e(Flags flag, FILE* fp, int* count, int eflags, char* line_, char** argv, int file_amount, int argc);
-void flag_o(char* line_, char pattern[], int eflags);
+void flag_o(char* line_, char pattern[], Flags flag);
 void pattern_from_file(char* line_, Flags* flag);
 void flag_f(Flags flag, FILE* fp, int* f_count, char*** f_ptrns, int eflags, char* line_,char**  argv, int file_amount);
 void add_pattern(char *pattern, Flags* flag);

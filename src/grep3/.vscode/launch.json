@@ -7,10 +7,7 @@
             "program": "${fileDirname}/${fileBasenameNoExtension}",
             "args": [
                 "-e",
-                "11",
-                "-e",
-                "back",
-                "test.txt",
+                "some",
                 "lyrics1.txt"
             ],
             "stopAtEntry": false,

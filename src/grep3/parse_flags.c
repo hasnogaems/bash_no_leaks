@@ -52,6 +52,7 @@ Flags parse_flags(int argc, char **argv, char* line_) {
   }
   flag.file_counter = argc - optind;
   if (flag.v && flag.o) flag.o = 0;
+  if (flag.e && flag.o) flag.e = 0;
   return flag;
 }
 int parse_pattern(int argc, char **argv, int *count) {
