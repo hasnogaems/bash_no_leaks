@@ -47,8 +47,10 @@ int grep(Flags flag, FILE* fp, int eflags, char* line_, char** argv, int y,
   // printf("hello?\n");
   int x = 0;
   int c_count = 0;
+  int string_counter=0;
 
   while (fgets(line_, 1024, fp)) {
+    string_counter ++;
     x = regex(flag.pattern, line_, flag);
     if (flag.v ? x : !x) {
       
@@ -65,6 +67,7 @@ int grep(Flags flag, FILE* fp, int eflags, char* line_, char** argv, int y,
           continue;
         }
         if (flag.c != 1) {
+          if (flag.n == 1) printf("%d:", string_counter);
           multifileprint(&flag, argv[optind]);
           printf("%s", line_);
           if (line_[strlen(line_) - 1] != '\n')
