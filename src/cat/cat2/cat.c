@@ -3,12 +3,17 @@
 #include "parse_flags.h"
 
 
+<<<<<<< HEAD
  int main(int argc, char *argv[]) {
     //printf("ARGC=%d", argc);
+=======
+int main(int argc, char *argv[]) {
+>>>>>>> 1b3d6035ae5ff106ecdd8884007f24b50452443d
     FILE *fp;
     int line_index = 0;
     int previous = 10;
     int current = 0;
+<<<<<<< HEAD
     int count = 0;
     int line_count=1;
     int new_line=1;
@@ -16,16 +21,23 @@
 
     flags Flag;
     if(argc>1)Flag = parse_flags(argc, argv);
+=======
+    int extra_line = 0;
+int count=1;
+    flags Flag = parse_flags(argc, argv);
+>>>>>>> 1b3d6035ae5ff106ecdd8884007f24b50452443d
     fp = fopen(argv[argc - 1], "r");
-
+int x;
     int c;
     while (1&&argc>1) {
         c = fgetc(fp);
         current = c;
         if (feof(fp)) break;
-
+//x=(previous == 10 && current == 10);
+//printf("X=%d!", x);
         if (previous == 10 && current == 10) {
             count++;
+<<<<<<< HEAD
         }
 if (Flag.s == 1 && previous == 10 && current == 10 && count > 1) { //flag s
          
@@ -57,6 +69,29 @@ if (Flag.s == 1 && previous == 10 && current == 10 && count > 1) { //flag s
             //if (extra_line == 1) {printf("\n");}
             count = 0;
         }
+=======
+            if(count>2){
+            count--;
+             continue;}
+        }
+
+
+
+        /*{
+            extra_line = 1;
+        }*/
+
+        
+
+        //if (Flag.s == 1 && previous == 10 && current == 10 && extra_line == 1) {
+            
+            
+       // }
+        //if (current != 10) {
+            //if (extra_line == 1) {printf("\n");}
+           // extra_line = 0;
+       // }
+>>>>>>> 1b3d6035ae5ff106ecdd8884007f24b50452443d
 
         if(Flag.b==0){
         }
