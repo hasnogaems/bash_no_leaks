@@ -595,6 +595,14 @@ FILE="lyrics.txt lyrics2.txt empty.file"
 TEST_CASE="grep $FLAGS $PATTERN $FILE"
 run_test_case
 #-------------------------------------------------------------------
+clear_vars
+TC_NAME="GEL1S"
+FLAGS="-el"
+PATTERN="me"
+FILE="lyrics.txt"
+TEST_CASE="grep $FLAGS $PATTERN $FILE"
+run_test_case
+#-------------------------------------------------------------------
 
 echo -e "---------------------------\033[33mSUMMARY\033[0m---------------------------------"
 echo "SUCCESS: $COUNTER_SUCCESS"
