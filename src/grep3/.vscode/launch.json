@@ -6,9 +6,9 @@
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}",
             "args": [
-                "-e",
-                "some",
-                "lyrics1.txt"
+                "-c",
+                "1",
+                "test.txt"
             ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

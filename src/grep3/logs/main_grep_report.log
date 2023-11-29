@@ -117,22 +117,13 @@ That's the way I like it and I'll never get bored
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:GC1S:	❌  Failed
+│ Test:GC1S:	✅  Passed
 └──────────────────────────────────────────────────────────────────
 orig: grep -c me lyrics.txt
 3
 -------------------------------------------------------------------
 s21_: ./s21_grep -c me lyrics.txt
-Somebody once told me the world is gonna roll me
-Hey now, you're an all-star, get your game on, go play
-But the meteor men beg to differ
 3
--------------------------------------------------------------------
-diff -s orig_GC1S.log s21_GC1S.log
-0a1,3
-> Somebody once told me the world is gonna roll me
-> Hey now, you're an all-star, get your game on, go play
-> But the meteor men beg to differ
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -664,22 +655,13 @@ That's the way I like it and I'll never get bored
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:GIC1S:	❌  Failed
+│ Test:GIC1S:	✅  Passed
 └──────────────────────────────────────────────────────────────────
 orig: grep -ic Your lyrics.txt
 3
 -------------------------------------------------------------------
 s21_: ./s21_grep -ic Your lyrics.txt
-Your brain gets smart but your head gets dumb
-Hey now, you're an all-star, get your game on, go play
-My world's on fire, how about yours?
 3
--------------------------------------------------------------------
-diff -s orig_GIC1S.log s21_GIC1S.log
-0a1,3
-> Your brain gets smart but your head gets dumb
-> Hey now, you're an all-star, get your game on, go play
-> My world's on fire, how about yours?
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -763,63 +745,13 @@ your
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:GVC1S:	❌  Failed
+│ Test:GVC1S:	✅  Passed
 └──────────────────────────────────────────────────────────────────
 orig: grep -vc me lyrics.txt
 22
 -------------------------------------------------------------------
 s21_: ./s21_grep -vc me lyrics.txt
-I ain't the sharpest tool in the shed
-She was looking kind of dumb with her finger and her thumb
-In the shape of an "L" on her forehead
-Well the years start coming and they don't stop coming
-Fed to the rules and I hit the ground running
-Didn't make sense not to live for fun
-Your brain gets smart but your head gets dumb
-So much to do, so much to see
-So what's wrong with taking the back streets?
-You'll never know if you don't go
-You'll never shine if you don't glow
-Hey now, you're a rock star, get the show on, get paid
-And all that glitters is gold
-Only shooting stars break the mold
-It's a cool place and they say it gets colder
-You're bundled up now, wait 'til you get older
-Judging by the hole in the satellite picture
-The ice we skate is getting pretty thin
-The water's getting warm so you might as well swim
-My world's on fire, how about yours?
-That's the way I like it and I'll never get bored
-
-3
--------------------------------------------------------------------
-diff -s orig_GVC1S.log s21_GVC1S.log
-1c1,23
-< 22
----
-> I ain't the sharpest tool in the shed
-> She was looking kind of dumb with her finger and her thumb
-> In the shape of an "L" on her forehead
-> Well the years start coming and they don't stop coming
-> Fed to the rules and I hit the ground running
-> Didn't make sense not to live for fun
-> Your brain gets smart but your head gets dumb
-> So much to do, so much to see
-> So what's wrong with taking the back streets?
-> You'll never know if you don't go
-> You'll never shine if you don't glow
-> Hey now, you're a rock star, get the show on, get paid
-> And all that glitters is gold
-> Only shooting stars break the mold
-> It's a cool place and they say it gets colder
-> You're bundled up now, wait 'til you get older
-> Judging by the hole in the satellite picture
-> The ice we skate is getting pretty thin
-> The water's getting warm so you might as well swim
-> My world's on fire, how about yours?
-> That's the way I like it and I'll never get bored
-> 
-> 3
+22
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -1168,13 +1100,13 @@ s21_: ./s21_grep -cl rock lyrics.txt lyrics2.txt
 lyrics.txt
 1
 lyrics2.txt
-8
+1
 -------------------------------------------------------------------
 diff -s orig_GCL1M.log s21_GCL1M.log
 1a2
 > 1
 2a4
-> 8
+> 1
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -1185,68 +1117,28 @@ lyrics.txt:1
 lyrics2.txt:8
 -------------------------------------------------------------------
 s21_: ./s21_grep -cn rock lyrics.txt lyrics2.txt
-Hey now, you're a rock star, get the show on, get paid
 1
-We will, we will rock you
-We will, we will rock you
-We will, we will rock you, sing it!
-We will, we will rock you
-We will, we will rock you, sing it
-We will, we will rock you, everybody
-We will, we will rock you, hmm
-We will, we will rock you
 8
 -------------------------------------------------------------------
 diff -s orig_GCN1M.log s21_GCN1M.log
-1,2c1,11
+1,2c1,2
 < lyrics.txt:1
 < lyrics2.txt:8
 ---
-> Hey now, you're a rock star, get the show on, get paid
 > 1
-> We will, we will rock you
-> We will, we will rock you
-> We will, we will rock you, sing it!
-> We will, we will rock you
-> We will, we will rock you, sing it
-> We will, we will rock you, everybody
-> We will, we will rock you, hmm
-> We will, we will rock you
 > 8
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
-│ Test:GCH1M:	❌  Failed
+│ Test:GCH1M:	✅  Passed
 └──────────────────────────────────────────────────────────────────
 orig: grep -ch rock lyrics.txt lyrics2.txt
 1
 8
 -------------------------------------------------------------------
 s21_: ./s21_grep -ch rock lyrics.txt lyrics2.txt
-Hey now, you're a rock star, get the show on, get paid
 1
-We will, we will rock you
-We will, we will rock you
-We will, we will rock you, sing it!
-We will, we will rock you
-We will, we will rock you, sing it
-We will, we will rock you, everybody
-We will, we will rock you, hmm
-We will, we will rock you
 8
--------------------------------------------------------------------
-diff -s orig_GCH1M.log s21_GCH1M.log
-0a1
-> Hey now, you're a rock star, get the show on, get paid
-1a3,10
-> We will, we will rock you
-> We will, we will rock you
-> We will, we will rock you, sing it!
-> We will, we will rock you
-> We will, we will rock you, sing it
-> We will, we will rock you, everybody
-> We will, we will rock you, hmm
-> We will, we will rock you
 -------------------------------------------------------------------
 
 ┌──────────────────────────────────────────────────────────────────
@@ -1628,6 +1520,6 @@ lyrics.txt:That's the way I like it and I'll never get bored
 -------------------------------------------------------------------
 
 ---------------------------SUMMARY---------------------------------
-SUCCESS: 38
-FAIL: 16
+SUCCESS: 42
+FAIL: 12
 -------------------------------------------------------------------

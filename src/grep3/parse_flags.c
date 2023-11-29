@@ -1,7 +1,7 @@
 #include <string.h>
 
 #include "h.h"
-Flags parse_flags(int argc, char **argv, char* line_) {
+Flags parse_flags(int argc, char **argv, char *line_) {
   int c;
   Flags flag = {0};
   int option_index = 0;
@@ -42,7 +42,7 @@ Flags parse_flags(int argc, char **argv, char* line_) {
         case 'f':
           flag.f = 1;
           pattern_from_file(optarg, &flag);
-         // (*e_count)++;
+          // (*e_count)++;
           break;
         case 'o':
           flag.o = 1;
@@ -50,24 +50,24 @@ Flags parse_flags(int argc, char **argv, char* line_) {
       }
     }
   }
-  
+
   flag.file_counter = argc - optind;
-  if (!flag.e && !flag.f){
-        if (argc > optind) {
-            add_pattern(argv[optind], &flag);
-        }
-         
-        flag.file_counter --;
+  if (!flag.e && !flag.f) {
+    if (argc > optind) {
+      add_pattern(argv[optind], &flag);
     }
+
+    flag.file_counter--;
+  }
   if (flag.v && flag.o) flag.o = 0;
   if (flag.e && flag.o) flag.e = 0;
-   if (!flag.e && !flag.f){
-        if (argc > optind) {
-            add_pattern(argv[optind], &flag);
-        }
-        
-        flag.file_counter --;
+  if (!flag.e && !flag.f) {
+    if (argc > optind) {
+      add_pattern(argv[optind], &flag);
     }
+
+    flag.file_counter--;
+  }
   return flag;
 }
 int parse_pattern(int argc, char **argv, int *count) {
@@ -100,14 +100,13 @@ int parse_pattern(int argc, char **argv, int *count) {
 }
 int parse_file_amount(char **argv, int argc) {
   int i;
-  int y=0;
+  int y = 0;
   FILE *fptemp;
   for (i = 1; i < argc; i++) {
     fptemp = fopen(argv[i], "r");
     if (fptemp != NULL)
       // if(i==argc-1)
       y++;
-    
   }
   fclose(fptemp);
   // printf("File_name=%s argv index of File_name is %d\n", argv[i], i);
