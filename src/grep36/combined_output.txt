@@ -1,0 +1,791 @@
+
+Content from file: grep.c
+#include <getopt.h>
+#include <regex.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "h.h"
+#define no_argument 0
+#define required_argument 1
+#define optional_argument 2
+int main(int argc, char *argv[]) {
+  if (argc == 1)
+    printf(
+        "Usage: grep [OPTION]... PATTERNS [FILE]...\nTry 'grep --help' for "
+        "more information.\n");
+  else {
+    regex_t regex;
+    
+    int count = 0;
+    int* e_count = &count;
+    int f_count=0;
+    FILE* fp;
+    int eflags = 0;
+    char* pattern = malloc(100 * sizeof(char));
+    char** e_ptrns = (char **)malloc(1025 * sizeof(char *));
+    char** f_ptrns = (char **)malloc(1025 * sizeof(char *));
+    int c=0;
+    int x;
+    //printf("Where?\n");
+    Flags flag = parse_flags(argc, argv, e_ptrns, e_count, &f_ptrns, &f_count);  // parse flags
+    int y = parse_pattern(argc, argv, e_ptrns, &count);      // parse pattern
+    int file_amount = parse_file_amount(argv, argc);          // parse file name
+
+    //printf("OPTIND=%d\n", optind);
+    // printf("file name is %s its index is%d\n", argv[file_name], file_name);
+//printf("line31\n");
+   while(optind<argc){
+    if(open_file_and_i_flag(&fp, &flag, optind, argv, &eflags) == 0){
+     // printf("OPTIND=%d", optind);
+      optind++;
+      continue;
+    }
+    
+    
+    
+    //printf("line33\n");
+//if(fp==NULL)printf("NULL fp in MAIN func\n");
+    char *line_ = (char *)malloc(1025 * sizeof(char));  // here we store line from our file we grabbed with fgets
+    //printf("line 36\n");
+    grep(flag, fp, eflags, line_, argv, y, count, e_ptrns, file_amount, f_ptrns, &f_count, argc);
+    //if(fp==NULL)printf("NULL fp\n");
+    
+  //printf("line34\n");
+    //raw_pattern(flag, *line, *fp);
+   
+    
+    free(line_);
+    optind++;
+    fclose(fp);
+  }
+  free(pattern);
+  free(e_ptrns);
+  }
+  return 0;
+}
+
+Content from file: parse_flags.c
+#include <string.h>
+
+#include "h.h"
+Flags parse_flags(int argc, char **argv, char **e_ptrns, int *e_count, char*** f_ptrns, int* f_count) {
+  int c;
+  Flags flag = {0};
+  int option_index = 0;
+  int count = 0;
+
+  if (argc > 1) {
+    while (1) {
+      c = getopt_long(argc, argv, "e:ivclnhsf:o", long_options, &option_index);
+      // printf("optind=%d on argv[%s]\n", optind, argv[optind]);
+      if (c == -1) break;
+
+      switch (c) {
+        case 'e':
+          flag.e = 1;
+          e_ptrns[*e_count] = optarg;
+          (*e_count)++;
+          break;
+        case 'i':
+          flag.i = 1;
+          break;
+        case 'v':
+          flag.v = 1;
+          break;
+        case 'c':
+          flag.c = 1;
+          break;
+        case 'l':
+          flag.l = 1;
+          break;
+        case 'n':
+          flag.n = 1;
+          break;
+        case 'h':
+          flag.h = 1;
+          break;
+        case 's':
+          flag.s = 1;
+          break;
+        case 'f':
+          flag.f = 1;
+          pattern_from_file(e_ptrns, optarg, e_count);
+         // (*e_count)++;
+          break;
+        case 'o':
+          flag.o = 1;
+          break;
+      }
+    }
+  }
+  if (flag.v && flag.o) flag.o = 0;
+  return flag;
+}
+int parse_pattern(int argc, char **argv, char **e_ptrns, int *count) {
+  int i;
+  char **x;
+  int pattern;
+  int pattern_found = 0;
+
+  for (i = 1; i < argc; i++) {
+    if (argv[i][0] != '-') {
+      pattern = i;
+      break;
+    }
+
+    //             e_ptrns[*count]=argv[i+1];//argv не важно какой
+    //             // индекс если мы читаем оттуда, не должно быть segfault?
+    //            // printf("argv[%d]=%s\n", i+1, argv[i+1]);
+    //             (*count)++;
+    //             x=realloc(e_ptrns, *count*(1025*sizeof(char)));
+    //             if(x==NULL)printf("Realloc failed");else e_ptrns=x;
+    //                                 }
+
+    //     if(argv[i][0]!='-'&&pattern_found==0/*&&strcmp(argv[i-1],
+    //     "-e")!=0*/){ pattern=i;pattern_found=1;}
+    //     //else if(argv[i][0]=='-')
+
+    // }
+  }
+  return pattern;
+}
+int parse_file_amount(char **argv, int argc) {
+  int i;
+  int y=0;
+  FILE *fptemp;
+  for (i = 1; i < argc; i++) {
+    fptemp = fopen(argv[i], "r");
+    if (fptemp != NULL)
+      // if(i==argc-1)
+      y++;
+    
+  }
+  fclose(fptemp);
+  // printf("File_name=%s argv index of File_name is %d\n", argv[i], i);
+  return y;
+}
+Content from file: regex.c
+#include <regex.h>
+#include <stdio.h>
+int regex(char pattern[], char line[], int eflags) {
+  // printf("%d", eflags);// тут лезли нули
+  regex_t regex;
+  int return_value = regcomp(&regex, pattern, eflags);
+  if (return_value) {
+    printf("Could not compile regular expression.\n");
+    
+  }
+
+  return_value = regexec(&regex, line, 0, NULL, 0);
+  if (!return_value) {
+  } else {
+    // printf("%dNo match.\n",return_value);
+  }
+  regfree(&regex);
+  return return_value;
+}
+
+Content from file: function.c
+#include "h.h"
+
+int open_file_and_i_flag(FILE** fp,Flags* flag, int file_name, char** argv, int* eflags){
+  int result=0;
+  // printf("in open_file argv[%d]=%s\n", optind, argv[optind]);
+    (*fp)=fopen(argv[optind],"r");//opening file
+        if ((*fp) == NULL) 
+        {
+            //printf("Error opening file.\n");
+            return 0;//debug
+        }
+         //here we store line from our file we grabbed with fgets
+        if(flag->i==1){ //no distinction between upper and lowercase characters
+        (*eflags)=REG_ICASE;
+       // printf("EFLAGS IN MAIN=%d\n", eflags);
+        }   
+        return 1;
+}
+/* grep_file(){
+
+} */
+
+void pattern_from_file(char** e_ptrns, char* optarg, int* e_count){
+  FILE* pt = NULL;
+  pt=fopen(optarg, "r");
+  if(pt== NULL)printf("in function pattern_file file is not read! optarg=%s", optarg);
+if(pt != NULL){
+  char string[1000];
+         while (fgets(string, 1000, pt) != NULL){
+            if (string[strlen(string) - 1] == '\n') string[strlen(string) - 1] = '\0';
+            
+  e_ptrns[*e_count]=string;
+   printf("recorded in e_ptrns[%d]=%s\n", *e_count, e_ptrns[*e_count]);
+  (*e_count)++;
+ 
+
+}
+}
+ else {
+        printf("s21_grep: %s: No such file or directory\n", optarg);
+    }
+    fclose(pt);
+}
+
+int grep(Flags flag,FILE* fp, int eflags, char* line_, char** argv, int y, int count, char** e_ptrns, int file_amount, char** f_ptrns, int* f_count, int argc){
+ //printf("hello?\n");
+    int x=0; 
+    
+    if (flag.e != 1 && flag.v != 1 && flag.c !=1 && flag.f !=1)
+      while (fgets(line_, 1024, fp)) {
+        
+        x = regex(argv[y], line_, eflags);
+        if (!x){
+        if(flag.l==1){
+        printf("%s\n", argv[optind]);
+        break;}
+        if(flag.o==1){
+          flag_o(line_, argv[y], eflags);
+          continue;
+        }
+        
+          multifileprint(file_amount, argv, argc);
+        printf("%s", line_);
+        if (line_[strlen(line_) - 1] != '\n') printf("\n");
+        }
+
+      }
+      //printf("here?\n");
+     // if(fp==NULL)printf("NULL fp in grep func\n");
+//printf("line 42\n");
+    fseek(fp, 0, SEEK_SET);  // Move the cursor to the beginning of the file
+    
+    fgets(line_, 1024, fp);
+
+    fseek(fp, 0, SEEK_SET);
+    //printf("line 37 grep\n");
+    //printf("e_ptrns[0]=%s", e_ptrns[0]);
+noflags_ve_v(flag, fp, &count, e_ptrns, eflags, x, line_, argv, y, file_amount, f_ptrns, f_count, argc);
+    // exec e patterns
+
+    if (flag.c == 1&&flag.e==1) {
+      int c_count = 0;
+      while (fgets(line_, 1024, fp)) {  // print e patterns
+        int loop_count = count;
+        while (loop_count > 0) {  // что значат фиолетовые синие и желтые скобки
+          x = regex(e_ptrns[loop_count - 1], line_, eflags);
+          loop_count--;
+          // printf("X in E loop=%d\n", x);
+          if (!x) {
+            c_count++;
+          }
+        }
+      }
+      printf("%d\n", c_count);
+    }
+
+    if(flag.c==1&&flag.e!=1){
+      while (fgets(line_, 1024, fp)) {
+        x = regex(argv[y], line_, eflags);
+        if (!x) count++;
+      }
+      printf("%d\n", count);
+
+    }
+    //         printf("INSIDE THE e_ptrns:\n");
+    // for(int n=0;n<2;n++){
+    //     printf("%s\n", e_ptrns[n]);}
+}
+
+void noflags_ve_v(Flags flag, FILE* fp, int* count, char** e_ptrns, int eflags, int x, char* line_, char** argv, int y, int file_amount, char** f_ptrns, int* f_count, int argc){
+    if (flag.v == 1 && (flag.e == 1|| flag.f ==1)) {
+      while (fgets(line_, 1024, fp)) {  // print e patterns
+        int loop_count = (*count);
+        while (loop_count > 0) {  
+          x = regex(e_ptrns[loop_count - 1], line_, eflags);
+          loop_count--;
+          // printf("X in E loop=%d\n", x);
+          if (x) {
+            printf("%s", line_);
+          }
+        }
+      }
+      printf("\n");
+    }
+
+    if (flag.v == 1) {
+      // printf("V==1 and argv[y]=%s", argv[y]);
+      while (fgets(line_, 1024, fp)) {  // print e patterns
+
+        
+        x = regex(argv[y], line_, eflags);
+
+        // printf("X in E loop=%d\n", x);
+        if (x) {
+          printf("%s", line_);
+        }
+      }
+      //printf("\n");
+    }
+/*     if(flag.f==1){
+      flag_f(flag, fp, f_count, &f_ptrns, eflags, line_, argv, file_amount);
+    } */
+    if (flag.v != 1 && flag.c != 1) {
+      flag_e(flag, fp, count, e_ptrns, eflags, line_, argv, file_amount, argc);
+    }
+}
+void multifileprint(int x, char** argv, int argc){
+  while (argc>optind) {
+    printf("%s:", argv[optind]);
+    optind++;
+  }
+}
+
+void flag_e(Flags flag, FILE* fp, int* count, char** e_ptrns, int eflags, char* line_, char** argv, int file_amount, int argc){
+  //fseek(fp, 0, SEEK_SET);   
+  int x;
+  while (fgets(line_, 1024, fp)) {  // print e patterns
+         int loop_count = (*count);
+        while (loop_count > 0) { 
+          //printf("e_ptrns[loop_count-1]=%s\n", e_ptrns[loop_count-1]);
+          x = regex(e_ptrns[loop_count - 1], line_, eflags);
+          loop_count--;
+          // printf("X in E loop=%d\n", x);
+          if (!x) {
+            multifileprint(file_amount, argv, argc);
+            printf("%s", line_);
+          }
+        }
+      }
+
+}
+
+/* void flag_f(Flags flag, FILE* fp, int* f_count, char*** f_ptrns, int eflags, char* line_,char**  argv, int file_amount, int argc){
+  printf("f_ptrns[0]=%s", *f_ptrns[0]);//я могу все писсать просто в паттерн для е флага, и потом при любом из них on я вывожу
+
+  int x;
+  while (fgets(line_, 1024, fp)) {  // print e patterns
+         int loop_count = *f_count;
+        while (loop_count > 0) { 
+          //printf("f_ptrns[0]=%s", *f_ptrns[loop_count-1]);
+          x = regex(*f_ptrns[loop_count - 1], line_, eflags);
+          loop_count--;
+          // printf("X in E loop=%d\n", x);
+          if (!x) {
+            multifileprint(file_amount, argv, argc);
+            printf("%s", line_);
+          }
+        }
+      }
+} */
+
+void flag_o(char* line_, char pattern[], int eflags){
+  regex_t regex;
+  regmatch_t matches[1];
+
+  int return_value = regcomp(&regex, pattern, eflags);
+  if (return_value) {
+    printf("Could not compile regular expression.\n");
+    
+  }
+  while ((regexec(&regex, line_, 1, matches, 0) == 0)){
+                    printf("%.*s\n", (int) (matches[0].rm_eo - matches[0].rm_so), line_ + matches[0].rm_so);
+                    line_ += matches[0].rm_eo;
+                } //первый аргумент это длина паттерна, а второй сдвигает указатель в строке чтобы от стоял на первом чаре, и потом печатает как раз длину паттерна. 
+}
+
+
+
+Content from file: grep.c
+#include <getopt.h>
+#include <regex.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "h.h"
+#define no_argument 0
+#define required_argument 1
+#define optional_argument 2
+int main(int argc, char *argv[]) {
+  if (argc == 1)
+    printf(
+        "Usage: grep [OPTION]... PATTERNS [FILE]...\nTry 'grep --help' for "
+        "more information.\n");
+  else {
+    regex_t regex;
+    
+    int count = 0;
+    int* e_count = &count;
+    int f_count=0;
+    FILE* fp;
+    int eflags = 0;
+    char* pattern = malloc(100 * sizeof(char));
+    char** e_ptrns = (char **)malloc(1025 * sizeof(char *));
+    char** f_ptrns = (char **)malloc(1025 * sizeof(char *));
+    int c=0;
+    int x;
+    char *line_ = (char *)malloc(1025 * sizeof(char)); 
+    //printf("Where?\n");
+    Flags flag = parse_flags(argc, argv, e_ptrns, e_count, &f_ptrns, &f_count, line_);  // parse flags
+    int y = parse_pattern(argc, argv, e_ptrns, &count);      // parse pattern
+    int file_amount = parse_file_amount(argv, argc);          // parse file name
+
+    //printf("OPTIND=%d\n", optind);
+    // printf("file name is %s its index is%d\n", argv[file_name], file_name);
+//printf("line31\n");
+   while(optind<argc){
+    if(open_file_and_i_flag(&fp, &flag, optind, argv, &eflags) == 0){
+     // printf("OPTIND=%d", optind);
+      optind++;
+      continue;
+    }
+    
+    
+    
+    //printf("line33\n");
+//if(fp==NULL)printf("NULL fp in MAIN func\n");
+     // here we store line from our file we grabbed with fgets
+    //printf("line 36\n");
+    grep(flag, fp, eflags, line_, argv, y, count, e_ptrns, file_amount, f_ptrns, &f_count, argc);
+    //if(fp==NULL)printf("NULL fp\n");
+    
+  //printf("line34\n");
+    //raw_pattern(flag, *line, *fp);
+   
+    
+    free(line_);
+    optind++;
+    fclose(fp);
+  }
+  free(pattern);
+  free(e_ptrns);
+  }
+  return 0;
+}
+
+Content from file: parse_flags.c
+#include <string.h>
+
+#include "h.h"
+Flags parse_flags(int argc, char **argv, char **e_ptrns, int *e_count, char*** f_ptrns, int* f_count, char* line_) {
+  int c;
+  Flags flag = {0};
+  int option_index = 0;
+  int count = 0;
+
+  if (argc > 1) {
+    while (1) {
+      c = getopt_long(argc, argv, "e:ivclnhsf:o", long_options, &option_index);
+      // printf("optind=%d on argv[%s]\n", optind, argv[optind]);
+      if (c == -1) break;
+
+      switch (c) {
+        case 'e':
+          flag.e = 1;
+          e_ptrns[*e_count] = optarg;
+          (*e_count)++;
+          break;
+        case 'i':
+          flag.i = 1;
+          break;
+        case 'v':
+          flag.v = 1;
+          break;
+        case 'c':
+          flag.c = 1;
+          break;
+        case 'l':
+          flag.l = 1;
+          break;
+        case 'n':
+          flag.n = 1;
+          break;
+        case 'h':
+          flag.h = 1;
+          break;
+        case 's':
+          flag.s = 1;
+          break;
+        case 'f':
+          flag.f = 1;
+          pattern_from_file(e_ptrns, optarg, e_count, line_);
+         // (*e_count)++;
+          break;
+        case 'o':
+          flag.o = 1;
+          break;
+      }
+    }
+  }
+  if (flag.v && flag.o) flag.o = 0;
+  return flag;
+}
+int parse_pattern(int argc, char **argv, char **e_ptrns, int *count) {
+  int i;
+  char **x;
+  int pattern;
+  int pattern_found = 0;
+
+  for (i = 1; i < argc; i++) {
+    if (argv[i][0] != '-') {
+      pattern = i;
+      break;
+    }
+
+    //             e_ptrns[*count]=argv[i+1];//argv не важно какой
+    //             // индекс если мы читаем оттуда, не должно быть segfault?
+    //            // printf("argv[%d]=%s\n", i+1, argv[i+1]);
+    //             (*count)++;
+    //             x=realloc(e_ptrns, *count*(1025*sizeof(char)));
+    //             if(x==NULL)printf("Realloc failed");else e_ptrns=x;
+    //                                 }
+
+    //     if(argv[i][0]!='-'&&pattern_found==0/*&&strcmp(argv[i-1],
+    //     "-e")!=0*/){ pattern=i;pattern_found=1;}
+    //     //else if(argv[i][0]=='-')
+
+    // }
+  }
+  return pattern;
+}
+int parse_file_amount(char **argv, int argc) {
+  int i;
+  int y=0;
+  FILE *fptemp;
+  for (i = 1; i < argc; i++) {
+    fptemp = fopen(argv[i], "r");
+    if (fptemp != NULL)
+      // if(i==argc-1)
+      y++;
+    
+  }
+  fclose(fptemp);
+  // printf("File_name=%s argv index of File_name is %d\n", argv[i], i);
+  return y;
+}
+Content from file: regex.c
+#include <regex.h>
+#include <stdio.h>
+int regex(char pattern[], char line[], int eflags) {
+  // printf("%d", eflags);// тут лезли нули
+  regex_t regex;
+  int return_value = regcomp(&regex, pattern, eflags);
+  if (return_value) {
+    printf("Could not compile regular expression.\n");
+    
+  }
+
+  return_value = regexec(&regex, line, 0, NULL, 0);
+  if (!return_value) {
+  } else {
+    // printf("%dNo match.\n",return_value);
+  }
+  regfree(&regex);
+  return return_value;
+}
+
+Content from file: function.c
+#include "h.h"
+
+int open_file_and_i_flag(FILE** fp,Flags* flag, int file_name, char** argv, int* eflags){
+  int result=0;
+  // printf("in open_file argv[%d]=%s\n", optind, argv[optind]);
+    (*fp)=fopen(argv[optind],"r");//opening file
+        if ((*fp) == NULL) 
+        {
+            //printf("Error opening file.\n");
+            return 0;//debug
+        }
+         //here we store line from our file we grabbed with fgets
+        if(flag->i==1){ //no distinction between upper and lowercase characters
+        (*eflags)=REG_ICASE;
+       // printf("EFLAGS IN MAIN=%d\n", eflags);
+        }   
+        return 1;
+}
+/* grep_file(){
+
+} */
+
+void pattern_from_file(char** e_ptrns, char* optarg, int* e_count, char* line){
+  FILE* pt = NULL;
+  pt=fopen(optarg, "r");
+  if(pt== NULL)printf("in function pattern_file file is not read! optarg=%s", optarg);
+if(pt != NULL){
+  char string[1000];
+         while (fgets(string, 1000, pt) != NULL){
+            if (string[strlen(string) - 1] == '\n') string[strlen(string) - 1] = '\0';
+            
+  e_ptrns[*e_count]=string;
+   printf("recorded in e_ptrns[%d]=%s\n", *e_count, e_ptrns[*e_count]);
+  (*e_count)++;
+ 
+
+}
+}
+ else {
+        printf("s21_grep: %s: No such file or directory\n", optarg);
+    }
+    fclose(pt);
+}
+
+int grep(Flags flag,FILE* fp, int eflags, char* line_, char** argv, int y, int count, char** e_ptrns, int file_amount, char** f_ptrns, int* f_count, int argc){
+ //printf("hello?\n");
+    int x=0; 
+    
+    if (flag.e != 1 && flag.v != 1 && flag.c !=1 && flag.f !=1)
+      while (fgets(line_, 1024, fp)) {
+        
+        x = regex(argv[y], line_, eflags);
+        if (!x){
+        if(flag.l==1){
+        printf("%s\n", argv[optind]);
+        break;}
+        if(flag.o==1){
+          flag_o(line_, argv[y], eflags);
+          continue;
+        }
+        
+          multifileprint(file_amount, argv, argc);
+        printf("%s", line_);
+        if (line_[strlen(line_) - 1] != '\n') printf("\n");
+        }
+
+      }
+      //printf("here?\n");
+     // if(fp==NULL)printf("NULL fp in grep func\n");
+//printf("line 42\n");
+    fseek(fp, 0, SEEK_SET);  // Move the cursor to the beginning of the file
+    
+    fgets(line_, 1024, fp);
+
+    fseek(fp, 0, SEEK_SET);
+    //printf("line 37 grep\n");
+    //printf("e_ptrns[0]=%s", e_ptrns[0]);
+noflags_ve_v(flag, fp, &count, e_ptrns, eflags, x, line_, argv, y, file_amount, f_ptrns, f_count, argc);
+    // exec e patterns
+
+    if (flag.c == 1&&flag.e==1) {
+      int c_count = 0;
+      while (fgets(line_, 1024, fp)) {  // print e patterns
+        int loop_count = count;
+        while (loop_count > 0) {  // что значат фиолетовые синие и желтые скобки
+          x = regex(e_ptrns[loop_count - 1], line_, eflags);
+          loop_count--;
+          // printf("X in E loop=%d\n", x);
+          if (!x) {
+            c_count++;
+          }
+        }
+      }
+      printf("%d\n", c_count);
+    }
+
+    if(flag.c==1&&flag.e!=1){
+      while (fgets(line_, 1024, fp)) {
+        x = regex(argv[y], line_, eflags);
+        if (!x) count++;
+      }
+      printf("%d\n", count);
+
+    }
+    //         printf("INSIDE THE e_ptrns:\n");
+    // for(int n=0;n<2;n++){
+    //     printf("%s\n", e_ptrns[n]);}
+}
+
+void noflags_ve_v(Flags flag, FILE* fp, int* count, char** e_ptrns, int eflags, int x, char* line_, char** argv, int y, int file_amount, char** f_ptrns, int* f_count, int argc){
+    if (flag.v == 1 && (flag.e == 1|| flag.f ==1)) {
+      while (fgets(line_, 1024, fp)) {  // print e patterns
+        int loop_count = (*count);
+        while (loop_count > 0) {  
+          x = regex(e_ptrns[loop_count - 1], line_, eflags);
+          loop_count--;
+          // printf("X in E loop=%d\n", x);
+          if (x) {
+            printf("%s", line_);
+          }
+        }
+      }
+      printf("\n");
+    }
+
+    if (flag.v == 1) {
+      // printf("V==1 and argv[y]=%s", argv[y]);
+      while (fgets(line_, 1024, fp)) {  // print e patterns
+
+        
+        x = regex(argv[y], line_, eflags);
+
+        // printf("X in E loop=%d\n", x);
+        if (x) {
+          printf("%s", line_);
+        }
+      }
+      //printf("\n");
+    }
+/*     if(flag.f==1){
+      flag_f(flag, fp, f_count, &f_ptrns, eflags, line_, argv, file_amount);
+    } */
+    if (flag.v != 1 && flag.c != 1) {
+      flag_e(flag, fp, count, e_ptrns, eflags, line_, argv, file_amount, argc);
+    }
+}
+void multifileprint(int x, char** argv, int argc){
+  while (argc>optind) {
+    printf("%s:", argv[optind]);
+    optind++;
+  }
+}
+
+void flag_e(Flags flag, FILE* fp, int* count, char** e_ptrns, int eflags, char* line_, char** argv, int file_amount, int argc){
+  //fseek(fp, 0, SEEK_SET);   
+  int x;
+  while (fgets(line_, 1024, fp)) {  // print e patterns
+         int loop_count = (*count);
+        while (loop_count > 0) { 
+          //printf("e_ptrns[loop_count-1]=%s\n", e_ptrns[loop_count-1]);
+          x = regex(e_ptrns[loop_count - 1], line_, eflags);
+          loop_count--;
+          // printf("X in E loop=%d\n", x);
+          if (!x) {
+            multifileprint(file_amount, argv, argc);
+            printf("%s", line_);
+          }
+        }
+      }
+
+}
+
+/* void flag_f(Flags flag, FILE* fp, int* f_count, char*** f_ptrns, int eflags, char* line_,char**  argv, int file_amount, int argc){
+  printf("f_ptrns[0]=%s", *f_ptrns[0]);//я могу все писсать просто в паттерн для е флага, и потом при любом из них on я вывожу
+
+  int x;
+  while (fgets(line_, 1024, fp)) {  // print e patterns
+         int loop_count = *f_count;
+        while (loop_count > 0) { 
+          //printf("f_ptrns[0]=%s", *f_ptrns[loop_count-1]);
+          x = regex(*f_ptrns[loop_count - 1], line_, eflags);
+          loop_count--;
+          // printf("X in E loop=%d\n", x);
+          if (!x) {
+            multifileprint(file_amount, argv, argc);
+            printf("%s", line_);
+          }
+        }
+      }
+} */
+
+void flag_o(char* line_, char pattern[], int eflags){
+  regex_t regex;
+  regmatch_t matches[1];
+
+  int return_value = regcomp(&regex, pattern, eflags);
+  if (return_value) {
+    printf("Could not compile regular expression.\n");
+    
+  }
+  while ((regexec(&regex, line_, 1, matches, 0) == 0)){
+                    printf("%.*s\n", (int) (matches[0].rm_eo - matches[0].rm_so), line_ + matches[0].rm_so);
+                    line_ += matches[0].rm_eo;
+                } //первый аргумент это длина паттерна, а второй сдвигает указатель в строке чтобы от стоял на первом чаре, и потом печатает как раз длину паттерна. 
+}
+
+
