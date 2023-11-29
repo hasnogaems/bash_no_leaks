@@ -67,8 +67,9 @@ int grep(Flags flag, FILE* fp, int eflags, char* line_, char** argv, int y,
           continue;
         }
         if (flag.c != 1) {
-          if (flag.n == 1) printf("%d:", string_counter);
           multifileprint(&flag, argv[optind]);
+          if (flag.n == 1) printf("%d:", string_counter);
+          
           printf("%s", line_);
           if (line_[strlen(line_) - 1] != '\n')
             printf("\n");  //если строка из конца файла добавляем \n
