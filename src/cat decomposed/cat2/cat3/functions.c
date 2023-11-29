@@ -3,7 +3,7 @@
 
 #include "parse_flags.h"
 
-voidbig_while(int argc, char** argv, FILE* fp, flags* Flag) {
+void big_while(int argc, char** argv, FILE* fp, flags* Flag) {
   int c;
   int count = 0;
   int line_count = 1;
@@ -50,7 +50,7 @@ int v_and_s(int* previous, int* current, flags* Flag, int* c, int* count) {
     }
     if ((*c) == 127) {
       skip = 1;
-      printf("^%c", (*c) - 128);
+      printf("^?");
     }
   }
 
@@ -74,7 +74,7 @@ int flag_e(flags* Flag, int* c) {
 
       cont = 1;
     } else if ((*c) == 127) {
-      printf("^%c", (*c) - 128);
+      printf("^?");
       cont = 1;
     }
 
@@ -115,7 +115,7 @@ int tT(flags* Flag, int* c) {
       cont=1;
     }
     if ((*c) == 127) {
-      printf("^%c", (*c) - 128);
+      printf("^?");
       cont=1;
     }
     if ((*c) == 9) {
