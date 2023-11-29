@@ -62,7 +62,7 @@ int grep(Flags flag, FILE* fp, int eflags, char* line_, char** argv, int y,
           printf("%s\n", argv[optind]);
           break;
         }
-        if (flag.o == 1) {
+        if (flag.o == 1&&flag.c!=1) {
           flag_o(line_, argv[y], flag);
           continue;
         }
@@ -77,7 +77,9 @@ int grep(Flags flag, FILE* fp, int eflags, char* line_, char** argv, int y,
       
     }
   }
-  if (flag.c == 1) printf("%d\n", c_count);
+  if (flag.c == 1) {
+  multifileprint(&flag, argv[optind]);
+  printf("%d\n", c_count);}
   fclose(fp);
 }
 
