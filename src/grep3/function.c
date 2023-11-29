@@ -48,13 +48,11 @@ int grep(Flags flag,FILE* fp, int eflags, char* line_, char** argv, int y, int c
  //printf("hello?\n");
     int x=0; 
     
-    if (flag.e != 1 && flag.v != 1 && flag.c !=1 && flag.f !=1)
+    
       while (fgets(line_, 1024, fp)) {
         
-        x = regex(argv[y], line_, flag);
-        
-        flag.file_counter --;
-        if (!x){
+        x = regex(flag.pattern, line_, flag);
+        if (flag.v ? x : !x){
         if(flag.l==1){
         printf("%s\n", argv[optind]);
         break;}
@@ -79,7 +77,7 @@ int grep(Flags flag,FILE* fp, int eflags, char* line_, char** argv, int y, int c
     fseek(fp, 0, SEEK_SET);
     //printf("line 37 grep\n");
     //printf("e_ptrns[0]=%s", e_ptrns[0]);
-noflags_ve_v(flag, fp, &count,  eflags, x, line_, argv, y, file_amount, f_ptrns, f_count, argc);
+/* noflags_ve_v(flag, fp, &count,  eflags, x, line_, argv, y, file_amount, f_ptrns, f_count, argc); */
     // exec e patterns
 
     if (flag.c == 1&&flag.e==1) {

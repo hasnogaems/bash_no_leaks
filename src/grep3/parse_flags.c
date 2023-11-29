@@ -50,9 +50,24 @@ Flags parse_flags(int argc, char **argv, char* line_) {
       }
     }
   }
+  
   flag.file_counter = argc - optind;
+  if (!flag.e && !flag.f){
+        if (argc > optind) {
+            add_pattern(argv[optind], &flag);
+        }
+         
+        flag.file_counter --;
+    }
   if (flag.v && flag.o) flag.o = 0;
   if (flag.e && flag.o) flag.e = 0;
+   if (!flag.e && !flag.f){
+        if (argc > optind) {
+            add_pattern(argv[optind], &flag);
+        }
+        
+        flag.file_counter --;
+    }
   return flag;
 }
 int parse_pattern(int argc, char **argv, int *count) {
