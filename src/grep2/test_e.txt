@@ -1,9 +1,0 @@
--e
-11
-22
--e
-11
-ffff
-ddd
-HOLA
-i
