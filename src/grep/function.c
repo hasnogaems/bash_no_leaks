@@ -4,9 +4,8 @@ void add_pattern(char* pattern, Flags* flag) {
   strcat(flag->pattern, pattern);
 }
 
-int open_file_and_i_flag(FILE** fp, Flags* flag, int file_name, char** argv,
+int open_file_and_i_flag(FILE** fp, Flags* flag, char** argv,
                          int* eflags) {
-  int result = 0;
   // printf("in open_file argv[%d]=%s\n", optind, argv[optind]);
   (*fp) = fopen(argv[optind], "r");  // opening file
   if ((*fp) == NULL) {
@@ -42,8 +41,7 @@ void pattern_from_file(char* line_, Flags* flag) {
   fclose(pt);
 }
 
-int grep(Flags flag, FILE* fp, int eflags, char* line_, char** argv, int y,
-         int count, int file_amount, char** f_ptrns, int* f_count, int argc) {
+int grep(Flags flag, FILE* fp, char* line_, char** argv, int y) {
   // printf("hello?\n");
   int x = 0;
   int printl;
@@ -93,37 +91,8 @@ int grep(Flags flag, FILE* fp, int eflags, char* line_, char** argv, int y,
   
   fclose(fp);
 }
-
-// printf("here?\n");
-// if(fp==NULL)printf("NULL fp in grep func\n");
-// printf("line 42\n");
-// fseek(fp, 0, SEEK_SET);  // Move the cursor to the beginning of the file
-
-// fgets(line_, 1024, fp);
-
-// fseek(fp, 0, SEEK_SET);
-// printf("line 37 grep\n");
-// printf("e_ptrns[0]=%s", e_ptrns[0]);
-/* noflags_ve_v(flag, fp, &count,  eflags, x, line_, argv, y, file_amount,
- * f_ptrns, f_count, argc); */
-// exec e patterns
-
-/*    if(flag.c==1&&flag.e!=1){
-     while (fgets(line_, 1024, fp)) {
-       x = regex(argv[y], line_, flag);
-       if (!x) count++;
-     }
-     printf("%d\n", count);
-
-   }
-   //         printf("INSIDE THE e_ptrns:\n");
-   // for(int n=0;n<2;n++){
-   //     printf("%s\n", e_ptrns[n]);}
-} */
-
 void noflags_ve_v(Flags flag, FILE* fp, int* count, int eflags, int x,
-                  char* line_, char** argv, int y, int file_amount,
-                  char** f_ptrns, int* f_count, int argc) {
+                  char* line_, char** argv, int y, int file_amount, int argc) {
   if (flag.v == 1 && (flag.e == 1 || flag.f == 1)) {
     while (fgets(line_, 1024, fp)) {  // print e patterns
       int loop_count = (*count);

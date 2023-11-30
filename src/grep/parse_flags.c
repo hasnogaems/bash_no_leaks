@@ -1,12 +1,10 @@
 #include <string.h>
 
 #include "h.h"
-Flags parse_flags(int argc, char **argv, char *line_) {
+Flags parse_flags(int argc, char **argv) {
   int c;
   Flags flag = {0};
   int option_index = 0;
-  int count = 0;
-
   if (argc > 1) {
     while (1) {
       c = getopt_long(argc, argv, "e:ivclnhsf:o", long_options, &option_index);
@@ -64,31 +62,14 @@ Flags parse_flags(int argc, char **argv, char *line_) {
 
   return flag;
 }
-int parse_pattern(int argc, char **argv, int *count) {
+int parse_pattern(int argc, char **argv) {
   int i;
-  char **x;
   int pattern;
-  int pattern_found = 0;
-
   for (i = 1; i < argc; i++) {
     if (argv[i][0] != '-') {
       pattern = i;
       break;
     }
-
-    //             e_ptrns[*count]=argv[i+1];//argv не важно какой
-    //             // индекс если мы читаем оттуда, не должно быть segfault?
-    //            // printf("argv[%d]=%s\n", i+1, argv[i+1]);
-    //             (*count)++;
-    //             x=realloc(e_ptrns, *count*(1025*sizeof(char)));
-    //             if(x==NULL)printf("Realloc failed");else e_ptrns=x;
-    //                                 }
-
-    //     if(argv[i][0]!='-'&&pattern_found==0/*&&strcmp(argv[i-1],
-    //     "-e")!=0*/){ pattern=i;pattern_found=1;}
-    //     //else if(argv[i][0]=='-')
-
-    // }
   }
   return pattern;
 }
