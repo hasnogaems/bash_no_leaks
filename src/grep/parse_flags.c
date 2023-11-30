@@ -1,6 +1,8 @@
 #include <string.h>
 
 #include "h.h"
+static struct option long_options[] = {{"number-nonblank", no_argument, 0, 'b'},
+                                       {0, 0, 0, 0}};
 Flags parse_flags(int argc, char **argv) {
   int c;
   Flags flag = {0};
@@ -70,6 +72,20 @@ int parse_pattern(int argc, char **argv) {
       pattern = i;
       break;
     }
+
+    //             e_ptrns[*count]=argv[i+1];//argv не важно какой
+    //             // индекс если мы читаем оттуда, не должно быть segfault?
+    //            // printf("argv[%d]=%s\n", i+1, argv[i+1]);
+    //             (*count)++;
+    //             x=realloc(e_ptrns, *count*(1025*sizeof(char)));
+    //             if(x==NULL)printf("Realloc failed");else e_ptrns=x;
+    //                                 }
+
+    //     if(argv[i][0]!='-'&&pattern_found==0/*&&strcmp(argv[i-1],
+    //     "-e")!=0*/){ pattern=i;pattern_found=1;}
+    //     //else if(argv[i][0]=='-')
+
+    // }
   }
   return pattern;
 }
