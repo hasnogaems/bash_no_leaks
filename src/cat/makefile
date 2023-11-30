@@ -2,6 +2,9 @@ SHELL := /bin/bash
 s21_cat: cat.c parse_flags.c functions.c
 	gcc cat.c parse_flags.c functions.c -o s21_cat
 
+1: cat.c parse_flags.c functions.c
+	gcc -Wall -Werror -Wextra -std=c11 cat.c parse_flags.c functions.c -o s21_cat
+
 2:cat.o parse_flags.o functions.o
 	gcc cat.o parse_flags.o functions.o
 

@@ -6,20 +6,15 @@
 #define no_argument 0
 #define required_argument 1
 #define optional_argument 2
-
+static struct option long_options[] = {{"number-nonblank", no_argument, 0, 'b'},
+                                       {"number", no_argument, 0, 'n'},
+                                       {"squeeze-blank", no_argument, 0, 's'},
+                                       {0, 0, 0, 0}};
 flags parse_flags(int argc, char **argv) {
   int c;
-  int digit_optind = 0;
-
   flags Flags = {0};
 
   while (1) {
-    int this_option_optind;  // for debugging
-    if (optind) {
-      this_option_optind = optind;
-    } else {
-      this_option_optind = 1;
-    }
     int option_index = 0;
 
     if (argc > 1) {

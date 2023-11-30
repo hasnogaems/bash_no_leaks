@@ -4,8 +4,7 @@ void add_pattern(char* pattern, Flags* flag) {
   strcat(flag->pattern, pattern);
 }
 
-int open_file_and_i_flag(FILE** fp, Flags* flag, char** argv,
-                         int* eflags) {
+int open_file_and_i_flag(FILE** fp, Flags* flag, char** argv, int* eflags) {
   // printf("in open_file argv[%d]=%s\n", optind, argv[optind]);
   (*fp) = fopen(argv[optind], "r");  // opening file
   if ((*fp) == NULL) {
@@ -56,12 +55,11 @@ void grep(Flags flag, FILE* fp, char* line_, char** argv, int y) {
 
       // printf("%d\n", c_count); it enters here only when regex is triggered
 
-      if (flag.l == 1&&flag.c!=1) {
+      if (flag.l == 1 && flag.c != 1) {
         printf("%s\n", argv[optind]);
         break;
-      }
-      else if(flag.l==1&&flag.c==1){
-     printl=optind;
+      } else if (flag.l == 1 && flag.c == 1) {
+        printl = optind;
       }
       if (flag.o == 1 && flag.c != 1) {
         flag_o(line_, argv[y], flag);
@@ -75,32 +73,26 @@ void grep(Flags flag, FILE* fp, char* line_, char** argv, int y) {
         if (line_[strlen(line_) - 1] != '\n')
           printf("\n");  //если строка из конца файла добавляем \n
       }
-      
     }
-    
   }
   if (flag.c == 1) {
     multifileprint(&flag, argv[optind]);
     printf("%d\n", (flag.l ? 1 : c_count));
   }
-  if (flag.c == 1 && flag.l == 1){
+  if (flag.c == 1 && flag.l == 1) {
     printf("%s\n", argv[printl]);
   }
-  c_count=0;
-  string_counter=0;
-  
+  c_count = 0;
+  string_counter = 0;
+
   fclose(fp);
 }
 
-
-
-  
 void multifileprint(Flags* flag, char* filename) {
   if (flag->file_counter > 1 && flag->h == 0) printf("%s:", filename);
 }
 
-void flag_e(Flags flag, FILE* fp, int* count, char* line_,
-            char** argv) {
+void flag_e(Flags flag, FILE* fp, int* count, char* line_, char** argv) {
   // fseek(fp, 0, SEEK_SET);
   int x;
   while (fgets(line_, 1024, fp)) {  // print e patterns

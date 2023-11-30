@@ -9,6 +9,9 @@ FILE = test.txt
 s21_grep:grep.c parse_flags.c regex.c function.c
 	gcc grep.c parse_flags.c regex.c function.c -o s21_grep
 
+1:grep.c parse_flags.c regex.c function.c
+	gcc -Wall -Werror -Wextra -std=c11 grep.c parse_flags.c regex.c function.c -o s21_grep	
+
 2:prog4.c
 	gcc prog4.c
 

@@ -3,7 +3,7 @@
 
 #include "parse_flags.h"
 
-void big_while(int argc, char** argv, FILE* fp, flags* Flag) {
+void big_while(int argc, FILE* fp, flags* Flag) {
   int c;
   int count = 0;
   int line_count = 1;
